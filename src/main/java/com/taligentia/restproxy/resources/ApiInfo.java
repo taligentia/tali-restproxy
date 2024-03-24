@@ -30,12 +30,12 @@ public class ApiInfo extends RestProxyRessource {
 	@GET
 	@Path("/version")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Operation(summary = "Get Hdtm Engine api version", tags = "info version")
+	@Operation(summary = "Get version", tags = "info version")
 	@ApiResponse(responseCode = "200", description = "Success", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ResponseInfoVersion.class)))
 	public Response version() {
 		BaseResponse<ResponseInfoVersion> rep = start("version");
 		try {
-			return response(rep, getCoreManager().getInfoVersion());
+			return response(rep, getRestProxyManager().getInfoVersion());
 		} catch (Exception ex) {
 			return error(rep, ex);
 		}
@@ -44,13 +44,13 @@ public class ApiInfo extends RestProxyRessource {
 	@GET
 	@Path("/status")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Operation(summary = "Get HdtmEngine api status", tags = "info status")
+	@Operation(summary = "Get status", tags = "info status")
 	@ApiResponse(responseCode = "200", description = "Success", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ManagerInfo.class)))
 	public Response status(@Auth Principal user) {
 		BaseResponse<ManagerInfo> rep = start("status");
 		try {
 			getLogger().debug( user.getName() );
-			return response(rep, getCoreManager().getMangerInfo());
+			return response(rep, getRestProxyManager().getMangerInfo());
 		} catch (Exception ex) {
 			return error(rep, ex);
 		}

@@ -24,9 +24,9 @@ import io.swagger.v3.oas.annotations.security.OAuthScope;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 
-@Path("api/data")
+@Path("api/proxy")
 @Produces(MediaType.APPLICATION_JSON)
-@SecurityScheme(name = "searchSecurity", type = SecuritySchemeType.APIKEY, 
+@SecurityScheme(name = "proxySecurity", type = SecuritySchemeType.APIKEY,
 	flows = @OAuthFlows(
 		implicit = @OAuthFlow(authorizationUrl = "http://url.com/api/auth",
 			scopes = @OAuthScope(name = "search:read:", description = "search and read datas")
@@ -34,24 +34,23 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 	)
 )
 public class ApiProxy extends RestProxyRessource {
-	static public String[] Pages = { "api/data/.*" };
+	static public String[] Pages = { "api/proxy/.*" };
 
 	public ApiProxy(RestProxyManager mainManager) {
 		super(mainManager);
 	}
 
 	@POST
-	@Path("search")
-	@Operation(summary = "Search ", tags = "search")
-	@SecurityRequirement(name = "searchSecurity", scopes = "search:read")
+	@Path("process")
+	@Operation(summary = "Process ", tags = "process")
+	@SecurityRequirement(name = "proxySecurity", scopes = "search:read")
 	@ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = ResponseProxy.class)))
-	public Response search(
+	public Response process(
 			QueryProxy query,
 			@Auth Principal user) {
-		BaseResponse<ResponseProxy> rep = start("");
+		BaseResponse<ResponseProxy> rep = start("get");
 		try {
-			//return response(rep, getCoreManager().search(query));
-			return null;
+			return response(rep, getRestProxyManager().process(query));
 		} catch (Exception ex) {
 			return error(rep, ex);
 		}

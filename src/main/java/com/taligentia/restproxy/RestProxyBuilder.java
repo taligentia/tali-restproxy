@@ -15,9 +15,8 @@ import io.dropwizard.lifecycle.setup.ExecutorServiceBuilder;
 import io.dropwizard.setup.Environment;
 
 public class RestProxyBuilder extends BaseBuilderImpl implements BaseBuilder {
-	private RestProxyManagerConfiguration hdtmEngineManagerConfiguration;
+	private RestProxyManagerConfiguration restProxyManagerConfiguration;
 	private BearerConfiguration bearerConfiguration;
-	
 	private ExecutorService executorService;
 	private ExecutorServiceBuilder executorServiceBuilder;
 	private ProxyManager talidataProxyManager;
@@ -48,7 +47,7 @@ public class RestProxyBuilder extends BaseBuilderImpl implements BaseBuilder {
     }
     
     public RestProxyBuilder using(RestProxyManagerConfiguration configuration) {
-        this.hdtmEngineManagerConfiguration = configuration;
+        this.restProxyManagerConfiguration = configuration;
         if( executorServiceBuilder != null ) {
         	executorServiceBuilder
         		.minThreads(configuration.getPoolThreadSize())
@@ -75,7 +74,7 @@ public class RestProxyBuilder extends BaseBuilderImpl implements BaseBuilder {
 		final RestProxyManager manager = new RestProxyManager(
 				talidataProxyManager,
 			bearerConfiguration,
-			hdtmEngineManagerConfiguration		
+				restProxyManagerConfiguration
 		);
 		manager.setName(getName());
 		final ListeningExecutorService listeningExecutorService = MoreExecutors.listeningDecorator(executorService);

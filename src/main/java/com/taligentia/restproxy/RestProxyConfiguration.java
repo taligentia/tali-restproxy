@@ -14,7 +14,7 @@ import io.dropwizard.client.JerseyClientConfiguration;
 
 public class RestProxyConfiguration extends BaseConfiguration {
 	@NotNull
-	private RestProxyManagerConfiguration hdtm;
+	private RestProxyManagerConfiguration restProxy;
 
 	@NotNull
 	private ProxyConfiguration proxy;
@@ -27,12 +27,12 @@ public class RestProxyConfiguration extends BaseConfiguration {
 	@NotNull
 	private JerseyClientConfiguration jerseyClientConfiguration;
 	   
-	@JsonProperty("hdtm")
-	public RestProxyManagerConfiguration getHdtm() {
-		return hdtm;
+	@JsonProperty("restProxy")
+	public RestProxyManagerConfiguration getRestProxy() {
+		return restProxy;
 	}
 
-	@JsonProperty("search")
+	@JsonProperty("proxy")
 	public ProxyConfiguration getProxy() {
 		return proxy;
 	}
@@ -47,8 +47,8 @@ public class RestProxyConfiguration extends BaseConfiguration {
 		return jerseyClientConfiguration;
 	}
 
-	public void setHdtm(RestProxyManagerConfiguration hdtm) {
-		this.hdtm = hdtm;
+	public void setRestProxy(RestProxyManagerConfiguration restProxy) {
+		this.restProxy = restProxy;
 	}
 
 	@Override

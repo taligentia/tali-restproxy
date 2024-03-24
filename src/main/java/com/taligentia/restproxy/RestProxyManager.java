@@ -40,7 +40,6 @@ public class RestProxyManager extends BaseManagerImpl implements Managed,BaseMan
 
 	public void setLogger(Logger logger) {
 		super.setLogger(logger);
-//		obfuscator.setLogger(logger);
 	}
 
 	public String getName() {
@@ -74,7 +73,7 @@ public class RestProxyManager extends BaseManagerImpl implements Managed,BaseMan
 	@Override
 	public void start() throws Exception {
 		setStartedTime(null);
-		getLogger().info( "Initialisation de "+getAllName()+" "+ getVersion() );
+		getLogger().info( "Initialisation de " + getAllName() + " " + getVersion() );
 	}
 
 	@Override
@@ -122,5 +121,8 @@ public class RestProxyManager extends BaseManagerImpl implements Managed,BaseMan
 		return responseInfoVersion;
 	}
 
+	public ResponseProxy process( QueryProxy queryProxy) {
+		return null;
+	}
 }
 

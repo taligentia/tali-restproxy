@@ -9,7 +9,7 @@ public class RestProxyRessource extends BaseRessource {
 		super(mainManager);
 	}
 
-	protected RestProxyManager getCoreManager() {
+	protected RestProxyManager getRestProxyManager() {
 		return (RestProxyManager) super.getManager();
 	}
 	

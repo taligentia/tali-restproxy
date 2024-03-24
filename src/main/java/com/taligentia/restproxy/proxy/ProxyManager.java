@@ -10,7 +10,6 @@ public class ProxyManager implements Managed, BaseManager, InfoManager {
 
     @Override
     public void setStopListener(StopListener stopListener) {
-
     }
 
     @Override
@@ -30,6 +29,5 @@ public class ProxyManager implements Managed, BaseManager, InfoManager {
 
     @Override
     public void stop() throws Exception {
-
     }
 }

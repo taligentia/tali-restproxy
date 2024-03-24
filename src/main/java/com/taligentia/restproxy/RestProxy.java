@@ -57,7 +57,7 @@ public class RestProxy extends Application<RestProxyConfiguration> {
 
 		final RestProxyBuilder mainBuilder = new RestProxyBuilder(environment,getName())
 				.using(config.getAuth())
-				.using(config.getHdtm());
+				.using(config.getRestProxy());
 		final RestProxyManager mainManager = mainBuilder.build(getName());
 
 		environment.jersey().register(new ExceptionMapper<JsonMappingException> () {
