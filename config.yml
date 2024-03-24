@@ -1,0 +1,83 @@
+hdtm:
+  poolThreadSize: 10
+  retry: 10
+  timeOut: 5
+  resources: /opt/hdtmdata/samples
+
+search:
+  modele: /opt/hdtmdata/resources/talidata.yml
+  templateCloud: /opt/hdtmdata/resources/talidata-configset.zip
+  zkServer: "${HDTM_ENGINE_ZKSERVER}"
+  zkCredentials: "${HDTM_ENGINE_ZKCREDENTIALS}"
+
+auth:
+  jwt:
+    issuer: "taligentia"
+    validityInMinutes: 60
+    refreshValidityInMinutes: 300
+    # openssl rand -hex 32
+    tokenSecret: "4b76e958b63ee43cd5a228236df090bddc30edf2f7eca0f48ad49dac02cb200b"
+    refreshTokenSecret: "7dde711c7b120a93db0588718ee1b5071edc3880aa9c41a67660e0aa9f952faa"
+  authorizations:
+    - clientId: "${HDTM_ENGINE_CLIENTID}"
+      clientName: "User Data"
+      clientSecret: "${HDTM_ENGINE_CLIENTSECRET}"
+
+
+jerseyClient:
+  maxConnections: 16
+  maxConnectionsPerRoute: 8
+  keepAlive: 0ms
+  retries: 1
+  timeout: 120000ms
+  connectionTimeout: 10000ms
+  timeToLive: 1h
+  cookiesEnabled: false
+  minThreads: 1
+  maxThreads: 16
+  workQueueSize: 8
+  gzipEnabled: true
+  gzipEnabledForRequests: false
+  # Important : à positionner à false (https://github.com/dropwizard/dropwizard/issues/1094)
+  chunkedEncodingEnabled: false      
+
+logging:
+  # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
+  level: INFO
+  loggers:
+    org.eclipse.jetty: "OFF"
+    org.apache.http: "OFF"
+    org.reflections.Reflections: "OFF"
+    com.github.jknack.handlebars: "OFF"
+    com.fasterxml.jackson.module.afterburner: "OFF"
+    org.apache.zookeeper: "OFF"
+    org.mongodb.driver: "OFF"
+    org.hibernate.validator: "OFF"
+    io.dropwizard.assets: "OFF"
+    io.dropwizard.jersey: "OFF"
+    io.dropwizard.setup: "OFF"
+    org.jose4j: "OFF"
+    org.apache.poi: "INFO"
+    org.apache.solr: "INFO"
+    io.dropwizard: "INFO"
+    com.codahale: "INFO"
+    io.swagger: "INFO"
+    com.taligentia.hdtmdata: "INFO"
+  appenders:
+    - type: console
+      logFormat: "%d{ISO8601} %-5level %-26.26logger{25} - %msg%n"
+
+# configuration Server:
+server:
+  requestLog:
+    appenders: []
+  adminMinThreads: 1
+  adminMaxThreads: 64
+  applicationContextPath: /
+  adminContextPath: /admin
+  applicationConnectors:
+    - type: http
+      port: 9090
+  adminConnectors:
+    - type: http
+      port: 9091
