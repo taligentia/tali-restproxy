@@ -34,5 +34,3 @@ dependency-reduced-pom.xml
 settings-read.xml
 
 .idea/
-
-src/test/resources/default-sharepoint.yml

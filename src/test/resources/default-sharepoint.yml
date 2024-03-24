@@ -1,0 +1,86 @@
+restProxy:
+  poolThreadSize: 10
+  retry: 10
+  timeOut: 5
+  resources: src/main/resources/samples
+
+proxy:
+  url: http://win2016-sp.taliwin.com/sites/kamare/_api/
+  user: ${user}
+  passwd: ${passwd}
+  javaxSecurityAuthUseSubjectCredsOnly: false
+  sunSecurityKrb5Debug: true
+  javaSecurityKrb5Conf: /etc/krb5.conf
+  javaSecurityAuthLoginConfig: /app/login.conf
+
+auth:
+  jwt:
+    issuer: "taligentia"
+    validityInMinutes: 60
+    refreshValidityInMinutes: 300
+    # openssl rand -hex 32
+    tokenSecret: "4b76e958b63ee43cd5a228236df090bddc30edf2f7eca0f48ad49dac02cb200b"
+    refreshTokenSecret: "7dde711c7b120a93db0588718ee1b5071edc3880aa9c41a67660e0aa9f952faa"
+  authorizations:
+  - clientId: "f01c627b6fb8312e9e4c5732c0f78407b3c165d97d0c59721f331595ecdde20e"
+    clientName: "user Data"
+    clientSecret: "8c53ea56e275667c202786a769830c7de27ce63e85b0c7a001da4c2b79b9a76f"
+
+jerseyClient:
+  maxConnections: 16
+  maxConnectionsPerRoute: 8
+  keepAlive: 0ms
+  retries: 1
+  timeout: 120000ms
+  connectionTimeout: 10000ms
+  timeToLive: 1h
+  cookiesEnabled: false
+  minThreads: 1
+  maxThreads: 16
+  workQueueSize: 8
+  gzipEnabled: true
+  gzipEnabledForRequests: false
+  # Important : à positionner à false (https://github.com/dropwizard/dropwizard/issues/1094)
+  chunkedEncodingEnabled: false      
+
+logging:
+  # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
+  level: DEBUG
+  loggers:
+    org.eclipse.jetty: "OFF"
+    org.apache.http: "OFF"
+    org.reflections.Reflections: "OFF"
+    com.github.jknack.handlebars: "OFF"
+    com.fasterxml.jackson.module.afterburner: "OFF"
+    org.apache.zookeeper: "OFF"
+    org.mongodb.driver: "OFF"
+    org.hibernate.validator: "OFF"
+    io.dropwizard.assets: "OFF"
+    io.dropwizard.jersey: "OFF"
+    io.dropwizard.setup: "OFF"
+    org.jose4j: "OFF"
+    org.apache.poi: "INFO"
+    org.apache.solr: "INFO"
+    io.dropwizard: "INFO"
+    com.codahale: "INFO"
+    io.swagger: "INFO"
+    com.taligentia.hdtmdata: "DEBUG"
+
+  appenders:
+    - type: console
+      logFormat: "%d{ISO8601} %-5level %-26.26logger{25} - %msg%n"
+
+# configuration Server:
+server:
+  requestLog:
+    appenders: []
+  adminMinThreads: 1
+  adminMaxThreads: 64
+  applicationContextPath: /
+  adminContextPath: /admin
+  applicationConnectors:
+    - type: http
+      port: 9990
+  adminConnectors:
+    - type: http
+      port: 9991
