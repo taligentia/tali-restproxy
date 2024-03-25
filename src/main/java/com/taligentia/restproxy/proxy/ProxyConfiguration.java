@@ -2,7 +2,7 @@ package com.taligentia.restproxy.proxy;
 
 public class ProxyConfiguration {
 
-    private String url;
+    private String restUrl;
     private String user;
     private String passwd;
     private String javaxSecurityAuthUseSubjectCredsOnly;
@@ -10,12 +10,12 @@ public class ProxyConfiguration {
     private String javaSecurityKrb5Conf;
     private String javaSecurityAuthLoginConfig;
 
-    public String getUrl() {
-        return url;
+    public String getRestUrl() {
+        return restUrl;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setRestUrl(String url) {
+        this.restUrl = restUrl;
     }
 
     public String getUser() {

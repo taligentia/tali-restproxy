@@ -55,4 +55,22 @@ public class ApiProxy extends RestProxyRessource {
 			return error(rep, ex);
 		}
 	}
+
+	/*
+	@POST
+	@Path("process2")
+	@Operation(summary = "Process2 ", tags = "process2")
+	@SecurityRequirement(name = "proxySecurity", scopes = "search:read")
+	@ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = String.class)))
+	public Response process2(
+			QueryProxy query,
+			@Auth Principal user) {
+		BaseResponse<ResponseProxy> rep = start("get");
+		try {
+			return response(rep, getRestProxyManager().process2(query));
+		} catch (Exception ex) {
+			return error(rep, ex);
+		}
+	}
+	*/
 }

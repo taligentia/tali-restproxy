@@ -7,6 +7,8 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
+import com.taligentia.restproxy.proxy.ProxyManager;
+import com.taligentia.restproxy.proxy.ProxyManagerBuilder;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -55,7 +57,12 @@ public class RestProxy extends Application<RestProxyConfiguration> {
 				.build("jerseyClient");
 		jerseyClient.register(MultiPartFeature.class);
 
+		ProxyManager proxyManager = new ProxyManagerBuilder(environment)
+				.using( config.getProxy())
+				.build("proxy");
+
 		final RestProxyBuilder mainBuilder = new RestProxyBuilder(environment,getName())
+				.using(proxyManager)
 				.using(config.getAuth())
 				.using(config.getRestProxy());
 		final RestProxyManager mainManager = mainBuilder.build(getName());

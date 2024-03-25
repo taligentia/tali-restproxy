@@ -19,7 +19,7 @@ public class RestProxyBuilder extends BaseBuilderImpl implements BaseBuilder {
 	private BearerConfiguration bearerConfiguration;
 	private ExecutorService executorService;
 	private ExecutorServiceBuilder executorServiceBuilder;
-	private ProxyManager talidataProxyManager;
+	private ProxyManager proxyManager;
 	
 	public RestProxyBuilder(Environment environment, String name) {
 		super();
@@ -62,8 +62,8 @@ public class RestProxyBuilder extends BaseBuilderImpl implements BaseBuilder {
         return this;
     }
 
-	public RestProxyBuilder using(ProxyManager talidataProxyManager) {
-        this.talidataProxyManager = talidataProxyManager;
+	public RestProxyBuilder using(ProxyManager proxyManager) {
+        this.proxyManager = proxyManager;
         return this;
 	}
 
@@ -72,8 +72,8 @@ public class RestProxyBuilder extends BaseBuilderImpl implements BaseBuilder {
 		if( executorService == null )
 			throw new IllegalArgumentException("ExecutorService is not defined ");
 		final RestProxyManager manager = new RestProxyManager(
-				talidataProxyManager,
-			bearerConfiguration,
+				proxyManager,
+				bearerConfiguration,
 				restProxyManagerConfiguration
 		);
 		manager.setName(getName());

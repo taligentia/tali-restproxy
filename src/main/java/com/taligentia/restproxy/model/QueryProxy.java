@@ -5,10 +5,8 @@ import java.util.Map;
 
 public class QueryProxy {
 	@NotNull
-	private UserContext userContext;
-
 	private String acceptHeader;
-	private Map<String, Object> request;
+	private Map<String, String> request;
 	private boolean debug;
 
 	public QueryProxy(String dataset) {
@@ -18,16 +16,31 @@ public class QueryProxy {
 		this(null);
 	}
 
-	public UserContext getUserContext() {
-		return userContext;
-	}
-
-	public QueryProxy setUserContext(UserContext userContext) {
-		this.userContext = userContext;
-		return this;
-	}
-
 	public String asText() {
 		return toString();
+	}
+
+	public String getAcceptHeader() {
+		return acceptHeader;
+	}
+
+	public void setAcceptHeader(String acceptHeader) {
+		this.acceptHeader = acceptHeader;
+	}
+
+	public Map<String, String> getRequest() {
+		return request;
+	}
+
+	public void setRequest(Map<String, String> request) {
+		this.request = request;
+	}
+
+	public boolean isDebug() {
+		return debug;
+	}
+
+	public void setDebug(boolean debug) {
+		this.debug = debug;
 	}
 }

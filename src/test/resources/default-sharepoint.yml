@@ -5,9 +5,11 @@ restProxy:
   resources: src/main/resources/samples
 
 proxy:
-  url: http://win2016-sp.taliwin.com/sites/kamare/_api/
-  user: ${user}
-  passwd: ${passwd}
+  restUrl: http://win2016-sp.taliwin.com/sites/kamare/_api/
+  #user: ${USER}
+  #passwd: ${PASSWD}
+  user:
+  passwd:
   javaxSecurityAuthUseSubjectCredsOnly: false
   sunSecurityKrb5Debug: true
   javaSecurityKrb5Conf: /etc/krb5.conf

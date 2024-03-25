@@ -20,18 +20,17 @@ import io.dropwizard.lifecycle.Managed;
 
 public class RestProxyManager extends BaseManagerImpl implements Managed,BaseManager,InfoManager  {
 	final RestProxyManagerConfiguration configuration;
-	final ProxyManager talidataProxyManager;
+	final ProxyManager proxyManager;
 	private String name;
 	final BearerManager bearerManager;
 	private ListeningExecutorService executorService;
 	
 	public RestProxyManager(
-			ProxyManager talidataProxyManager,
+			ProxyManager proxyManager,
 			BearerConfiguration bearerConfiguration,
 			RestProxyManagerConfiguration configuration) {
 		super();
-		this.talidataProxyManager = talidataProxyManager;
-
+		this.proxyManager = proxyManager;
 		this.configuration = configuration;
 		this.bearerManager = new BearerManager(bearerConfiguration);
 		setName("");
@@ -122,7 +121,11 @@ public class RestProxyManager extends BaseManagerImpl implements Managed,BaseMan
 	}
 
 	public ResponseProxy process( QueryProxy queryProxy) {
-		return null;
+		return proxyManager.process(queryProxy);
 	}
+
+	//public String process2( QueryProxy queryProxy) {
+	//	return proxyManager.process(queryProxy).getResponse();
+	//}
 }
 
