@@ -1,7 +1,10 @@
 package com.taligentia.restproxy.resources;
 
+import com.taligentia.base.bearer.model.AuthUser;
 import com.taligentia.base.dropwizard.ressources.BaseRessource;
 import com.taligentia.restproxy.RestProxyManager;
+
+import java.util.List;
 
 public class RestProxyRessource extends BaseRessource {
 
@@ -17,4 +20,7 @@ public class RestProxyRessource extends BaseRessource {
 		return start(call, null, true);
 	}
 
+	protected List<String> getUserRoles(AuthUser user) {
+		return getRestProxyManager().getBearerManager().getConfiguration().getAuthorization((user.getId())).getClientRoles();
+	}
 }

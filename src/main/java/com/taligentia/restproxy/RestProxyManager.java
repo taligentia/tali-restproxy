@@ -124,8 +124,5 @@ public class RestProxyManager extends BaseManagerImpl implements Managed,BaseMan
 		return proxyManager.process(queryProxy);
 	}
 
-	//public String process2( QueryProxy queryProxy) {
-	//	return proxyManager.process(queryProxy).getResponse();
-	//}
 }
 

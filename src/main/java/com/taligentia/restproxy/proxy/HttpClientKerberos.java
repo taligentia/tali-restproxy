@@ -53,8 +53,9 @@ public class HttpClientKerberos {
     private String response;
 
     public void doGet(String user, String password, final String url) {
-        if (user==null || "".equals(user) || password==null || "".equals(password)) {
 
+        // No authentication
+        if (user==null || "".equals(user) || password==null || "".equals(password)) {
             try {
             TrustStrategy acceptingTrustStrategy = (cert, authType) -> true;
             SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy).build();
@@ -78,6 +79,8 @@ public class HttpClientKerberos {
             }
             return;
         }
+
+        // Kerberos authentication
         try {
             // "KrbLogin" name must match login.conf file entry
             // KrbLogin{
