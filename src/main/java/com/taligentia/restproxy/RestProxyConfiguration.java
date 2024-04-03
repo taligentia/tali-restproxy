@@ -26,7 +26,7 @@ public class RestProxyConfiguration extends BaseConfiguration {
 	@Valid
 	@NotNull
 	private JerseyClientConfiguration jerseyClientConfiguration;
-	   
+
 	@JsonProperty("restProxy")
 	public RestProxyManagerConfiguration getRestProxy() {
 		return restProxy;
@@ -55,5 +55,4 @@ public class RestProxyConfiguration extends BaseConfiguration {
 	public Map<String, Map<String, String>> getViewRendererConfiguration() {
 		return Map.of();
 	}
-
 }

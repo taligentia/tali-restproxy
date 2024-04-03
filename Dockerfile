@@ -29,7 +29,10 @@ COPY docker/logback.xml /app/.
 ENV RESTPROXY_JAR="restproxy-0.1.jar"
 #ENV user
 #ENV passwd
-COPY --from=builder /opt/build/target/${RESTPROXY_JAR} /app/.
+
+#COPY --from=builder /opt/build/target/${RESTPROXY_JAR} /app/.
+COPY target/${RESTPROXY_JAR} /app/.
+
 ENV RESTPROXY_CONFIG=config.yml
 EXPOSE 9990
 

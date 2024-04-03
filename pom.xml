@@ -16,7 +16,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<talidata-version>2.17.3</talidata-version>
-		<talibase-version>1.16.7</talibase-version>
+		<talibase-version>1.16.8</talibase-version>
 		<jackson-version>2.17.0</jackson-version>
 		<mainClass>com.taligentia.restproxy.RestProxy</mainClass>
 	</properties>

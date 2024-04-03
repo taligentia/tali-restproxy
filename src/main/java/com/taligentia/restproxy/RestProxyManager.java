@@ -1,6 +1,7 @@
 package com.taligentia.restproxy;
 
 import com.taligentia.restproxy.model.*;
+import com.taligentia.restproxy.proxy.ProxyConfiguration;
 import com.taligentia.restproxy.proxy.ProxyManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,6 +70,10 @@ public class RestProxyManager extends BaseManagerImpl implements Managed,BaseMan
 		return bearerManager;
 	}
 
+	public ProxyManager getProxyManager() {
+		return proxyManager;
+	}
+
 	@Override
 	public void start() throws Exception {
 		setStartedTime(null);
@@ -124,5 +129,8 @@ public class RestProxyManager extends BaseManagerImpl implements Managed,BaseMan
 		return proxyManager.process(queryProxy);
 	}
 
+	public RestProxyManagerConfiguration getConfiguration() {
+		return configuration;
+	}
 }
 

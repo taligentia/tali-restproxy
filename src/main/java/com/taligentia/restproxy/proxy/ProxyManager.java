@@ -22,6 +22,14 @@ public class ProxyManager implements Managed, BaseManager, InfoManager {
         this.proxyConfiguration = proxyConfiguration;
     }
 
+    public ProxyConfiguration getProxyConfiguration() {
+        return proxyConfiguration;
+    }
+
+    public void setProxyConfiguration(ProxyConfiguration proxyConfiguration) {
+        this.proxyConfiguration = proxyConfiguration;
+    }
+
     @Override
     public void setStopListener(StopListener stopListener) {
     }
@@ -49,12 +57,7 @@ public class ProxyManager implements Managed, BaseManager, InfoManager {
         httpClient.setAcceptHeader(queryProxy.getAcceptHeader());
         httpClient.doGet(proxyConfiguration.getUser(),proxyConfiguration.getPasswd(),queryProxy.getRequest().get("url"));
         ResponseProxy response = new ResponseProxy();
-        if (queryProxy.getAcceptHeader()!=null && queryProxy.getAcceptHeader().startsWith("application/json"))
-            response.setResponse(Utils.prettyPrintJsonString(httpClient.getResponse()));
-        else
-            response.setResponse(httpClient.getResponse());
+        response.setResponse(httpClient.getResponse());
         return response;
     }
-
-
 }

@@ -9,6 +9,7 @@ public class ProxyConfiguration {
     private String sunSecurityKrb5Debug;
     private String javaSecurityKrb5Conf;
     private String javaSecurityAuthLoginConfig;
+    private String dumpDirectory;
 
     public String getRestUrl() {
         return restUrl;
@@ -64,5 +65,13 @@ public class ProxyConfiguration {
 
     public void setJavaSecurityAuthLoginConfig(String javaSecurityAuthLoginConfig) {
         this.javaSecurityAuthLoginConfig = javaSecurityAuthLoginConfig;
+    }
+
+    public String getDumpDirectory() {
+        return dumpDirectory;
+    }
+
+    public void setDumpDirectory(String dumpDirectory) {
+        this.dumpDirectory = dumpDirectory;
     }
 }

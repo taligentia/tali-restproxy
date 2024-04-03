@@ -1,5 +1,7 @@
 package com.taligentia.restproxy.resources;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.security.Principal;
 import java.util.Arrays;
 
@@ -15,11 +17,13 @@ import com.taligentia.restproxy.model.ResponseProxy;
 import com.taligentia.base.bearer.model.AuthUser;
 import com.taligentia.base.bearer.model.InvalidRolesException;
 
+import com.taligentia.restproxy.utils.Utils;
 import io.dropwizard.auth.Auth;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.apache.commons.lang3.StringUtils;
 
 @Path("api/proxy")
 @Produces(MediaType.APPLICATION_JSON)
@@ -43,7 +47,15 @@ public class ApiProxy extends RestProxyRessource {
 		try {
 			if (!AuthUser.userRolesMatchOrNull(getUserRoles((AuthUser) user), Arrays.asList(expectedRoles)))
 				return error(rep, new InvalidRolesException(Arrays.asList(expectedRoles), getUserRoles((AuthUser) user)));
-			return response(rep, getRestProxyManager().process(query));
+			ResponseProxy responseProxy = getRestProxyManager().process(query);
+			String dumpDirectory = getRestProxyManager().getProxyManager().getProxyConfiguration().getDumpDirectory();
+			if (responseProxy.getResponse()!=null && StringUtils.isNotEmpty(dumpDirectory)) {
+				String dumpValue = responseProxy.getResponse();
+				if (query.getAcceptHeader()!=null && query.getAcceptHeader().startsWith("application/json"))
+					dumpValue = Utils.prettyPrintJsonString(dumpValue);
+				Utils.dumpToTextFile(dumpDirectory, "api_proxy.json", dumpValue);
+			}
+			return response(rep, responseProxy);
 		} catch (Exception ex) {
 			return error(rep, ex);
 		}
