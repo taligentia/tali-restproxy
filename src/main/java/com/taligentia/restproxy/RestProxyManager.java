@@ -34,7 +34,7 @@ public class RestProxyManager extends BaseManagerImpl implements Managed,BaseMan
 		this.proxyManager = proxyManager;
 		this.configuration = configuration;
 		this.bearerManager = new BearerManager(bearerConfiguration);
-		setName("");
+		setName("RestProxyManager");
 		setLogger(LoggerFactory.getLogger(RestProxyManager.class));
 	}	
 

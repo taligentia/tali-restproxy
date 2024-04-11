@@ -1,6 +1,9 @@
 package com.taligentia.restproxy.proxy;
 
 import com.codahale.metrics.health.HealthCheck;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.taligentia.base.dropwizard.BaseManager;
 import com.taligentia.base.dropwizard.InfoManager;
 import com.taligentia.restproxy.model.QueryProxy;
@@ -46,7 +49,6 @@ public class ProxyManager implements Managed, BaseManager, InfoManager {
 
     @Override
     public void start() throws Exception {
-
     }
 
     @Override
@@ -56,8 +58,16 @@ public class ProxyManager implements Managed, BaseManager, InfoManager {
     public ResponseProxy process(QueryProxy queryProxy) {
         httpClient.setAcceptHeader(queryProxy.getAcceptHeader());
         httpClient.doGet(proxyConfiguration.getUser(),proxyConfiguration.getPasswd(),queryProxy.getRequest().get("url"));
+        ObjectMapper mapper = new ObjectMapper();
         ResponseProxy response = new ResponseProxy();
-        response.setResponse(httpClient.getResponse());
+        try {
+            JsonNode jsonNode = mapper.readTree(httpClient.getResponse());
+            response.setJsonResponse(jsonNode);
+            response.setHttpStatusCode(httpClient.getStatusCode());
+            response.setHttpStatusMessage(httpClient.getStatusMessage());
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         return response;
     }
 }

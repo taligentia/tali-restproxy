@@ -1,7 +1,5 @@
 package com.taligentia.restproxy.resources;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.security.Principal;
 import java.util.Arrays;
 
@@ -34,7 +32,7 @@ public class ApiProxy extends RestProxyRessource {
 		super(mainManager);
 	}
 
-	static private final String[] expectedRoles = { "read" };
+	static private final String[] defaultExpectedRoles = { "read" };
 
 	@POST
 	@Path("process")
@@ -45,8 +43,8 @@ public class ApiProxy extends RestProxyRessource {
 			@Auth Principal user) {
 		BaseResponse<ResponseProxy> rep = start("get");
 		try {
-			if (!AuthUser.userRolesMatchOrNull(getUserRoles((AuthUser) user), Arrays.asList(expectedRoles)))
-				return error(rep, new InvalidRolesException(Arrays.asList(expectedRoles), getUserRoles((AuthUser) user)));
+			if (!AuthUser.userRolesMatch(getUserRoles((AuthUser) user), Arrays.asList(defaultExpectedRoles)))
+				return error(rep, new InvalidRolesException(Arrays.asList(defaultExpectedRoles), getUserRoles((AuthUser) user)));
 			ResponseProxy responseProxy = getRestProxyManager().process(query);
 			String dumpDirectory = getRestProxyManager().getProxyManager().getProxyConfiguration().getDumpDirectory();
 			if (responseProxy.getResponse()!=null && StringUtils.isNotEmpty(dumpDirectory)) {

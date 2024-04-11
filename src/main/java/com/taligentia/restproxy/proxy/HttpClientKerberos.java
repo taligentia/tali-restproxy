@@ -52,6 +52,10 @@ public class HttpClientKerberos {
 
     private String response;
 
+    private int statusCode;
+
+    private String statusMessage;
+
     public void doGet(String user, String password, final String url) {
 
         // No authentication
@@ -124,7 +128,6 @@ public class HttpClientKerberos {
                 request.setHeader("Accept",this.acceptHeader);
             HttpResponse httpResponse = httpclient.execute(request);
             HttpEntity entity = httpResponse.getEntity();
-
             //System.out.println("----------------------------------------");
             //System.out.println("STATUS >> " + response.getStatusLine());
             //if (entity != null) {
@@ -132,6 +135,8 @@ public class HttpClientKerberos {
             //}
             //System.out.println("----------------------------------------");
 
+            this.statusCode = httpResponse.getStatusLine().getStatusCode();
+            this.statusMessage = httpResponse.getStatusLine().getReasonPhrase();
             this.response = EntityUtils.toString(entity);
             EntityUtils.consume(entity);
         } finally {
@@ -182,5 +187,13 @@ public class HttpClientKerberos {
 
     public String getResponse() {
         return response;
+    }
+
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    public String getStatusMessage() {
+        return statusMessage;
     }
 }

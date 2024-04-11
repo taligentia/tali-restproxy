@@ -67,6 +67,8 @@ public class RestProxy extends Application<RestProxyConfiguration> {
 				.using(config.getRestProxy());
 		final RestProxyManager mainManager = mainBuilder.build(getName());
 
+		mainManager.getLogger().info(">>>>>>2024/04/10<<<<<<<");
+
 		environment.jersey().register(new ExceptionMapper<JsonMappingException> () {
 			@Override
 			public Response toResponse(JsonMappingException ex) {
