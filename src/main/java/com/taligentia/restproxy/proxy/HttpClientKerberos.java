@@ -91,19 +91,15 @@ public class HttpClientKerberos {
             //     com.sun.security.auth.module.Krb5LoginModule required doNotPrompt=false debug=true useTicketCache=false;
             // };
             LoginContext loginContext = new LoginContext("KrbLogin", new KerberosCallBackHandler(user, password));
+
             loginContext.login();
 
             PrivilegedAction sendAction = new PrivilegedAction() {
                 @Override
                 public Object run() {
                     try {
-                        Subject current = Subject.getSubject(AccessController.getContext());
-                        //System.out.println("----------------------------------------");
-                        Set<Principal> principals = current.getPrincipals();
-                        //for (Principal next : principals) {
-                        //    System.out.println("DOAS Principal: " + next.getName());
-                        //}
-                        //System.out.println("----------------------------------------");
+                        //Subject current = Subject.getSubject(AccessController.getContext());
+                        //Set<Principal> principals = current.getPrincipals();
                         HttpClient httpClient = getHttpClient();
                         call(httpClient, url);
                     } catch (IOException e) {
@@ -128,13 +124,6 @@ public class HttpClientKerberos {
                 request.setHeader("Accept",this.acceptHeader);
             HttpResponse httpResponse = httpclient.execute(request);
             HttpEntity entity = httpResponse.getEntity();
-            //System.out.println("----------------------------------------");
-            //System.out.println("STATUS >> " + response.getStatusLine());
-            //if (entity != null) {
-            //    System.out.println("RESULT >> " + EntityUtils.toString(entity));
-            //}
-            //System.out.println("----------------------------------------");
-
             this.statusCode = httpResponse.getStatusLine().getStatusCode();
             this.statusMessage = httpResponse.getStatusLine().getReasonPhrase();
             this.response = EntityUtils.toString(entity);
