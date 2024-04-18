@@ -1,5 +1,6 @@
 package com.taligentia.restproxy.proxy;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthSchemeProvider;
@@ -59,23 +60,23 @@ public class HttpClientKerberos {
     public void doGet(String user, String password, final String url) {
 
         // No authentication
-        if (user==null || "".equals(user) || password==null || "".equals(password)) {
+        if (StringUtils.isEmpty(user) || StringUtils.isEmpty(password)) {
             try {
-            TrustStrategy acceptingTrustStrategy = (cert, authType) -> true;
-            SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy).build();
-            SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext,
-                    NoopHostnameVerifier.INSTANCE);
+                TrustStrategy acceptingTrustStrategy = (cert, authType) -> true;
+                SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy).build();
+                SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext,
+                        NoopHostnameVerifier.INSTANCE);
 
-            Registry<ConnectionSocketFactory> socketFactoryRegistry =
-                    RegistryBuilder.<ConnectionSocketFactory> create()
-                            .register("https", sslsf)
-                            .register("http", new PlainConnectionSocketFactory())
-                            .build();
+                Registry<ConnectionSocketFactory> socketFactoryRegistry =
+                        RegistryBuilder.<ConnectionSocketFactory> create()
+                                .register("https", sslsf)
+                                .register("http", new PlainConnectionSocketFactory())
+                                .build();
 
-            BasicHttpClientConnectionManager connectionManager =
-                    new BasicHttpClientConnectionManager(socketFactoryRegistry);
-            CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(sslsf)
-                    .setConnectionManager(connectionManager).build();
+                BasicHttpClientConnectionManager connectionManager =
+                        new BasicHttpClientConnectionManager(socketFactoryRegistry);
+                CloseableHttpClient httpClient = HttpClients.custom().setSSLSocketFactory(sslsf)
+                        .setConnectionManager(connectionManager).build();
 
                 call (httpClient, url);
             } catch (IOException | KeyManagementException | NoSuchAlgorithmException | KeyStoreException e) {
@@ -120,7 +121,7 @@ public class HttpClientKerberos {
 
         try {
             HttpUriRequest request = new HttpGet(url);
-            if (this.acceptHeader!=null && !"".equals(this.acceptHeader))
+            if (!StringUtils.isEmpty(this.acceptHeader))
                 request.setHeader("Accept",this.acceptHeader);
             HttpResponse httpResponse = httpclient.execute(request);
             HttpEntity entity = httpResponse.getEntity();

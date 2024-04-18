@@ -12,6 +12,7 @@ proxy:
   sunSecurityKrb5Debug: true
   javaSecurityKrb5Conf: /etc/krb5.conf
   javaSecurityAuthLoginConfig: /app/login.conf
+  # Json response Dump dir pour debugging. Pas de dump si vide
   dumpDirectory: ${DUMP_DIRECTORY}
 
 auth:
