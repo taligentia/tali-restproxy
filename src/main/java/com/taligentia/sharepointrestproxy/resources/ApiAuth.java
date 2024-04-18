@@ -1,4 +1,4 @@
-package com.taligentia.restproxy.resources;
+package com.taligentia.sharepointrestproxy.resources;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -18,7 +18,7 @@ import com.taligentia.base.bearer.ApiAuthToken;
 import com.taligentia.base.bearer.model.AccessToken;
 import com.taligentia.base.bearer.model.AuthToken;
 import com.taligentia.base.bearer.model.AuthUser;
-import com.taligentia.restproxy.RestProxyManager;
+import com.taligentia.sharepointrestproxy.SharepointRestProxyManager;
 
 import io.dropwizard.auth.Auth;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,7 +30,7 @@ public class ApiAuth extends RestProxyRessource {
 	
 	final ApiAuthToken apiAuthToken;
 
-	public ApiAuth(RestProxyManager manager) {
+	public ApiAuth(SharepointRestProxyManager manager) {
     	super(manager);
     	apiAuthToken = new ApiAuthToken(manager.getBearerManager());
     }

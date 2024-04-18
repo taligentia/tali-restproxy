@@ -1,8 +1,7 @@
-package com.taligentia.restproxy;
+package com.taligentia.sharepointrestproxy;
 
-import com.taligentia.restproxy.model.*;
-import com.taligentia.restproxy.proxy.ProxyConfiguration;
-import com.taligentia.restproxy.proxy.ProxyManager;
+import com.taligentia.sharepointrestproxy.model.*;
+import com.taligentia.sharepointrestproxy.proxy.ProxyManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,23 +18,23 @@ import com.taligentia.base.dropwizard.ManagerInfo;
 
 import io.dropwizard.lifecycle.Managed;
 
-public class RestProxyManager extends BaseManagerImpl implements Managed,BaseManager,InfoManager  {
-	final RestProxyManagerConfiguration configuration;
+public class SharepointRestProxyManager extends BaseManagerImpl implements Managed,BaseManager,InfoManager  {
+	final SharepointRestProxyManagerConfiguration configuration;
 	final ProxyManager proxyManager;
 	private String name;
 	final BearerManager bearerManager;
 	private ListeningExecutorService executorService;
 	
-	public RestProxyManager(
+	public SharepointRestProxyManager(
 			ProxyManager proxyManager,
 			BearerConfiguration bearerConfiguration,
-			RestProxyManagerConfiguration configuration) {
+			SharepointRestProxyManagerConfiguration configuration) {
 		super();
 		this.proxyManager = proxyManager;
 		this.configuration = configuration;
 		this.bearerManager = new BearerManager(bearerConfiguration);
 		setName("RestProxyManager");
-		setLogger(LoggerFactory.getLogger(RestProxyManager.class));
+		setLogger(LoggerFactory.getLogger(SharepointRestProxyManager.class));
 	}	
 
 	public void setLogger(Logger logger) {
@@ -51,7 +50,7 @@ public class RestProxyManager extends BaseManagerImpl implements Managed,BaseMan
 	}
 
 	public String getVersion() {
-		return RestProxy.getVersion() == null ? "_" : RestProxy.getVersion();
+		return SharepointRestProxy.getVersion() == null ? "_" : SharepointRestProxy.getVersion();
 	}
 	
 	private String getAllName() {
@@ -100,7 +99,7 @@ public class RestProxyManager extends BaseManagerImpl implements Managed,BaseMan
 
 	@SuppressWarnings("resource")
 	public ManagerInfo getMangerInfo() {
-		final RestProxyManager manager = this;
+		final SharepointRestProxyManager manager = this;
 		return new ManagerInfo() {
 			
 			@Override
@@ -129,7 +128,7 @@ public class RestProxyManager extends BaseManagerImpl implements Managed,BaseMan
 		return proxyManager.process(queryProxy);
 	}
 
-	public RestProxyManagerConfiguration getConfiguration() {
+	public SharepointRestProxyManagerConfiguration getConfiguration() {
 		return configuration;
 	}
 }

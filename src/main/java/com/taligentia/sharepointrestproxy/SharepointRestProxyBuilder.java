@@ -1,4 +1,4 @@
-package com.taligentia.restproxy;
+package com.taligentia.sharepointrestproxy;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -9,19 +9,19 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.taligentia.base.bearer.BearerConfiguration;
 import com.taligentia.base.dropwizard.BaseBuilder;
 import com.taligentia.base.dropwizard.BaseBuilderImpl;
-import com.taligentia.restproxy.proxy.ProxyManager;
+import com.taligentia.sharepointrestproxy.proxy.ProxyManager;
 
 import io.dropwizard.lifecycle.setup.ExecutorServiceBuilder;
 import io.dropwizard.setup.Environment;
 
-public class RestProxyBuilder extends BaseBuilderImpl implements BaseBuilder {
-	private RestProxyManagerConfiguration restProxyManagerConfiguration;
+public class SharepointRestProxyBuilder extends BaseBuilderImpl implements BaseBuilder {
+	private SharepointRestProxyManagerConfiguration restProxyManagerConfiguration;
 	private BearerConfiguration bearerConfiguration;
 	private ExecutorService executorService;
 	private ExecutorServiceBuilder executorServiceBuilder;
 	private ProxyManager proxyManager;
 	
-	public RestProxyBuilder(Environment environment, String name) {
+	public SharepointRestProxyBuilder(Environment environment, String name) {
 		super();
     	setExecutorServiceBuilder( environment
     			.lifecycle()
@@ -31,7 +31,7 @@ public class RestProxyBuilder extends BaseBuilderImpl implements BaseBuilder {
 		);
 	}
 
-	public RestProxyBuilder() {
+	public SharepointRestProxyBuilder() {
     	super();
 		setExecutorServiceBuilder(null);
 	}
@@ -41,12 +41,12 @@ public class RestProxyBuilder extends BaseBuilderImpl implements BaseBuilder {
         this.executorService = null;
 	}
 	
-   public RestProxyBuilder using(ExecutorService executorService) {
+   public SharepointRestProxyBuilder using(ExecutorService executorService) {
     	this.executorService = executorService;
     	return this;
     }
     
-    public RestProxyBuilder using(RestProxyManagerConfiguration configuration) {
+    public SharepointRestProxyBuilder using(SharepointRestProxyManagerConfiguration configuration) {
         this.restProxyManagerConfiguration = configuration;
         if( executorServiceBuilder != null ) {
         	executorServiceBuilder
@@ -57,21 +57,21 @@ public class RestProxyBuilder extends BaseBuilderImpl implements BaseBuilder {
         return this;
     }
 
-    public RestProxyBuilder using(BearerConfiguration bearerConfiguration) {
+    public SharepointRestProxyBuilder using(BearerConfiguration bearerConfiguration) {
         this.bearerConfiguration = bearerConfiguration;
         return this;
     }
 
-	public RestProxyBuilder using(ProxyManager proxyManager) {
+	public SharepointRestProxyBuilder using(ProxyManager proxyManager) {
         this.proxyManager = proxyManager;
         return this;
 	}
 
 	@Override
-	public RestProxyManager build(String string) {
+	public SharepointRestProxyManager build(String string) {
 		if( executorService == null )
 			throw new IllegalArgumentException("ExecutorService is not defined ");
-		final RestProxyManager manager = new RestProxyManager(
+		final SharepointRestProxyManager manager = new SharepointRestProxyManager(
 				proxyManager,
 				bearerConfiguration,
 				restProxyManagerConfiguration

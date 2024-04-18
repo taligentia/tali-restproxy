@@ -1,4 +1,4 @@
-package com.taligentia.restproxy.model;
+package com.taligentia.sharepointrestproxy.model;
 
 import javax.validation.constraints.NotNull;
 import java.util.Map;

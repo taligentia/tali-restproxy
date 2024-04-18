@@ -1,4 +1,4 @@
-package com.taligentia.restproxy.utils;
+package com.taligentia.sharepointrestproxy.utils;
 
 import org.junit.Test;
 public class UtilsTest {

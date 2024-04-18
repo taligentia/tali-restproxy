@@ -1,4 +1,4 @@
-package com.taligentia.restproxy;
+package com.taligentia.sharepointrestproxy;
 
 import java.util.Map;
 
@@ -9,12 +9,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.taligentia.base.bearer.BearerConfiguration;
 import com.taligentia.base.dropwizard.BaseConfiguration;
 
-import com.taligentia.restproxy.proxy.ProxyConfiguration;
+import com.taligentia.sharepointrestproxy.proxy.ProxyConfiguration;
 import io.dropwizard.client.JerseyClientConfiguration;
 
-public class RestProxyConfiguration extends BaseConfiguration {
+public class SharepointRestProxyConfiguration extends BaseConfiguration {
 	@NotNull
-	private RestProxyManagerConfiguration restProxy;
+	private SharepointRestProxyManagerConfiguration restProxy;
 
 	@NotNull
 	private ProxyConfiguration proxy;
@@ -28,7 +28,7 @@ public class RestProxyConfiguration extends BaseConfiguration {
 	private JerseyClientConfiguration jerseyClientConfiguration;
 
 	@JsonProperty("restProxy")
-	public RestProxyManagerConfiguration getRestProxy() {
+	public SharepointRestProxyManagerConfiguration getRestProxy() {
 		return restProxy;
 	}
 
@@ -47,7 +47,7 @@ public class RestProxyConfiguration extends BaseConfiguration {
 		return jerseyClientConfiguration;
 	}
 
-	public void setRestProxy(RestProxyManagerConfiguration restProxy) {
+	public void setRestProxy(SharepointRestProxyManagerConfiguration restProxy) {
 		this.restProxy = restProxy;
 	}
 

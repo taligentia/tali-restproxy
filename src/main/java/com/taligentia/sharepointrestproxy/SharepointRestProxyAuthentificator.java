@@ -1,4 +1,4 @@
-package com.taligentia.restproxy;
+package com.taligentia.sharepointrestproxy;
 
 import java.util.Optional;
 
@@ -9,8 +9,8 @@ import com.taligentia.base.bearer.model.AuthUser;
 
 import io.dropwizard.auth.Authenticator;
 
-public class RestProxyAuthentificator extends BaseAuthenticator implements Authenticator<JwtContext, AuthUser> {
-    public RestProxyAuthentificator(RestProxyManager manager) {
+public class SharepointRestProxyAuthentificator extends BaseAuthenticator implements Authenticator<JwtContext, AuthUser> {
+    public SharepointRestProxyAuthentificator(SharepointRestProxyManager manager) {
     	super(manager.getBearerManager());
     }
 

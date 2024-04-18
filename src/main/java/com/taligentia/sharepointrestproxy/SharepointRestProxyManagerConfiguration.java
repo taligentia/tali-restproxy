@@ -1,10 +1,10 @@
-package com.taligentia.restproxy;
+package com.taligentia.sharepointrestproxy;
 
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class RestProxyManagerConfiguration {
+public class SharepointRestProxyManagerConfiguration {
     @NotNull
     private int poolThreadSize;
     @NotNull

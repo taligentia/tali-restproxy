@@ -1,4 +1,4 @@
-package com.taligentia.restproxy.proxy;
+package com.taligentia.sharepointrestproxy.proxy;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
@@ -21,24 +21,18 @@ import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.impl.auth.SPNegoSchemeFactory;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.BasicHttpClientConnectionManager;
-import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
 
-import javax.net.ssl.X509TrustManager;
 import javax.security.auth.Subject;
 import javax.security.auth.callback.*;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
 import java.security.*;
-import java.util.Set;
-import javax.net.ssl.TrustManager;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.HttpsURLConnection;
-import java.time.Duration;
+
 import org.apache.http.conn.ssl.SSLContexts
 ;
 

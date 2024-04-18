@@ -1,4 +1,4 @@
-package com.taligentia.restproxy.proxy;
+package com.taligentia.sharepointrestproxy.proxy;
 
 import com.taligentia.base.dropwizard.BaseBuilder;
 import com.taligentia.base.dropwizard.BaseBuilderImpl;

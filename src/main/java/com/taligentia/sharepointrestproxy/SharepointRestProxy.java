@@ -1,4 +1,4 @@
-package com.taligentia.restproxy;
+package com.taligentia.sharepointrestproxy;
 
 
 import java.util.LinkedList;
@@ -7,8 +7,8 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
-import com.taligentia.restproxy.proxy.ProxyManager;
-import com.taligentia.restproxy.proxy.ProxyManagerBuilder;
+import com.taligentia.sharepointrestproxy.proxy.ProxyManager;
+import com.taligentia.sharepointrestproxy.proxy.ProxyManagerBuilder;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -16,9 +16,9 @@ import com.google.common.collect.Lists;
 import com.taligentia.base.bearer.BaseAuthenticator;
 import com.taligentia.base.dropwizard.BaseApplication;
 import com.taligentia.base.dropwizard.utils.PathsFilter;
-import com.taligentia.restproxy.resources.ApiAuth;
-import com.taligentia.restproxy.resources.ApiProxy;
-import com.taligentia.restproxy.resources.ApiInfo;
+import com.taligentia.sharepointrestproxy.resources.ApiAuth;
+import com.taligentia.sharepointrestproxy.resources.ApiProxy;
+import com.taligentia.sharepointrestproxy.resources.ApiInfo;
 
 import io.dropwizard.Application;
 import io.dropwizard.client.JerseyClientBuilder;
@@ -26,31 +26,31 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
 
-public class RestProxy extends Application<RestProxyConfiguration> {
+public class SharepointRestProxy extends Application<SharepointRestProxyConfiguration> {
 	public static void main(String[] args) throws Exception {
-		new RestProxy().run(args);
+		new SharepointRestProxy().run(args);
 	}
 
-	public RestProxy() {
+	public SharepointRestProxy() {
 		super();
 	}
 	
 	public static String getVersion() {
-		return BaseApplication.getVersion(RestProxy.class);
+		return BaseApplication.getVersion(SharepointRestProxy.class);
 	}
 	
 	@Override
 	public String getName() {
-		return BaseApplication.getName(RestProxy.class);
+		return BaseApplication.getName(SharepointRestProxy.class);
 	}
 	
 	@Override
-	public void initialize(Bootstrap<RestProxyConfiguration> bootstrap) {
+	public void initialize(Bootstrap<SharepointRestProxyConfiguration> bootstrap) {
 		BaseApplication.initialize(bootstrap);
 	}
 	
 	@Override
-	public void run(RestProxyConfiguration config, Environment environment) {
+	public void run(SharepointRestProxyConfiguration config, Environment environment) {
 
 		final Client jerseyClient = new JerseyClientBuilder(environment)
 				.using(config.getJerseyClientConfiguration())
@@ -61,11 +61,11 @@ public class RestProxy extends Application<RestProxyConfiguration> {
 				.using( config.getProxy())
 				.build("proxy");
 
-		final RestProxyBuilder mainBuilder = new RestProxyBuilder(environment,getName())
+		final SharepointRestProxyBuilder mainBuilder = new SharepointRestProxyBuilder(environment,getName())
 				.using(proxyManager)
 				.using(config.getAuth())
 				.using(config.getRestProxy());
-		final RestProxyManager mainManager = mainBuilder.build(getName());
+		final SharepointRestProxyManager mainManager = mainBuilder.build(getName());
 
 		mainManager.getLogger().info(">>>>>>2024/04/10<<<<<<<");
 
@@ -81,7 +81,7 @@ public class RestProxy extends Application<RestProxyConfiguration> {
 		BaseApplication.registerhealthChecks(environment, mainBuilder);
 
 		// Authentification de l'api
-		final BaseAuthenticator baseAuthenticator = new RestProxyAuthentificator(mainManager);
+		final BaseAuthenticator baseAuthenticator = new SharepointRestProxyAuthentificator(mainManager);
 		baseAuthenticator.register(environment.jersey());
 
 		// Mise en place des Server Filter (PathsFilter implements ContainerRequestFilter) sue les API

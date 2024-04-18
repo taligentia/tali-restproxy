@@ -1,4 +1,4 @@
-package com.taligentia.restproxy.proxy;
+package com.taligentia.sharepointrestproxy.proxy;
 
 import com.codahale.metrics.health.HealthCheck;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -6,9 +6,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.taligentia.base.dropwizard.BaseManager;
 import com.taligentia.base.dropwizard.InfoManager;
-import com.taligentia.restproxy.model.QueryProxy;
-import com.taligentia.restproxy.model.ResponseProxy;
-import com.taligentia.restproxy.utils.Utils;
+import com.taligentia.sharepointrestproxy.model.QueryProxy;
+import com.taligentia.sharepointrestproxy.model.ResponseProxy;
 import io.dropwizard.lifecycle.Managed;
 import org.slf4j.Logger;
 

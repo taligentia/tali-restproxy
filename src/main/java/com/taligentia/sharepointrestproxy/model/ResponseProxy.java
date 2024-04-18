@@ -1,4 +1,4 @@
-package com.taligentia.restproxy.model;
+package com.taligentia.sharepointrestproxy.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

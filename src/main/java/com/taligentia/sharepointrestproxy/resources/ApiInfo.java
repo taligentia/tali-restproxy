@@ -1,4 +1,4 @@
-package com.taligentia.restproxy.resources;
+package com.taligentia.sharepointrestproxy.resources;
 
 import java.security.Principal;
 
@@ -9,8 +9,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.taligentia.base.dropwizard.ManagerInfo;
-import com.taligentia.restproxy.RestProxyManager;
-import com.taligentia.restproxy.model.ResponseInfoVersion;
+import com.taligentia.sharepointrestproxy.SharepointRestProxyManager;
+import com.taligentia.sharepointrestproxy.model.ResponseInfoVersion;
 
 import io.dropwizard.auth.Auth;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,7 +23,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 public class ApiInfo extends RestProxyRessource {
 	static public String[] Pages = { "api/info/.*" };
 
-	public ApiInfo(RestProxyManager mainManager) {
+	public ApiInfo(SharepointRestProxyManager mainManager) {
 		super(mainManager);
 	}
 

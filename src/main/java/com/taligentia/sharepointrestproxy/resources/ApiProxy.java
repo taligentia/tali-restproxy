@@ -1,4 +1,4 @@
-package com.taligentia.restproxy.resources;
+package com.taligentia.sharepointrestproxy.resources;
 
 import java.security.Principal;
 import java.util.Arrays;
@@ -9,13 +9,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.taligentia.restproxy.RestProxyManager;
-import com.taligentia.restproxy.model.QueryProxy;
-import com.taligentia.restproxy.model.ResponseProxy;
+import com.taligentia.sharepointrestproxy.SharepointRestProxyManager;
+import com.taligentia.sharepointrestproxy.model.QueryProxy;
+import com.taligentia.sharepointrestproxy.model.ResponseProxy;
 import com.taligentia.base.bearer.model.AuthUser;
 import com.taligentia.base.bearer.model.InvalidRolesException;
 
-import com.taligentia.restproxy.utils.Utils;
+import com.taligentia.sharepointrestproxy.utils.Utils;
 import io.dropwizard.auth.Auth;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -28,7 +28,7 @@ import org.apache.commons.lang3.StringUtils;
 public class ApiProxy extends RestProxyRessource {
 	static public String[] Pages = { "api/proxy/.*" };
 
-	public ApiProxy(RestProxyManager mainManager) {
+	public ApiProxy(SharepointRestProxyManager mainManager) {
 		super(mainManager);
 	}
 

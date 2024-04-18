@@ -6,11 +6,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.taligentia</groupId>
-	<artifactId>restproxy</artifactId>
+	<artifactId>sharepointrestproxy</artifactId>
 	<version>0.1</version>
 	<packaging>jar</packaging>
 
-	<name>restproxy</name>
+	<name>sharepointrestproxy</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -18,7 +18,7 @@
 		<talidata-version>2.17.5</talidata-version>
 		<talibase-version>1.16.10</talibase-version>
 		<jackson-version>2.17.0</jackson-version>
-		<mainClass>com.taligentia.restproxy.RestProxy</mainClass>
+		<mainClass>com.taligentia.sharepointrestproxy.SharepointRestProxy</mainClass>
 	</properties>
 
 	<repositories>

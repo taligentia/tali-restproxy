@@ -1,19 +1,19 @@
-package com.taligentia.restproxy.resources;
+package com.taligentia.sharepointrestproxy.resources;
 
 import com.taligentia.base.bearer.model.AuthUser;
 import com.taligentia.base.dropwizard.ressources.BaseRessource;
-import com.taligentia.restproxy.RestProxyManager;
+import com.taligentia.sharepointrestproxy.SharepointRestProxyManager;
 
 import java.util.List;
 
 public class RestProxyRessource extends BaseRessource {
 
-	protected RestProxyRessource(RestProxyManager mainManager) {
+	protected RestProxyRessource(SharepointRestProxyManager mainManager) {
 		super(mainManager);
 	}
 
-	protected RestProxyManager getRestProxyManager() {
-		return (RestProxyManager) super.getManager();
+	protected SharepointRestProxyManager getRestProxyManager() {
+		return (SharepointRestProxyManager) super.getManager();
 	}
 	
 	protected <T> BaseResponse<T> start(String call) {
