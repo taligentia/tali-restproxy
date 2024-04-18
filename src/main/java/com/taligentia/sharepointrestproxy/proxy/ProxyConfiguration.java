@@ -1,8 +1,6 @@
 package com.taligentia.sharepointrestproxy.proxy;
 
 public class ProxyConfiguration {
-
-    private String restUrl;
     private String user;
     private String passwd;
     private String javaxSecurityAuthUseSubjectCredsOnly;
@@ -10,14 +8,6 @@ public class ProxyConfiguration {
     private String javaSecurityKrb5Conf;
     private String javaSecurityAuthLoginConfig;
     private String dumpDirectory;
-
-    public String getRestUrl() {
-        return restUrl;
-    }
-
-    public void setRestUrl(String url) {
-        this.restUrl = restUrl;
-    }
 
     public String getUser() {
         return user;

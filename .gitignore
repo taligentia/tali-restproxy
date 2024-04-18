@@ -38,3 +38,5 @@ settings-read.xml
 .secrets/
 
 dump/
+
+docker/.env

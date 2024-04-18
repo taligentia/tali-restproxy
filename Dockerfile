@@ -19,11 +19,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt update -y && apt install -y dos2unix curl netcat procps dnsutils
 RUN apt -yqq install krb5-user libpam-krb5
+RUN rm /etc/krb5.conf
 
-COPY docker/krb5.conf /etc/krb5.conf
-COPY docker/login.conf /app/login.conf
-COPY docker/sharepoint.keytab /app/.
-COPY docker/sharepoint.keytab /etc/krb5.keytab
 COPY docker/logback.xml /app/.
 
 ENV RESTPROXY_JAR="sharepointrestproxy-0.1.jar"

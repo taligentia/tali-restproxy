@@ -5,7 +5,6 @@ restProxy:
   resources: src/main/resources/samples
 
 proxy:
-  restUrl: http://win2016-sp.taliwin.com/sites/kamare/_api/
   user: ${USER}
   passwd: ${PASSWD}
   javaxSecurityAuthUseSubjectCredsOnly: false
