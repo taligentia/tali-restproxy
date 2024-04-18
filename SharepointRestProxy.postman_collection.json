@@ -1,0 +1,411 @@
+{
+	"info": {
+		"_postman_id": "5a1a6c3a-0f62-45a7-b3a0-d02d48f05003",
+		"name": "SharepointRestProxy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "test",
+			"item": [
+				{
+					"name": "List",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"request\": {\n        \"url\": \"http://win2016-sp.taliwin.com/sites/kamare/_api/web/lists\"\n    },\n    \"acceptHeader\": \"application/json;odata=verbose\",\n    \"debug\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{proxy_url}}/api/proxy/process",
+							"host": [
+								"{{proxy_url}}"
+							],
+							"path": [
+								"api",
+								"proxy",
+								"process"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test Eolya",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"request\": {\n        \"url\": \"https://www.eolya.fr/test.json\"\n    },\n    \"debug\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{proxy_url}}/api/proxy/process",
+							"host": [
+								"{{proxy_url}}"
+							],
+							"path": [
+								"api",
+								"proxy",
+								"process"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "ntlm",
+							"ntlm": [
+								{
+									"key": "password",
+									"value": "RsC!15dK1PLu",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "spadmin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json;odata=verbose",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://win2016-sp.taliwin.com/sites/kamare/_api/web/GetFolderByServerRelativeUrl%28%27PERCO%27%29%2FFiles",
+							"protocol": "http",
+							"host": [
+								"win2016-sp",
+								"taliwin",
+								"com"
+							],
+							"path": [
+								"sites",
+								"kamare",
+								"_api",
+								"web",
+								"GetFolderByServerRelativeUrl%28%27PERCO%27%29%2FFiles"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth - Get access token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"Bearer not null\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.access_token).to.not.null;",
+							"});",
+							"",
+							"// Set access token",
+							"var jsonData = pm.response.json();",
+							"console.log(pm.environment.get('authToken'));",
+							"pm.collectionVariables .set('authToken', jsonData.access_token, 'global');"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"clientId\": \"f01c627b6fb8312e9e4c5732c0f78407b3c165d97d0c59721f331595ecdde20e\",\n    \"clientSecret\": \"8c53ea56e275667c202786a769830c7de27ce63e85b0c7a001da4c2b79b9a76f\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{proxy_url}}/api/auth/token",
+					"host": [
+						"{{proxy_url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - Refresh access token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Bearer not null\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.access_token).to.not.null;",
+							"});",
+							"",
+							"// Set access token",
+							"var jsonData = pm.response.json();",
+							"console.log(pm.environment.get('authToken'));",
+							"pm.collectionVariables .set('authToken', jsonData.access_token, 'global');"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{proxy_url}}/api/auth/refresh",
+					"host": [
+						"{{proxy_url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - Check access token",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{proxy_url}}/api/auth/check-token",
+					"host": [
+						"{{proxy_url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"check-token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Info version",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{proxy_url}}/api/info/version",
+					"host": [
+						"{{proxy_url}}"
+					],
+					"path": [
+						"api",
+						"info",
+						"version"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Info status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{proxy_url}}/api/info/status",
+					"host": [
+						"{{proxy_url}}"
+					],
+					"path": [
+						"api",
+						"info",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Site Title",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"request\": {\n        \"url\": \"http://win2016-sp.taliwin.com/sites/kamare/_api/web/title\"\n    },\n    \"acceptHeader\": \"application/json;odata=verbose\",\n    \"debug\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{proxy_url}}/api/proxy/process",
+					"host": [
+						"{{proxy_url}}"
+					],
+					"path": [
+						"api",
+						"proxy",
+						"process"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Brainset files list",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"request\": {\n        \"urlx1\": \"http://win2016-sp.taliwin.com/sites/kamare/_api/web/GetFolderByServerRelativeUrl%28%27PERCO%27%29%2FFiles\",\n        \"urlx2\": \"http://win2016-sp.taliwin.com/sites/kamare/_api/web/GetFolderByServerRelativeUrl%28%27Documents%20partages%2FBrainSet1%27%29%2FFiles\",\n        \"url\": \"http://win2016-sp.taliwin.com/sites/kamare/_api/web/GetFolderByServerRelativeUrl%28%27BrainSet1%27%29%2FFiles\"\n    },\n    \"acceptHeader\": \"application/json;odata=verbose\",\n    \"debug\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{proxy_url}}/api/proxy/process",
+					"host": [
+						"{{proxy_url}}"
+					],
+					"path": [
+						"api",
+						"proxy",
+						"process"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get file",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"request\": {\n        \"urlxx\": \"http://win2016-sp.taliwin.com/sites/kamare/_api/Web/GetFileByServerRelativePath(decodedurl='/sites/kamare/PERCO/devis%20Ribaud%20SEB%20Isolation%20BEJEAN.pdf')\",\n        \"url\": \"http://win2016-sp.taliwin.com/sites/kamare/_api/Web/GetFileByServerRelativePath(decodedurl='/sites/kamare/PERCO/devis%20Ribaud%20SEB%20Isolation%20BEJEAN.pdf')\"\n    },\n    \"acceptHeader\": \"application/json;odata=verbose\",\n    \"debug\": true\n}\n\n\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{proxy_url}}/api/proxy/process",
+					"host": [
+						"{{proxy_url}}"
+					],
+					"path": [
+						"api",
+						"proxy",
+						"process"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{authToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "scope",
+			"value": "sample"
+		},
+		{
+			"key": "authToken",
+			"value": ""
+		},
+		{
+			"key": "clientId",
+			"value": "f01c627b6fb8312e9e4c5732c0f78407b3c165d97d0c59721f331595ecdde20e"
+		},
+		{
+			"key": "clientSecret",
+			"value": "8c53ea56e275667c202786a769830c7de27ce63e85b0c7a001da4c2b79b9a76f"
+		}
+	]
+}
