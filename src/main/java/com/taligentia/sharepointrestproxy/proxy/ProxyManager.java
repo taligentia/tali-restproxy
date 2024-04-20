@@ -10,12 +10,13 @@ import com.taligentia.sharepointrestproxy.model.QueryProxy;
 import com.taligentia.sharepointrestproxy.model.ResponseProxy;
 import io.dropwizard.lifecycle.Managed;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 import java.io.IOException;
 
 public class ProxyManager implements Managed, BaseManager, InfoManager {
-
+    public static final Logger logger = LoggerFactory.getLogger(ProxyManager.class);
     private HttpClientKerberos httpClient ;
     private ProxyConfiguration proxyConfiguration;
 
@@ -43,7 +44,7 @@ public class ProxyManager implements Managed, BaseManager, InfoManager {
 
     @Override
     public Logger getLogger() {
-        return null;
+        return logger;
     }
 
     @Override
@@ -56,6 +57,7 @@ public class ProxyManager implements Managed, BaseManager, InfoManager {
 
     public ResponseProxy process(QueryProxy queryProxy) {
         httpClient.setAcceptHeader(queryProxy.getAcceptHeader());
+        getLogger().debug("SharepointRestProxy : " + queryProxy.getRequest().get("url"));
         httpClient.doGet(proxyConfiguration.getUser(),proxyConfiguration.getPasswd(),queryProxy.getRequest().get("url"));
         ObjectMapper mapper = new ObjectMapper();
         ResponseProxy response = new ResponseProxy();

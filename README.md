@@ -42,7 +42,7 @@ $ docker tag sharepointrestproxy:`cat pom.xml | grep -oP '(?<=<version>).*?(?=</
 ```
 $ mkdir dump && chmod go+rw dump
 
-$ docker run --env-file=.secrets/.env -v "$PWD/dump:/dump" -p 9094:9990 -v "$(pwd)"/docker/krb5.conf:/etc/krb5.conf:ro -v "$(pwd)"docker/login.conf:/app/login.conf:ro -v "$(pwd)"docker/sharepoint.keytab:/app/sharepoint.keytab:ro --add-host="win2016-sp.taliwin.com:10.168.0.91" --add-host="win2016-dc.taliwin.com:10.168.0.90" --rm -d --name sharepointrestproxy sharepointrestproxy:latest  
+$ docker run --env-file=.secrets/.env -v "$PWD/dump:/dump" -p 9094:9990 -v "$(pwd)"/docker/krb5.conf:/etc/krb5.conf:ro -v "$(pwd)"/docker/login.conf:/app/login.conf:ro -v "$(pwd)"/docker/sharepoint.keytab:/app/sharepoint.keytab:ro --add-host="win2016-sp.taliwin.com:10.168.0.91" --add-host="win2016-dc.taliwin.com:10.168.0.90" --rm -d --name sharepointrestproxy sharepointrestproxy:0.1
 
 $ docker logs sharepointrestproxy
 

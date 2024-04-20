@@ -5,8 +5,8 @@ restProxy:
   resources: src/main/resources/samples
 
 proxy:
-  user: ${USER}
-  passwd: ${PASSWD}
+  user: ${SPUSER}
+  passwd: ${SPPASSWD}
   javaxSecurityAuthUseSubjectCredsOnly: false
   sunSecurityKrb5Debug: true
   javaSecurityKrb5Conf: /etc/krb5.conf

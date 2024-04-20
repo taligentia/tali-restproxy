@@ -21,7 +21,7 @@ RUN apt update -y && apt install -y dos2unix curl netcat procps dnsutils
 RUN apt -yqq install krb5-user libpam-krb5
 RUN rm /etc/krb5.conf
 
-COPY docker/logback.xml /app/.
+COPY dockerimage/logback.xml /app/.
 
 ENV RESTPROXY_JAR="sharepointrestproxy-0.1.jar"
 #ENV user
@@ -34,8 +34,8 @@ ENV RESTPROXY_CONFIG=config.yml
 EXPOSE 9990
 
 WORKDIR /app
-COPY docker/entrypoint.sh config*.yml /app/.
-COPY docker/config*.yml /app/.
+COPY dockerimage/entrypoint.sh config*.yml /app/.
+COPY dockerimage/config*.yml /app/.
 RUN cd /app && dos2unix *.sh *.yml
 
 ENTRYPOINT ["/bin/bash", "/app/entrypoint.sh" ]
