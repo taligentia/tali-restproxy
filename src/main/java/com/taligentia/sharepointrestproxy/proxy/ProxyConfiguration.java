@@ -1,28 +1,42 @@
 package com.taligentia.sharepointrestproxy.proxy;
 
+import com.taligentia.base.bearer.model.AuthToken;
+import com.taligentia.base.dropwizard.utils.Utils;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
 public class ProxyConfiguration {
-    private String user;
-    private String passwd;
+    private String authFile;
+    private ProxyAuthList proxyAuths;
+
     private String javaxSecurityAuthUseSubjectCredsOnly;
     private String sunSecurityKrb5Debug;
     private String javaSecurityKrb5Conf;
     private String javaSecurityAuthLoginConfig;
     private String dumpDirectory;
 
-    public String getUser() {
-        return user;
+    public String getAuthFile() {
+        return authFile;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setAuthFile(String authFile) throws IOException {
+        this.authFile = authFile;
+        if (authFile==null)
+            return;
+        File f = new File(authFile);
+        if (!f.exists())
+            return;
+        proxyAuths = Utils.fromYaml(f, ProxyAuthList.class);
     }
 
-    public String getPasswd() {
-        return passwd;
-    }
-
-    public void setPasswd(String passwd) {
-        this.passwd = passwd;
+    public ProxyAuth getAuth(String service) {
+        if (proxyAuths!=null)
+            for (int i=0; i<proxyAuths.size(); i++)
+                if (service.equals(proxyAuths.get(i).getService()))
+                    return proxyAuths.get(i);
+        return null;
     }
 
     public String getJavaxSecurityAuthUseSubjectCredsOnly() {

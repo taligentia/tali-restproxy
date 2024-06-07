@@ -5,10 +5,7 @@ restProxy:
   resources: src/main/resources/samples
 
 proxy:
-  #user: ${USER}
-  #passwd: ${PASSWD}
-  user:
-  passwd:
+  authFile: src/test/resources/auth.yml
   javaxSecurityAuthUseSubjectCredsOnly: false
   sunSecurityKrb5Debug: true
   javaSecurityKrb5Conf: /etc/krb5.conf
@@ -24,12 +21,8 @@ auth:
     tokenSecret: "4b76e958b63ee43cd5a228236df090bddc30edf2f7eca0f48ad49dac02cb200b"
     refreshTokenSecret: "7dde711c7b120a93db0588718ee1b5071edc3880aa9c41a67660e0aa9f952faa"
   authorizations:
-  - clientId: "f01c627b6fb8312e9e4c5732c0f78407b3c165d97d0c59721f331595ecdde20e"
-    clientName: "user Data"
-    clientSecret: "8c53ea56e275667c202786a769830c7de27ce63e85b0c7a001da4c2b79b9a76f"
-    clientRoles:
-      - read
-  authorizationsFile:
+  authorizationsFile: src/test/resources/authorizations.yml
+
 
 jerseyClient:
   maxConnections: 16

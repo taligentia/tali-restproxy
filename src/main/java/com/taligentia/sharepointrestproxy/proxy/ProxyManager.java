@@ -58,7 +58,7 @@ public class ProxyManager implements Managed, BaseManager, InfoManager {
     public ResponseProxy process(QueryProxy queryProxy) {
         httpClient.setAcceptHeader(queryProxy.getAcceptHeader());
         getLogger().debug("SharepointRestProxy : " + queryProxy.getRequest().get("url"));
-        httpClient.doGet(proxyConfiguration.getUser(),proxyConfiguration.getPasswd(),queryProxy.getRequest().get("url"));
+        httpClient.doGet(proxyConfiguration.getAuth("sharepointrestproxy").getMethod(),proxyConfiguration.getAuth("sharepointrestproxy").getUser(), proxyConfiguration.getAuth("sharepointrestproxy").getPasswd(), proxyConfiguration.getAuth("sharepointrestproxy").getDomain(), queryProxy.getRequest().get("url"));
         ObjectMapper mapper = new ObjectMapper();
         ResponseProxy response = new ResponseProxy();
         try {
