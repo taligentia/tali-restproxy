@@ -32,7 +32,13 @@ $ mvn -e -B -Dmaven.test.skip=true package
 ## Build image
 ```
 $ docker build --no-cache -t sharepointrestproxy:`cat pom.xml | grep -oP '(?<=<version>).*?(?=</version>)' | head -1` --build-arg READPASSWORD=`cat .secrets/tali-maven-read.txt` .
-$ docker tag sharepointrestproxy:`cat pom.xml | grep -oP '(?<=<version>).*?(?=</version>)' | head -1` sharepointrestproxy:latest
+```
+
+#### Pousser l'image docker dans la registry github
+```
+$ cat .secrets/settings-write.xml | docker login https://docker.pkg.github.com --password-stdin -u taligentia
+$ docker tag sharepointrestproxy:`cat pom.xml | grep -oP '(?<=<version>).*?(?=</version>)' | head -1` docker.pkg.github.com/taligentia/kamare/sharepointrestproxy:`cat pom.xml | grep -oP '(?<=<version>).*?(?=</version>)' | head -1`
+$ docker push docker.pkg.github.com/taligentia/kamare/sharepointrestproxy:`cat pom.xml | grep -oP '(?<=<version>).*?(?=</version>)' | head -1`
 ```
 
 ## Run / Logs / Stop / Exec
