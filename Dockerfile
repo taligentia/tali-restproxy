@@ -21,7 +21,7 @@ RUN apt update -y && apt install -y dos2unix curl netcat procps dnsutils
 RUN apt -yqq install krb5-user libpam-krb5
 RUN rm /etc/krb5.conf
 
-ENV RESTPROXY_JAR="sharepointrestproxy-0.1.0.jar"
+ENV RESTPROXY_JAR="sharepointrestproxy-0.1.1.jar"
 ENV RESTPROXY_CONFIG=config.yml
 
 WORKDIR /app
