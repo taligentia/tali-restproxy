@@ -1,15 +1,13 @@
 package com.taligentia.sharepointrestproxy.proxy;
 
-import com.taligentia.base.bearer.model.AuthToken;
 import com.taligentia.base.dropwizard.utils.Utils;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 public class ProxyConfiguration {
     private String authFile;
-    private ProxyAuthList proxyAuths;
+    private AuthLoginList proxyAuths;
 
     private String javaxSecurityAuthUseSubjectCredsOnly;
     private String sunSecurityKrb5Debug;
@@ -28,10 +26,10 @@ public class ProxyConfiguration {
         File f = new File(authFile);
         if (!f.exists())
             return;
-        proxyAuths = Utils.fromYaml(f, ProxyAuthList.class);
+        proxyAuths = Utils.fromYaml2(f, AuthLoginList.class);
     }
 
-    public ProxyAuth getAuth(String service) {
+    public AuthLogin getAuth(String service) {
         if (proxyAuths!=null)
             for (int i=0; i<proxyAuths.size(); i++)
                 if (service.equals(proxyAuths.get(i).getService()))

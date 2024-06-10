@@ -4,7 +4,7 @@ import com.taligentia.base.utils.Utils;
 
 import javax.validation.constraints.NotNull;
 
-public class ProxyAuth {
+public class AuthLogin {
 
 	@NotNull
 	private String service;
@@ -13,7 +13,7 @@ public class ProxyAuth {
 	private String passwd;
 	private String domain;
 
-	public ProxyAuth() {}
+	public AuthLogin() {}
 
 	public String getService() {
 		return service;

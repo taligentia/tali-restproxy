@@ -4,3 +4,8 @@ authorizations:
     clientSecret: "8c53ea56e275667c202786a769830c7de27ce63e85b0c7a001da4c2b79b9a76f"
     clientRoles:
       - read
+  - clientId: "f01c627b6fb8312e9e4c5732c0f78407b3c165d97d0c59721f331595ecdde20f"
+    clientName: "user Data 2"
+    clientSecret: "8c53ea56e275667c202786a769830c7de27ce63e85b0c7a001da4c2b79b9a76e"
+    clientRoles:
+      - read
