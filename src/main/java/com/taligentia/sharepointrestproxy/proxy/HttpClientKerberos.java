@@ -18,13 +18,13 @@ import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.SSLContextBuilder;
 import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.impl.auth.NTLMSchemeFactory;
 import org.apache.http.impl.auth.SPNegoSchemeFactory;
 import org.apache.http.impl.client.*;
 import org.apache.http.impl.conn.BasicHttpClientConnectionManager;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
 
 import javax.security.auth.Subject;
@@ -74,19 +74,20 @@ public class HttpClientKerberos {
                 BasicHttpClientConnectionManager connectionManager =
                         new BasicHttpClientConnectionManager(socketFactoryRegistry);
 
-
+                final BasicCredentialsProvider provider = new BasicCredentialsProvider();
                 CloseableHttpClient httpClient = null;
+
                 if ("basic".equals(authMethod) && StringUtils.isNotEmpty(user) && StringUtils.isNotEmpty(password)) {
-                    final BasicCredentialsProvider provider = new BasicCredentialsProvider();
                     provider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(user, password));
 
-                    httpClient = HttpClients.custom().setSSLSocketFactory(sslsf)
+                    httpClient = HttpClients.custom()
+                            .setSSLSocketFactory(sslsf)
                             .setConnectionManager(connectionManager)
                             .setDefaultCredentialsProvider(provider)
                             .build();
                 }
+
                 if ("ntlm".equals(authMethod) && StringUtils.isNotEmpty(user) && StringUtils.isNotEmpty(password) && StringUtils.isNotEmpty(domain)) {
-                    final BasicCredentialsProvider provider = new BasicCredentialsProvider();
                     provider.setCredentials(AuthScope.ANY, new NTCredentials(user, password, null, domain));
                     Registry<AuthSchemeProvider> authSchemeRegistry = RegistryBuilder.<AuthSchemeProvider>create()
                             .register(AuthSchemes.NTLM, new NTLMSchemeFactory())
@@ -99,29 +100,13 @@ public class HttpClientKerberos {
                             .setTargetPreferredAuthSchemes(Arrays.asList(AuthSchemes.NTLM, AuthSchemes.KERBEROS, AuthSchemes.SPNEGO))
                             .build();
 
-
-
-
-                    /*
-                    // setup a Trust Strategy that allows all certificates.
-                    SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy() {
-                        @Override
-                        public boolean isTrusted(java.security.cert.X509Certificate[] chain, String authType) throws java.security.cert.CertificateException {
-                            return true;
-                        }
-                    }).build();
-
-                     */
-                    //b.setSSLContext(sslContext);
-
-                    httpClient = HttpClientBuilder.create()
+                    httpClient = HttpClients.custom()
+                            .setSSLSocketFactory(sslsf)
+                            .setConnectionManager(connectionManager)
                             .setDefaultCredentialsProvider(provider)
-                            .setDefaultAuthSchemeRegistry(authSchemeRegistry)
-                            .setConnectionManager(new PoolingHttpClientConnectionManager())
-                            .setDefaultCookieStore(new BasicCookieStore())
                             .setDefaultRequestConfig(config)
+                            .setDefaultAuthSchemeRegistry(authSchemeRegistry)
                             .build();
-
                 }
 
                 if (httpClient==null)
@@ -150,9 +135,24 @@ public class HttpClientKerberos {
                     @Override
                     public Object run() {
                         try {
-                            //Subject current = Subject.getSubject(AccessController.getContext());
-                            //Set<Principal> principals = current.getPrincipals();
-                            HttpClient httpClient = getHttpClient();
+                            Credentials use_jaas_creds = new Credentials() {
+                                public String getPassword() {
+                                    return null;
+                                }
+                                public Principal getUserPrincipal() {
+                                    return null;
+                                }
+                            };
+
+                            CredentialsProvider credsProvider = new BasicCredentialsProvider();
+                            credsProvider.setCredentials(new AuthScope(null, -1, null), use_jaas_creds);
+                            Registry<AuthSchemeProvider> authSchemeRegistry = RegistryBuilder.<AuthSchemeProvider>create().register(AuthSchemes.SPNEGO, new SPNegoSchemeFactory(true)).build();
+
+                            HttpClient httpClient = HttpClients.custom()
+                                    .setDefaultCredentialsProvider(credsProvider)
+                                    .setDefaultAuthSchemeRegistry(authSchemeRegistry)
+                                    .build();
+
                             call(httpClient, url);
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -164,11 +164,6 @@ public class HttpClientKerberos {
             } catch (LoginException le) {
                 le.printStackTrace();
             }
-        }
-
-        // basic authentication
-        if (authMethod.equals("basid")) {
-            // TODO
         }
     }
 
@@ -187,22 +182,6 @@ public class HttpClientKerberos {
         } finally {
             httpclient.getConnectionManager().shutdown();
         }
-    }
-
-    private HttpClient getHttpClient() {
-        Credentials use_jaas_creds = new Credentials() {
-            public String getPassword() {
-                return null;
-            }
-            public Principal getUserPrincipal() {
-                return null;
-            }
-        };
-
-        CredentialsProvider credsProvider = new BasicCredentialsProvider();
-        credsProvider.setCredentials(new AuthScope(null, -1, null), use_jaas_creds);
-        Registry<AuthSchemeProvider> authSchemeRegistry = RegistryBuilder.<AuthSchemeProvider>create().register(AuthSchemes.SPNEGO, new SPNegoSchemeFactory(true)).build();
-        return HttpClients.custom().setDefaultAuthSchemeRegistry(authSchemeRegistry).setDefaultCredentialsProvider(credsProvider).build();
     }
 
     class KerberosCallBackHandler implements CallbackHandler {
