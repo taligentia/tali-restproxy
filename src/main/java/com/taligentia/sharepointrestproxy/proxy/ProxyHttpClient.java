@@ -61,28 +61,32 @@ public class ProxyHttpClient {
 
     public void doGet(String authMethod, String user, String password, String domain, final String url) {
 
+        ConnectionSocketFactory sslsf = null;
+        SSLContext sslContext = null;
+        try {
+            if (!sslVerification) {
+                TrustStrategy acceptingTrustStrategy = (cert, authType) -> true;
+                sslContext = SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy).build();
+            } else {
+                sslContext = SSLContexts.custom().loadTrustMaterial(null).build();
+            }
+        } catch (KeyManagementException | NoSuchAlgorithmException | KeyStoreException e) {
+            e.printStackTrace();
+        }
+        sslsf = new SSLConnectionSocketFactory(sslContext, NoopHostnameVerifier.INSTANCE);
+
+        Registry<ConnectionSocketFactory> socketFactoryRegistry =
+                RegistryBuilder.<ConnectionSocketFactory> create()
+                        .register("https", sslsf)
+                        .register("http", new PlainConnectionSocketFactory())
+                        .build();
+
+        BasicHttpClientConnectionManager connectionManager =
+                new BasicHttpClientConnectionManager(socketFactoryRegistry);
+
         // No authentication
         if (StringUtils.isEmpty(authMethod) || authMethod.equals("basic") || authMethod.equals("ntlm") || (StringUtils.isEmpty(user) && StringUtils.isEmpty(password))) {
             try {
-                ConnectionSocketFactory sslsf = null;
-                SSLContext sslContext = null;
-                if (!sslVerification) {
-                    TrustStrategy acceptingTrustStrategy = (cert, authType) -> true;
-                    sslContext = SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy).build();
-                } else {
-                    sslContext = SSLContexts.custom().loadTrustMaterial(null).build();
-
-                }
-                sslsf = new SSLConnectionSocketFactory(sslContext, NoopHostnameVerifier.INSTANCE);
-
-                Registry<ConnectionSocketFactory> socketFactoryRegistry =
-                        RegistryBuilder.<ConnectionSocketFactory> create()
-                                .register("https", sslsf)
-                                .register("http", new PlainConnectionSocketFactory())
-                                .build();
-
-                BasicHttpClientConnectionManager connectionManager =
-                        new BasicHttpClientConnectionManager(socketFactoryRegistry);
 
                 final BasicCredentialsProvider provider = new BasicCredentialsProvider();
                 CloseableHttpClient httpClient = null;
@@ -125,7 +129,7 @@ public class ProxyHttpClient {
                             .setConnectionManager(connectionManager).build();
 
                 call (httpClient, url);
-            } catch (IOException | KeyManagementException | NoSuchAlgorithmException | KeyStoreException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             return;
@@ -160,6 +164,7 @@ public class ProxyHttpClient {
                             Registry<AuthSchemeProvider> authSchemeRegistry = RegistryBuilder.<AuthSchemeProvider>create().register(AuthSchemes.SPNEGO, new SPNegoSchemeFactory(true)).build();
 
                             HttpClient httpClient = HttpClients.custom()
+                                    .setConnectionManager(connectionManager)
                                     .setDefaultCredentialsProvider(credsProvider)
                                     .setDefaultAuthSchemeRegistry(authSchemeRegistry)
                                     .build();
