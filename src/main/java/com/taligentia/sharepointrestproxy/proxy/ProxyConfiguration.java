@@ -9,13 +9,14 @@ public class ProxyConfiguration {
     private String authFile;
     private AuthLoginList proxyAuths;
 
+    private String sslSettingsFile;
+    private SslSettings sslSettings;
+
     private String javaxSecurityAuthUseSubjectCredsOnly;
     private String sunSecurityKrb5Debug;
     private String javaSecurityKrb5Conf;
     private String javaSecurityAuthLoginConfig;
     private String dumpDirectory;
-    private String sslCertificateAuthorities;
-    private Boolean sslVerification;
 
 
     public String getAuthFile() {
@@ -32,12 +33,30 @@ public class ProxyConfiguration {
         proxyAuths = Utils.fromYaml2(f, AuthLoginList.class);
     }
 
+    public String getSslSettingsFile() {
+        return sslSettingsFile;
+    }
+
+    public void setSslSettingsFile(String sslSettingsFile) throws IOException {
+        this.sslSettingsFile = sslSettingsFile;
+        if (sslSettingsFile==null)
+            return;
+        File f = new File(sslSettingsFile);
+        if (!f.exists())
+            return;
+        sslSettings = Utils.fromYaml2(f, SslSettings.class);
+    }
+
     public AuthLogin getAuth(String service) {
         if (proxyAuths!=null)
             for (int i=0; i<proxyAuths.size(); i++)
                 if (service.equals(proxyAuths.get(i).getService()))
                     return proxyAuths.get(i);
         return null;
+    }
+
+    public SslSettings getSslSettings() {
+        return sslSettings;
     }
 
     public String getJavaxSecurityAuthUseSubjectCredsOnly() {
@@ -77,19 +96,11 @@ public class ProxyConfiguration {
     }
 
     public String getSslCertificateAuthorities() {
-        return sslCertificateAuthorities;
-    }
-
-    public void setSslCertificateAuthorities(String sslCertificateAuthorities) {
-        this.sslCertificateAuthorities = sslCertificateAuthorities;
+        return sslSettings.getSslCertificateAuthorities();
     }
 
     public Boolean getSslVerification() {
-        return sslVerification;
-    }
-
-    public void setSslVerification(Boolean sslVerification) {
-        this.sslVerification = sslVerification;
+        return sslSettings.getSslVerification();
     }
 
     public void setDumpDirectory(String dumpDirectory) {

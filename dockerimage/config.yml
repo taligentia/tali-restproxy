@@ -6,6 +6,7 @@ restProxy:
 
 proxy:
   authFile: /app/auth.yml
+  sslSettingsFile: /app/ssl-settings.yml
   javaxSecurityAuthUseSubjectCredsOnly: false
   sunSecurityKrb5Debug: true
   javaSecurityKrb5Conf: /etc/krb5.conf
