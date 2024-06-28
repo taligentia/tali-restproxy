@@ -1,5 +1,7 @@
 package com.taligentia.sharepointrestproxy.proxy;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import io.dropwizard.setup.Environment;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -11,6 +13,7 @@ import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.config.ConnectionConfig;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
@@ -22,6 +25,8 @@ import org.apache.http.impl.auth.NTLMSchemeFactory;
 import org.apache.http.impl.auth.SPNegoSchemeFactory;
 import org.apache.http.impl.client.*;
 import org.apache.http.impl.conn.BasicHttpClientConnectionManager;
+import org.apache.http.params.CoreConnectionPNames;
+import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 
 import javax.security.auth.Subject;
@@ -31,18 +36,14 @@ import javax.security.auth.login.LoginException;
 import java.io.IOException;
 import java.security.*;
 import java.util.Arrays;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import javax.net.ssl.SSLContext;
 
-import org.apache.http.conn.ssl.SSLContexts
-;
+import org.apache.http.conn.ssl.SSLContexts;
 
 public class ProxyHttpClient {
     // https://stackoverflow.com/questions/21629132/httpclient-set-credentials-for-kerberos-authentication
-
-    public void setAcceptHeader(String acceptHeader) {
-        this.acceptHeader = acceptHeader;
-    }
-
     private String acceptHeader = null;
 
     private String response;
@@ -51,15 +52,28 @@ public class ProxyHttpClient {
 
     private String statusMessage;
 
+    private String sslCertificateAuthorities = null;
+    private Boolean sslVerification;
+
+    public ProxyHttpClient() {
+        sslVerification = true;
+    }
+
     public void doGet(String authMethod, String user, String password, String domain, final String url) {
 
         // No authentication
         if (StringUtils.isEmpty(authMethod) || authMethod.equals("basic") || authMethod.equals("ntlm") || (StringUtils.isEmpty(user) && StringUtils.isEmpty(password))) {
             try {
-                TrustStrategy acceptingTrustStrategy = (cert, authType) -> true;
-                SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy).build();
-                SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext,
-                        NoopHostnameVerifier.INSTANCE);
+                ConnectionSocketFactory sslsf = null;
+                SSLContext sslContext = null;
+                if (!sslVerification) {
+                    TrustStrategy acceptingTrustStrategy = (cert, authType) -> true;
+                    sslContext = SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy).build();
+                } else {
+                    sslContext = SSLContexts.custom().loadTrustMaterial(null).build();
+
+                }
+                sslsf = new SSLConnectionSocketFactory(sslContext, NoopHostnameVerifier.INSTANCE);
 
                 Registry<ConnectionSocketFactory> socketFactoryRegistry =
                         RegistryBuilder.<ConnectionSocketFactory> create()
@@ -77,7 +91,7 @@ public class ProxyHttpClient {
                     provider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(user, password));
 
                     httpClient = HttpClients.custom()
-                            .setSSLSocketFactory(sslsf)
+                            //.setSSLSocketFactory(sslsf)
                             .setConnectionManager(connectionManager)
                             .setDefaultCredentialsProvider(provider)
                             .build();
@@ -97,7 +111,7 @@ public class ProxyHttpClient {
                             .build();
 
                     httpClient = HttpClients.custom()
-                            .setSSLSocketFactory(sslsf)
+                            //.setSSLSocketFactory(sslsf)
                             .setConnectionManager(connectionManager)
                             .setDefaultCredentialsProvider(provider)
                             .setDefaultRequestConfig(config)
@@ -106,7 +120,8 @@ public class ProxyHttpClient {
                 }
 
                 if (httpClient==null)
-                    httpClient = HttpClients.custom().setSSLSocketFactory(sslsf)
+                    httpClient = HttpClients.custom()
+                            //.setSSLSocketFactory(sslsf)
                             .setConnectionManager(connectionManager).build();
 
                 call (httpClient, url);
@@ -148,7 +163,6 @@ public class ProxyHttpClient {
                                     .setDefaultCredentialsProvider(credsProvider)
                                     .setDefaultAuthSchemeRegistry(authSchemeRegistry)
                                     .build();
-
                             call(httpClient, url);
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -163,20 +177,20 @@ public class ProxyHttpClient {
         }
     }
 
-    private void call(HttpClient httpclient, String url) throws IOException {
+    private void call(HttpClient httpClient, String url) throws IOException {
 
         try {
             HttpUriRequest request = new HttpGet(url);
             if (!StringUtils.isEmpty(this.acceptHeader))
                 request.setHeader("Accept",this.acceptHeader);
-            HttpResponse httpResponse = httpclient.execute(request);
+            HttpResponse httpResponse = httpClient.execute(request);
             HttpEntity entity = httpResponse.getEntity();
             this.statusCode = httpResponse.getStatusLine().getStatusCode();
             this.statusMessage = httpResponse.getStatusLine().getReasonPhrase();
             this.response = EntityUtils.toString(entity);
             EntityUtils.consume(entity);
         } finally {
-            httpclient.getConnectionManager().shutdown();
+            httpClient.getConnectionManager().shutdown();
         }
     }
 
@@ -203,6 +217,18 @@ public class ProxyHttpClient {
                 }
             }
         }
+    }
+
+    public void setAcceptHeader(String acceptHeader) {
+        this.acceptHeader = acceptHeader;
+    }
+
+    public void setSslVerification(Boolean sslVerification) {
+        this.sslVerification = sslVerification;
+    }
+
+    public void setSslCertificateAuthorities(String sslCertificateAuthorities) {
+        this.sslCertificateAuthorities = sslCertificateAuthorities;
     }
 
     public String getResponse() {

@@ -1,0 +1,6 @@
+auth:
+  - service : sharepointrestproxy
+    method: kerberos
+    user: spadmin
+    passwd: sC!15dK1PLu
+

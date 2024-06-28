@@ -11,6 +11,8 @@ proxy:
   javaSecurityKrb5Conf: /etc/krb5.conf
   javaSecurityAuthLoginConfig: /app/login.conf
   dumpDirectory: ${DUMP_DIRECTORY}
+  sslCertificateAuthorities: ""
+  sslVerification : true
 
 auth:
   jwt:

@@ -1,6 +1,6 @@
 auth:
   - service : sharepointrestproxy
-    method: kerberos
+    method: ntlm
     user: spadmin
-    passwd: sC!15dK1PLu
-
+    passwd: RsC!15dK1PLu
+    domain: TALIWIN
