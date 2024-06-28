@@ -36,7 +36,7 @@ $ docker build --no-cache -t sharepointrestproxy:`cat pom.xml | grep -oP '(?<=<v
 
 #### Pousser l'image docker dans la registry github
 ```
-$ cat .secrets/settings-write.xml | docker login https://docker.pkg.github.com --password-stdin -u taligentia
+$ cat .secrets/docker-deploy.txt | docker login https://docker.pkg.github.com --password-stdin -u taligentia
 $ docker tag sharepointrestproxy:`cat pom.xml | grep -oP '(?<=<version>).*?(?=</version>)' | head -1` docker.pkg.github.com/taligentia/kamare/sharepointrestproxy:`cat pom.xml | grep -oP '(?<=<version>).*?(?=</version>)' | head -1`
 $ docker push docker.pkg.github.com/taligentia/kamare/sharepointrestproxy:`cat pom.xml | grep -oP '(?<=<version>).*?(?=</version>)' | head -1`
 ```
@@ -48,7 +48,7 @@ $ docker push docker.pkg.github.com/taligentia/kamare/sharepointrestproxy:`cat p
 ```
 $ mkdir dump && chmod go+rw dump
 
-$ docker run --env-file=.secrets/.env -v "$PWD/dump:/dump" -p 9094:9990 -v "$(pwd)"/docker/auth.yml:/app/auth.yml:ro -v "$(pwd)"/docker/authorizations.yml:/app/authorizations.yml:ro -v "$(pwd)"/docker/krb5.conf:/etc/krb5.conf:ro -v "$(pwd)"/docker/login.conf:/app/login.conf:ro -v "$(pwd)"/docker/sharepoint.keytab:/app/sharepoint.keytab:ro --add-host="win2016-sp.taliwin.com:10.168.0.91" --add-host="win2016-dc.taliwin.com:10.168.0.90" --rm -d --name sharepointrestproxy sharepointrestproxy:`cat pom.xml | grep -oP '(?<=<version>).*?(?=</version>)' | head -1`
+$ docker run --env-file=.secrets/.env -v "$PWD/dump:/dump" -p 9094:9990 -v /etc/timezone:/etc/timezone:ro -v /etc/localtime:/etc/localtime:ro -v "$(pwd)"/docker/certs:/app/certs:ro -v "$(pwd)"/docker/auth.yml:/app/auth.yml:ro -v "$(pwd)"/docker/authorizations.yml:/app/authorizations.yml:ro -v "$(pwd)"/docker/krb5.conf:/etc/krb5.conf:ro -v "$(pwd)"/docker/login.conf:/app/login.conf:ro -v "$(pwd)"/docker/sharepoint.keytab:/app/sharepoint.keytab:ro --add-host="win2016-sp.taliwin.com:10.168.0.91" --add-host="win2016-dc.taliwin.com:10.168.0.90" --rm -d --name sharepointrestproxy sharepointrestproxy:`cat pom.xml | grep -oP '(?<=<version>).*?(?=</version>)' | head -1`
 
 $ docker logs sharepointrestproxy
 
