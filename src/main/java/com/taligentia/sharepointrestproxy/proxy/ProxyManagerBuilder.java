@@ -25,10 +25,9 @@ public class ProxyManagerBuilder extends BaseBuilderImpl implements BaseBuilder 
 
     @Override
     public ProxyManager build(String s) {
-        HttpClientKerberos httpClient = new HttpClientKerberos();
         ProxyManager manager;
         try {
-            manager = new ProxyManager(httpClient, proxyConfiguration);
+            manager = new ProxyManager(proxyConfiguration);
         } catch (IllegalArgumentException | ClassNotFoundException | IOException e) {
             throw new IllegalArgumentException(e);
         }
