@@ -17,7 +17,6 @@ import java.io.IOException;
 
 public class ProxyManager implements Managed, BaseManager, InfoManager {
     public static final Logger logger = LoggerFactory.getLogger(ProxyManager.class);
-    //private HttpClientKerberos httpClient ;
     private ProxyConfiguration proxyConfiguration;
 
     public ProxyManager(ProxyConfiguration proxyConfiguration) throws IllegalArgumentException, ClassNotFoundException, IOException {
@@ -55,7 +54,7 @@ public class ProxyManager implements Managed, BaseManager, InfoManager {
     }
 
     public ResponseProxy process(QueryProxy queryProxy) {
-        HttpClientKerberos httpClient = new HttpClientKerberos();
+        ProxyHttpClient httpClient = new ProxyHttpClient();
         httpClient.setAcceptHeader(queryProxy.getAcceptHeader());
         getLogger().debug("SharepointRestProxy : " + queryProxy.getRequest().get("url"));
         httpClient.doGet(proxyConfiguration.getAuth("sharepointrestproxy").getMethod(),proxyConfiguration.getAuth("sharepointrestproxy").getUser(), proxyConfiguration.getAuth("sharepointrestproxy").getPasswd(), proxyConfiguration.getAuth("sharepointrestproxy").getDomain(), queryProxy.getRequest().get("url"));

@@ -2,7 +2,6 @@ package com.taligentia.sharepointrestproxy.proxy;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.*;
 import org.apache.http.client.CredentialsProvider;
@@ -18,13 +17,11 @@ import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.conn.ssl.SSLContextBuilder;
 import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.impl.auth.NTLMSchemeFactory;
 import org.apache.http.impl.auth.SPNegoSchemeFactory;
 import org.apache.http.impl.client.*;
 import org.apache.http.impl.conn.BasicHttpClientConnectionManager;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
 
 import javax.security.auth.Subject;
@@ -32,7 +29,6 @@ import javax.security.auth.callback.*;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
-import java.net.URL;
 import java.security.*;
 import java.util.Arrays;
 import javax.net.ssl.SSLContext;
@@ -40,7 +36,7 @@ import javax.net.ssl.SSLContext;
 import org.apache.http.conn.ssl.SSLContexts
 ;
 
-public class HttpClientKerberos {
+public class ProxyHttpClient {
     // https://stackoverflow.com/questions/21629132/httpclient-set-credentials-for-kerberos-authentication
 
     public void setAcceptHeader(String acceptHeader) {
