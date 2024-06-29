@@ -40,3 +40,5 @@ settings-read.xml
 dump/
 
 docker/.env
+
+tmp/
