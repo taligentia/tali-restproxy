@@ -14,10 +14,6 @@ Dans .secrets
 
 Fichier .secrets/.env 
 ```
-# Authentification
-USER=spadmin
-PASSWD=RsC!15dK1PLu
-
 # Json response Dump dir (pour debugging)
 DUMP_DIRECTORY=/dump
 ```
