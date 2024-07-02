@@ -12,12 +12,9 @@ RUN mount=type=cache,target=/root/.m2 mvn -e -B dependency:resolve
 COPY src src
 RUN mvn -e -B -Dmaven.test.skip=true package
 
-
 #========================================
-FROM debian:bookworm-20240612-slim
+FROM docker.pkg.github.com/taligentia/cea/kamare_base:1.0.0
 ENV DEBIAN_FRONTEND=noninteractive
-
-RUN apt update -y && apt install -y dos2unix curl netcat-openbsd procps dnsutils openjdk-17-jdk && apt -yqq install krb5-user libpam-krb5 && rm /etc/krb5.conf
 
 ENV RESTPROXY_JAR="sharepointrestproxy-0.1.2.jar"
 ENV RESTPROXY_CONFIG=config.yml

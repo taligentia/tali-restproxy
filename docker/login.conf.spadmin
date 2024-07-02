@@ -4,6 +4,6 @@ KrbLogin {
     debug=true
     useTicketCache=false
     useKeyTab=true
-    principal="HTTP/kamare@TALIWIN.COM"
-    keyTab="/projects/Taligentia/CEA-SharepointRestProxy/sharepointrestproxy/src/test/resources/kamare.keytab";
+    principal="HTTP/win2016-sp@TALIWIN.COM"
+    keyTab="/app/sharepoint.keytab";
 };
