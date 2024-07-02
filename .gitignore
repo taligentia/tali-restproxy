@@ -42,3 +42,7 @@ dump/
 docker/.env
 
 tmp/
+
+docker/save/
+
+docker/certs/

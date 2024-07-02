@@ -10,7 +10,7 @@ proxy:
   javaxSecurityAuthUseSubjectCredsOnly: false
   sunSecurityKrb5Debug: true
   javaSecurityKrb5Conf: /etc/krb5.conf
-  javaSecurityAuthLoginConfig: /app/login.conf
+  javaSecurityAuthLoginConfig: src/test/resources/login.conf
   dumpDirectory: ${DUMP_DIRECTORY}
 
 auth:
@@ -63,7 +63,7 @@ logging:
     io.dropwizard: "INFO"
     com.codahale: "INFO"
     io.swagger: "INFO"
-    com.taligentia.restproxy: "DEBUG"
+    com.taligentia: "DEBUG"
 
   appenders:
     - type: console

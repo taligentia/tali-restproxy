@@ -1,9 +1,0 @@
-KrbLogin {
-    com.sun.security.auth.module.Krb5LoginModule required
-    doNotPrompt=false
-    debug=true
-    useTicketCache=false
-    useKeyTab=true
-    principal="HTTP/win2016-sp@TALIWIN.COM"
-    keyTab="/app/sharepoint.keytab";
-};
