@@ -40,3 +40,9 @@ settings-read.xml
 dump/
 
 docker/.env
+
+tmp/
+
+docker/save/
+
+docker/certs/

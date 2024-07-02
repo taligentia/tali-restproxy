@@ -64,7 +64,7 @@ logging:
     io.dropwizard: "INFO"
     com.codahale: "INFO"
     io.swagger: "INFO"
-    com.taligentia.hdtmdata: "DEBUG"
+    com.taligentia: "DEBUG"
 
   appenders:
     - type: console
