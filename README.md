@@ -7,8 +7,6 @@ Dans .secrets
 
 | Fichier | Description |
 | ----------- | ----------- |
-| settings-read.xml | Utiliser par Dockerfile pour buid |
-| tali-maven-read.txt | Pour lire les jar via le repo maven taligentia. Initialise la variable d'environnement READPASSWORD pour le build |
 | .env | Passé en paramètre de docker si container lancé avec "docker run" passé en paramètre de docker si container lancé avec "docker run" |
 
 
