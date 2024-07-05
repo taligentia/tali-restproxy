@@ -57,6 +57,7 @@ public class ProxyManager implements Managed, BaseManager, InfoManager {
         ProxyHttpClient httpClient = new ProxyHttpClient();
         httpClient.setAcceptHeader(queryProxy.getAcceptHeader());
         httpClient.setSslCertificateAuthorities(proxyConfiguration.getSslCertificateAuthorities());
+        httpClient.setSslCertificateAuthoritiesPassword(proxyConfiguration.getSslCertificateAuthoritiesPassword());
         httpClient.setSslVerification(proxyConfiguration.getSslVerification());
         getLogger().debug("SharepointRestProxy : " + queryProxy.getRequest().get("url"));
         httpClient.doGet(proxyConfiguration.getAuth("sharepointrestproxy").getMethod(),proxyConfiguration.getAuth("sharepointrestproxy").getUser(), proxyConfiguration.getAuth("sharepointrestproxy").getPasswd(), proxyConfiguration.getAuth("sharepointrestproxy").getDomain(), queryProxy.getRequest().get("url"));

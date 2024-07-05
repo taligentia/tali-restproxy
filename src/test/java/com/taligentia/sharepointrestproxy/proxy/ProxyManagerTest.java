@@ -18,7 +18,9 @@ public class ProxyManagerTest {
 
         ProxyHttpClient httpClient = new ProxyHttpClient();
         httpClient.setAcceptHeader("application/json;odata=verbose");
-        httpClient.setSslVerification(false);
+        httpClient.setSslVerification(true);
+        httpClient.setSslCertificateAuthorities("/projects/Taligentia/CEA-SharepointRestProxy/sharepointrestproxy/src/test/resources/win2016-sp.cer");
+        httpClient.setSslCertificateAuthoritiesPassword(null);
         httpClient.doGet(authMethod, user, passwd, domain, url);
         System.out.println(httpClient.getResponse());
     }

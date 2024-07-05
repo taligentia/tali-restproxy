@@ -46,3 +46,5 @@ tmp/
 docker/save/
 
 docker/certs/
+
+src/test/resources/win2016-sp.cer

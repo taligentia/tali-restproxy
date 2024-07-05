@@ -1,5 +1,6 @@
 package com.taligentia.sharepointrestproxy.proxy;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -15,9 +16,7 @@ import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
-import org.apache.http.conn.ssl.NoopHostnameVerifier;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.conn.ssl.TrustStrategy;
+import org.apache.http.conn.ssl.*;
 import org.apache.http.impl.auth.NTLMSchemeFactory;
 import org.apache.http.impl.auth.SPNegoSchemeFactory;
 import org.apache.http.impl.client.*;
@@ -28,12 +27,14 @@ import javax.security.auth.Subject;
 import javax.security.auth.callback.*;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.*;
+import java.security.cert.CertificateException;
 import java.util.Arrays;
 import javax.net.ssl.SSLContext;
 
-import org.apache.http.conn.ssl.SSLContexts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +47,7 @@ public class ProxyHttpClient {
     private int statusCode;
     private String statusMessage;
     private String sslCertificateAuthorities = null;
+    private String sslCertificateAuthoritiesPassword = null;
     private Boolean sslVerification;
 
     public ProxyHttpClient() {
@@ -62,10 +64,26 @@ public class ProxyHttpClient {
                 TrustStrategy acceptingTrustStrategy = (cert, authType) -> true;
                 sslContext = SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy).build();
             } else {
-                sslContext = SSLContexts.custom().loadTrustMaterial(null).build();
+                if (StringUtils.isNotEmpty(sslCertificateAuthorities)) {
+                    KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
+                    FileInputStream in = new FileInputStream(sslCertificateAuthorities);
+                    byte[] certificate = IOUtils.toByteArray(in);
+                    ByteArrayInputStream bis = new ByteArrayInputStream(certificate);
+                    if (StringUtils.isNotEmpty(sslCertificateAuthoritiesPassword))
+                        trustStore.load(bis, sslCertificateAuthoritiesPassword.toCharArray());
+                    sslContext = SSLContexts.custom()
+                            .loadTrustMaterial(trustStore, new TrustSelfSignedStrategy())
+                            .build();
+                } else {
+                    sslContext = SSLContexts.custom().loadTrustMaterial(null).build();
+                }
             }
         } catch (KeyManagementException | NoSuchAlgorithmException | KeyStoreException e) {
             e.printStackTrace();
+        } catch (CertificateException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         sslsf = new SSLConnectionSocketFactory(sslContext, NoopHostnameVerifier.INSTANCE);
 
@@ -242,6 +260,10 @@ public class ProxyHttpClient {
 
     public void setSslCertificateAuthorities(String sslCertificateAuthorities) {
         this.sslCertificateAuthorities = sslCertificateAuthorities;
+    }
+
+    public void setSslCertificateAuthoritiesPassword(String sslCertificateAuthoritiesPassword) {
+        this.sslCertificateAuthoritiesPassword = sslCertificateAuthoritiesPassword;
     }
 
     public String getResponse() {

@@ -99,6 +99,10 @@ public class ProxyConfiguration {
         return sslSettings.getSslCertificateAuthorities();
     }
 
+    public String getSslCertificateAuthoritiesPassword() {
+        return sslSettings.getSslCertificateAuthoritiesPassword();
+    }
+
     public Boolean getSslVerification() {
         return sslSettings.getSslVerification();
     }
