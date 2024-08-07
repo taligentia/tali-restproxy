@@ -13,7 +13,7 @@ public class ProxyManagerTest {
         String authMethod = "kerberos";
         String user = "";
         String passwd = "";
-        String domain = "TALIWIN";
+        String domain = "";
         String url = "https://win2016-sp.taliwin.com/sites/kamare/_api/web/title";
 
         ProxyHttpClient httpClient = new ProxyHttpClient();
