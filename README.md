@@ -37,6 +37,7 @@ $ docker push docker.pkg.github.com/taligentia/kamare/sharepointrestproxy:`cat p
 #### Loader l'image docker en local sous podman
 ```
 $ docker save sharepointrestproxy:`cat pom.xml | grep -oP '(?<=<version>).*?(?=</version>)' | head -1` > sharepointrestproxy.img && podman load -i sharepointrestproxy.img && rm sharepointrestproxy.img
+$ podman tag sharepointrestproxy:`cat pom.xml | grep -oP '(?<=<version>).*?(?=</version>)' | head -1` docker.pkg.github.com/taligentia/kamare/sharepointrestproxy:`cat pom.xml | grep -oP '(?<=<version>).*?(?=</version>)' | head -1`
 ```
 
 ## Run / Logs / Stop / Exec

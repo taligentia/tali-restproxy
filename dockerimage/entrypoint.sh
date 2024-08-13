@@ -30,4 +30,4 @@ fi
 
 echo ">>> Starting application"
 java $JAVA_OPTS -jar $RESTPROXY_JAR server config.yml
-touch /app/run.log && tail -f /app/run.log
+#touch /app/run.log && tail -f /app/run.log
