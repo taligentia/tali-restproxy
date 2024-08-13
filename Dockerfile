@@ -13,19 +13,18 @@ COPY src src
 RUN mvn -e -B -Dmaven.test.skip=true package
 
 #========================================
-FROM docker.pkg.github.com/taligentia/cea/kamare_base:1.0.0
+FROM docker.pkg.github.com/taligentia/cea/kamare_base:1.1.0
 ENV DEBIAN_FRONTEND=noninteractive
 
-ENV RESTPROXY_JAR="sharepointrestproxy-0.1.3.jar"
+ENV RESTPROXY_JAR="sharepointrestproxy-0.1.4.jar"
 ENV RESTPROXY_CONFIG=config.yml
 
 WORKDIR /app
 
-COPY dockerimage/entrypoint.sh config*.yml /app/.
-COPY dockerimage/config*.yml /app/.
-COPY dockerimage/logback.xml /app/.
+COPY dockerimage/* /app/.
+COPY dockerimage/templates /app/templates
 COPY --from=builder /opt/build/target/${RESTPROXY_JAR} /app/.
-RUN cd /app && dos2unix *.sh *.yml
+RUN cd /app && dos2unix *.sh *.yml && chmod +x *.sh
 
 EXPOSE 9990
 

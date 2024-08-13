@@ -1,0 +1,8 @@
+#!/bin/sh
+echo ">>> Apply environment variables in configuration files"
+
+if [ -f "/app/certs/win2016-sp.cer" ]; then
+    echo "Init keystore"
+    keytool -importcert -noprompt -alias startssl -keystore /etc/ssl/certs/java/cacerts -storepass changeit -file /app/certs/win2016-sp.cer
+    # keytool -keystore /etc/ssl/certs/java/cacerts -storepass changeit -list | grep startssl
+fi

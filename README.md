@@ -35,6 +35,11 @@ $ docker tag sharepointrestproxy:`cat pom.xml | grep -oP '(?<=<version>).*?(?=</
 $ docker push docker.pkg.github.com/taligentia/kamare/sharepointrestproxy:`cat pom.xml | grep -oP '(?<=<version>).*?(?=</version>)' | head -1`
 ```
 
+#### Loader l'image docker en local sous podman
+```
+$ docker save sharepointrestproxy:`cat pom.xml | grep -oP '(?<=<version>).*?(?=</version>)' | head -1` > sharepointrestproxy.img && podman load -i sharepointrestproxy.img && rm sharepointrestproxy.img
+```
+
 ## Run / Logs / Stop / Exec
 
 :exclamation: Pour le développement en local, lancer le VPN avant de de démarrer le container !
@@ -42,14 +47,13 @@ $ docker push docker.pkg.github.com/taligentia/kamare/sharepointrestproxy:`cat p
 ```
 $ mkdir dump && chmod go+rw dump
 
-$ docker run --env-file=.secrets/.env -v "$PWD/dump:/dump" -p 9094:9990 -v /etc/timezone:/etc/timezone:ro -v /etc/localtime:/etc/localtime:ro -v "$(pwd)"/docker/certs:/app/certs:ro -v "$(pwd)"/docker/ssl-settings.yml:/app/ssl-settings.yml:ro -v "$(pwd)"/docker/auth.yml:/app/auth.yml:ro -v "$(pwd)"/docker/authorizations.yml:/app/authorizations.yml:ro -v "$(pwd)"/docker/krb5.conf:/etc/krb5.conf:ro -v "$(pwd)"/docker/login.conf:/app/login.conf:ro -v "$(pwd)"/docker/sharepoint.keytab:/app/sharepoint.keytab:ro --add-host="win2016-sp.taliwin.com:10.168.0.91" --add-host="win2016-dc.taliwin.com:10.168.0.90" --rm -d --name sharepointrestproxy sharepointrestproxy:`cat pom.xml | grep -oP '(?<=<version>).*?(?=</version>)' | head -1`
+$ podman run --env-file=.secrets/.env -v "$PWD/dump:/dump" -p 9094:9990 -v /etc/timezone:/etc/timezone:ro -v /etc/localtime:/etc/localtime:ro -v "$(pwd)"/docker/certs:/app/certs:ro -v "$(pwd)"/docker/authorizations.yml:/app/authorizations.yml:ro -v "$(pwd)"/docker/krb5.conf:/etc/krb5.conf:ro -v "$(pwd)"/docker/kamare.keytab:/app/kamare.keytab:ro --add-host="win2016-sp.taliwin.com:10.168.0.91" --add-host="win2016-dc.taliwin.com:10.168.0.90" --rm -d --name sharepointrestproxy sharepointrestproxy:`cat pom.xml | grep -oP '(?<=<version>).*?(?=</version>)' | head -1`
 
-$ docker logs sharepointrestproxy
+$ podman logs sharepointrestproxy
 
-$ docker stop sharepointrestproxy
+$ podman stop sharepointrestproxy
 
-$ docker exec -i -t sharepointrestproxy /bin/bash
-
+$ podman exec -i -t sharepointrestproxy /bin/bash
 ```
 
 ## Sharepoint API test url
@@ -58,20 +62,3 @@ http://win2016-sp.taliwin.com/sites/kamare/_api/web/title
 http://win2016-sp.taliwin.com/sites/kamare/_api/web/lists
 http://win2016-sp.taliwin.com/sites/kamare/_api/Web/Lists%28guid%2748d3bd48-4aa1-4a9b-9e19-3c448d1c2351%27%29
 ```
-
-```
-mvn -e -B -Dmaven.test.skip=true package
-
-docker build -t restproxy:`cat pom.xml | grep -oP '(?<=<version>).*?(?=</version>)' | head -1` --build-arg READPASSWORD=`cat .secrets/tali-maven-read.txt` .
-
-docker tag restproxy:`cat pom.xml | grep -oP '(?<=<version>).*?(?=</version>)' | head -1` restproxy:latest
-
-docker image ls | grep restproxy
-
-docker run --env-file=.secrets/.env -v "$PWD/dump:/dump" -p 9094:9990 --add-host="win2016-sp.taliwin.com:10.168.0.91" --add-host="win2016-dc.taliwin.com:10.168.0.90" --rm -d --name restproxy restproxy:latest
-
-docker logs restproxy
-
-docker stop restproxy
-```
-
