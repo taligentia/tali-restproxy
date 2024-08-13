@@ -55,9 +55,28 @@ $ podman stop sharepointrestproxy
 $ podman exec -i -t sharepointrestproxy /bin/bash
 ```
 
+## Configuration par variables d'environnement
+
+* Les fichiers de configuration placés dans /app/templates sont copiés au démarrage dans /app après substitution des variables d'environnement
+* Il est possible d'écraser des fichiers dans /app/templates au démarrage par montage de volume 
+
+La syntaxe :
+|__Expression__     | __Meaning__    |
+| ----------------- | -------------- |
+|`${var}`           | Value of var (same as `$var`)
+|`${var-$DEFAULT}`  | If var not set, evaluate expression as $DEFAULT
+|`${var:-$DEFAULT}` | If var not set or is empty, evaluate expression as $DEFAULT
+|`${var=$DEFAULT}`  | If var not set, evaluate expression as $DEFAULT
+|`${var:=$DEFAULT}` | If var not set or is empty, evaluate expression as $DEFAULT
+|`${var+$OTHER}`    | If var set, evaluate expression as $OTHER, otherwise as empty string
+|`${var:+$OTHER}`   | If var set, evaluate expression as $OTHER, otherwise as empty string
+|`$$var`            | Escape expressions. Result will be `$var`. 
+
+
 ## Sharepoint API test url
 ```
 http://win2016-sp.taliwin.com/sites/kamare/_api/web/title
 http://win2016-sp.taliwin.com/sites/kamare/_api/web/lists
 http://win2016-sp.taliwin.com/sites/kamare/_api/Web/Lists%28guid%2748d3bd48-4aa1-4a9b-9e19-3c448d1c2351%27%29
 ```
+
