@@ -10,14 +10,14 @@ for filename in /app/templates/*; do
     fi
 done
 
-for filename in /app/templates_override/*; do
-    #echo "$filename"
-    if [[ -f $filename ]]; then
-        echo "---- envsubst $filename"
-        envsubst -i $filename -o /app/$(basename "$filename")
-        cat /app/$(basename "$filename")
-    fi
-done
+#for filename in /app/templates_override/*; do
+#    #echo "$filename"
+#    if [[ -f $filename ]]; then
+#        echo "---- envsubst $filename"
+#        envsubst -i $filename -o /app/$(basename "$filename")
+#        cat /app/$(basename "$filename")
+#    fi
+#done
 
 cd /app
 if [ -f "./init.sh" ]; then
