@@ -16,7 +16,6 @@ Fichier .secrets/.env
 DUMP_DIRECTORY=/dump
 ```
 
-
 ## Build jar
 ```
 $ mvn -e -B -Dmaven.test.skip=true package
