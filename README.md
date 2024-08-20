@@ -14,6 +14,8 @@ Fichier .secrets/.env
 ```
 # Json response Dump dir (pour debugging)
 DUMP_DIRECTORY=/dump
+PROXY_KEYTAB_FILE=kamare.keytab
+PROXY_PRINCIPAL=
 ```
 
 ## Build jar
@@ -53,7 +55,7 @@ $ podman logs sharepointrestproxy
 
 $ podman stop sharepointrestproxy
 
-$ podman exec -i -t sharepointrestproxy /bin/bash
+$ podman exec -it sharepointrestproxy /bin/bash
 ```
 
 ## Configuration par variables d'environnement
