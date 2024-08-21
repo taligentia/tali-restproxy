@@ -1,0 +1,1161 @@
+{
+	"info": {
+		"_postman_id": "84e43201-3df2-4b67-8e14-90b65293bcda",
+		"name": "BrainsetAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "BrainsetAPI",
+			"item": [
+				{
+					"name": "Auth - Get access token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Bearer not null\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.access_token).to.not.null;",
+									"});",
+									"",
+									"// Set access token",
+									"var jsonData = pm.response.json();",
+									"console.log(pm.environment.get('authToken'));",
+									"pm.collectionVariables .set('authToken', jsonData.access_token, 'global');"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clientId\": \"f01c627b6fb8312e9e4c5732c0f78407b3c165d97d0c59721f331595ecdde20e\",\n    \"clientSecret\": \"8c53ea56e275667c202786a769830c7de27ce63e85b0c7a001da4c2b79b9a76f\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{brainset_url}}/api/auth/token",
+							"host": [
+								"{{brainset_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth - Refresh access token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Bearer not null\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.access_token).to.not.null;",
+									"});",
+									"",
+									"// Set access token",
+									"var jsonData = pm.response.json();",
+									"console.log(pm.environment.get('authToken'));",
+									"pm.collectionVariables .set('authToken', jsonData.access_token, 'global');"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{brainset_url}}/api/auth/refresh",
+							"host": [
+								"{{brainset_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth - Check access token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{brainset_url}}/api/auth/check-token",
+							"host": [
+								"{{brainset_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"check-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Site Title",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"siteName\": \"kamare\",\n    \"_subSitePath\": \"Biblio_Expert\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{brainset_url}}/api/brainset/sitetitle",
+							"host": [
+								"{{brainset_url}}"
+							],
+							"path": [
+								"api",
+								"brainset",
+								"sitetitle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Site Brainsets",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"siteName\": \"kamare\",\n    \"_subSitePath\": \"Biblio_Expert\",\n    \"_listTitleStartWith\": \"ASPRO\",\n    \"_lastModifiedSince\": \"2024-04-16\",\n    \"_userName\": \"taliwin\\\\Kamare\",\n    \"_userName\": \"Kamare-user3\",\n    \"_requiredPermission\" : [\"ViewListItems\", \"OpenItems\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{brainset_url}}/api/brainset/brainsets",
+							"host": [
+								"{{brainset_url}}"
+							],
+							"path": [
+								"api",
+								"brainset",
+								"brainsets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Braintset Files",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"siteName\": \"kamare\",\n    \"_subSitePath\": \"Biblio_Expert\",\n    \"brainsetName\": \"BrainSet1\",\n    \"_lastModifiedSince\": \"2024-04-15\",\n    \"_start\": \"1\",\n    \"_rows\": \"10\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{brainset_url}}/api/brainset/files",
+							"host": [
+								"{{brainset_url}}"
+							],
+							"path": [
+								"api",
+								"brainset",
+								"files"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Site Users",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"siteName\": \"kamare\",\n    \"_subSitePath\": \"Biblio_Expert\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{brainset_url}}/api/brainset/users",
+							"host": [
+								"{{brainset_url}}"
+							],
+							"path": [
+								"api",
+								"brainset",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Site Groups",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"siteName\": \"kamare\",\n    \"_subSitePath\": \"Biblio_Expert\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{brainset_url}}/api/brainset/groups",
+							"host": [
+								"{{brainset_url}}"
+							],
+							"path": [
+								"api",
+								"brainset",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Site Group Members",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"siteName\": \"kamare\",\n    \"_subSitePath\": \"Biblio_Expert\",\n    \"groupName\": \"Projet Kamare - Membres\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{brainset_url}}/api/brainset/groupmembers",
+							"host": [
+								"{{brainset_url}}"
+							],
+							"path": [
+								"api",
+								"brainset",
+								"groupmembers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Site SubSites",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"siteName\": \"kamare\",\n    \"_subSitePath\": \"Biblio_Expert\",\n    \"_siteTitleStartWith\": \"B\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{brainset_url}}/api/brainset/subsites",
+							"host": [
+								"{{brainset_url}}"
+							],
+							"path": [
+								"api",
+								"brainset",
+								"subsites"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SharepointRestProxy",
+			"item": [
+				{
+					"name": "Tests directs",
+					"item": [
+						{
+							"name": "Gest Current User",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{sharepoint_url}}/sites/kamare/_api/web/currentUser",
+									"host": [
+										"{{sharepoint_url}}"
+									],
+									"path": [
+										"sites",
+										"kamare",
+										"_api",
+										"web",
+										"currentUser"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get folder files",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"accept": true
+								}
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json;odata=verbose",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{sharepoint_url}}/sites/kamare/_api/web/GetFolderByServerRelativeUrl('BrainSet1')/Files?$top=2&$skip=1",
+									"host": [
+										"{{sharepoint_url}}"
+									],
+									"path": [
+										"sites",
+										"kamare",
+										"_api",
+										"web",
+										"GetFolderByServerRelativeUrl('BrainSet1')",
+										"Files"
+									],
+									"query": [
+										{
+											"key": "$top",
+											"value": "2"
+										},
+										{
+											"key": "$skip",
+											"value": "1"
+										},
+										{
+											"key": "$select",
+											"value": "Name",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all SharePoint groups from the site",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{sharepoint_url}}/sites/kamare/_api/web/sitegroups",
+									"host": [
+										"{{sharepoint_url}}"
+									],
+									"path": [
+										"sites",
+										"kamare",
+										"_api",
+										"web",
+										"sitegroups"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all SharePoint site users",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{sharepoint_url}}/sites/kamare/_api/web/siteusers",
+									"host": [
+										"{{sharepoint_url}}"
+									],
+									"path": [
+										"sites",
+										"kamare",
+										"_api",
+										"web",
+										"siteusers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all users from a SharePoint group",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{sharepoint_url}}/sites/kamare/_api/web/sitegroups(4)/users",
+									"host": [
+										"{{sharepoint_url}}"
+									],
+									"path": [
+										"sites",
+										"kamare",
+										"_api",
+										"web",
+										"sitegroups(4)",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all lists from a SharePoint site",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{sharepoint_url}}/sites/kamare/_api/web/lists/",
+									"host": [
+										"{{sharepoint_url}}"
+									],
+									"path": [
+										"sites",
+										"kamare",
+										"_api",
+										"web",
+										"lists",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Retrieve list information",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{sharepoint_url}}/sites/kamare/_api/web/lists/getbytitle('BrainSet1')",
+									"host": [
+										"{{sharepoint_url}}"
+									],
+									"path": [
+										"sites",
+										"kamare",
+										"_api",
+										"web",
+										"lists",
+										"getbytitle('BrainSet1')"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get List User Effective Permissions",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{sharepoint_url}}/sites/kamare/_api/web/lists/getbytitle('BrainSet1')/getusereffectivepermissions(@user)?@user='i:0%23.w|taliwin\\Kamare'",
+									"host": [
+										"{{sharepoint_url}}"
+									],
+									"path": [
+										"sites",
+										"kamare",
+										"_api",
+										"web",
+										"lists",
+										"getbytitle('BrainSet1')",
+										"getusereffectivepermissions(@user)"
+									],
+									"query": [
+										{
+											"key": "@user",
+											"value": "'i:0%23.w|taliwin\\Kamare'"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get site users or groups",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{sharepoint_url}}/sites/kamare/_api/web/siteusers?$select=Id,LoginName,Title,PrincipalType",
+									"host": [
+										"{{sharepoint_url}}"
+									],
+									"path": [
+										"sites",
+										"kamare",
+										"_api",
+										"web",
+										"siteusers"
+									],
+									"query": [
+										{
+											"key": "$select",
+											"value": "Id,LoginName,Title,PrincipalType"
+										},
+										{
+											"key": "$filter",
+											"value": "(PrincipalType eq 1) or (PrincipalType eq 4) or (PrincipalType eq 8)",
+											"disabled": true
+										},
+										{
+											"key": null,
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get site groups",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{sharepoint_url}}/sites/kamare/_api/web/sitegroups?$select=Id,LoginName,Title,PrincipalType",
+									"host": [
+										"{{sharepoint_url}}"
+									],
+									"path": [
+										"sites",
+										"kamare",
+										"_api",
+										"web",
+										"sitegroups"
+									],
+									"query": [
+										{
+											"key": "$select",
+											"value": "Id,LoginName,Title,PrincipalType"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get site group members",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{sharepoint_url}}/sites/kamare/_api/web/sitegroups/getbyname('Projet Kamare - Membres')/users",
+									"host": [
+										"{{sharepoint_url}}"
+									],
+									"path": [
+										"sites",
+										"kamare",
+										"_api",
+										"web",
+										"sitegroups",
+										"getbyname('Projet Kamare - Membres')",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Search all subsites",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{sharepoint_url}}/sites/kamare/_api/search/query?querytext='(contentclass:STS_Site) (contentclass:STS_Web)'&trimduplicates=false&rowlimit=5000&selectproperties='Title,Url,Path,ParentLink'",
+									"host": [
+										"{{sharepoint_url}}"
+									],
+									"path": [
+										"sites",
+										"kamare",
+										"_api",
+										"search",
+										"query"
+									],
+									"query": [
+										{
+											"key": "querytext",
+											"value": "'(contentclass:STS_Site) (contentclass:STS_Web)'"
+										},
+										{
+											"key": "trimduplicates",
+											"value": "false"
+										},
+										{
+											"key": "rowlimit",
+											"value": "5000"
+										},
+										{
+											"key": "selectproperties",
+											"value": "'Title,Url,Path,ParentLink'"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List all subsites",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{sharepoint_url}}/sites/kamare/_api/web/webs?$select=Id,Title,ServerRelativeUrl,Created",
+									"host": [
+										"{{sharepoint_url}}"
+									],
+									"path": [
+										"sites",
+										"kamare",
+										"_api",
+										"web",
+										"webs"
+									],
+									"query": [
+										{
+											"key": "$select",
+											"value": "Id,Title,ServerRelativeUrl,Created"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Site Title",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{sharepoint_url}}/sites/kamare/_api/web/title",
+									"host": [
+										"{{sharepoint_url}}"
+									],
+									"path": [
+										"sites",
+										"kamare",
+										"_api",
+										"web",
+										"title"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all lists from a SharePoint Subsite",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{sharepoint_url}}/sites/kamare/Biblio_Expert/_api/web/lists/",
+									"host": [
+										"{{sharepoint_url}}"
+									],
+									"path": [
+										"sites",
+										"kamare",
+										"Biblio_Expert",
+										"_api",
+										"web",
+										"lists",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Site List Assignement",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{sharepoint_url}}/sites/kamare/_api/web/lists/GetByTitle('BrainSet1')/RoleAssignments/?$expand=Member",
+									"host": [
+										"{{sharepoint_url}}"
+									],
+									"path": [
+										"sites",
+										"kamare",
+										"_api",
+										"web",
+										"lists",
+										"GetByTitle('BrainSet1')",
+										"RoleAssignments",
+										""
+									],
+									"query": [
+										{
+											"key": "$expand",
+											"value": "Member"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "ntlm",
+						"ntlm": [
+							{
+								"key": "password",
+								"value": "RsC!15dK1PLu",
+								"type": "string"
+							},
+							{
+								"key": "username",
+								"value": "spadmin",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Auth - Get access token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Bearer not null\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.access_token).to.not.null;",
+									"});",
+									"",
+									"// Set access token",
+									"var jsonData = pm.response.json();",
+									"console.log(pm.environment.get('authToken'));",
+									"pm.collectionVariables .set('authToken', jsonData.access_token, 'global');"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"clientId\": \"f01c627b6fb8312e9e4c5732c0f78407b3c165d97d0c59721f331595ecdde20e\",\n    \"clientSecret\": \"8c53ea56e275667c202786a769830c7de27ce63e85b0c7a001da4c2b79b9a76f\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{proxy_url}}/api/auth/token",
+							"host": [
+								"{{proxy_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth - Refresh access token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Bearer not null\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.access_token).to.not.null;",
+									"});",
+									"",
+									"// Set access token",
+									"var jsonData = pm.response.json();",
+									"console.log(pm.environment.get('authToken'));",
+									"pm.collectionVariables .set('authToken', jsonData.access_token, 'global');"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{proxy_url}}/api/auth/refresh",
+							"host": [
+								"{{proxy_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth - Check access token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{proxy_url}}/api/auth/check-token",
+							"host": [
+								"{{proxy_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"check-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Info version",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{proxy_url}}/api/info/version",
+							"host": [
+								"{{proxy_url}}"
+							],
+							"path": [
+								"api",
+								"info",
+								"version"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Info status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{proxy_url}}/api/info/status",
+							"host": [
+								"{{proxy_url}}"
+							],
+							"path": [
+								"api",
+								"info",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"request\": {\n        \"url\": \"{{sharepoint_url}}/sites/kamare/_api/web/currentuser\"\n    },\n    \"acceptHeader\": \"application/json;odata=verbose\",\n    \"debug\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{proxy_url}}/api/proxy/process",
+							"host": [
+								"{{proxy_url}}"
+							],
+							"path": [
+								"api",
+								"proxy",
+								"process"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Site title",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"request\": {\n        \"url\": \"{{sharepoint_url}}/sites/kamare/_api/web/title\"\n    },\n    \"acceptHeader\": \"application/json;odata=verbose\",\n    \"debug\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{proxy_url}}/api/proxy/process",
+							"host": [
+								"{{proxy_url}}"
+							],
+							"path": [
+								"api",
+								"proxy",
+								"process"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Site lists",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"request\": {\n        \"url\": \"{{sharepoint_url}}/sites/kamare/_api/web/lists\"\n    },\n    \"acceptHeader\": \"application/json;odata=verbose\",\n    \"debug\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{proxy_url}}/api/proxy/process",
+							"host": [
+								"{{proxy_url}}"
+							],
+							"path": [
+								"api",
+								"proxy",
+								"process"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Brainset files",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"request\": {\n        \"url\": \"{{sharepoint_url}}/sites/kamare/_api/web/GetFolderByServerRelativeUrl%28%27BrainSet1%27%29%2FFiles\"\n    },\n    \"acceptHeader\": \"application/json;odata=verbose\",\n    \"debug\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{proxy_url}}/api/proxy/process",
+							"host": [
+								"{{proxy_url}}"
+							],
+							"path": [
+								"api",
+								"proxy",
+								"process"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get file",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"request\": {\n        \"url\": \"{{sharepoint_url}}/sites/kamare/_api/Web/GetFileByServerRelativePath(decodedurl='/sites/kamare/BrainSet1/livretJava.pdf')\"\n    },\n    \"acceptHeader\": \"application/json;odata=verbose\",\n    \"debug\": true\n}\n\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{proxy_url}}/api/proxy/process",
+							"host": [
+								"{{proxy_url}}"
+							],
+							"path": [
+								"api",
+								"proxy",
+								"process"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Effective Permissions",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"request\": {\n        \"url\": \"{{sharepoint_url}}/sites/kamare/_api/web/lists/getbytitle('BrainSet1')/getusereffectivepermissions(@user)?@user='i:0%23.w%7Ctaliwin%5CKamare'\"\n    },\n    \"acceptHeader\": \"application/json;odata=verbose\",\n    \"debug\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{proxy_url}}/api/proxy/process",
+							"host": [
+								"{{proxy_url}}"
+							],
+							"path": [
+								"api",
+								"proxy",
+								"process"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{authToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "authToken",
+			"value": ""
+		}
+	]
+}

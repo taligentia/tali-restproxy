@@ -14,8 +14,14 @@ Fichier .secrets/.env
 ```
 # Json response Dump dir (pour debugging)
 DUMP_DIRECTORY=/dump
+
+# LoginName: "i:0#.w|taliwin\\kamare"
 PROXY_KEYTAB_FILE=kamare.keytab
-PROXY_PRINCIPAL=
+PROXY_PRINCIPAL=HTTP/kamare.taliwin.com@TALIWIN.COM
+
+# LoginName: "SHAREPOINT\\system"
+#PROXY_KEYTAB_FILE=sharepoint.keytab
+#PROXY_PRINCIPAL=HTTP/win2016-sp@TALIWIN.COM
 ```
 
 ## Build jar
@@ -64,16 +70,17 @@ $ podman exec -it sharepointrestproxy /bin/bash
 * Il est possible d'écraser des fichiers dans /app/templates au démarrage par montage de volume 
 
 La syntaxe :
-|__Expression__     | __Meaning__    |
-| ----------------- | -------------- |
-|`${var}`           | Value of var (same as `$var`)
-|`${var-$DEFAULT}`  | If var not set, evaluate expression as $DEFAULT
-|`${var:-$DEFAULT}` | If var not set or is empty, evaluate expression as $DEFAULT
-|`${var=$DEFAULT}`  | If var not set, evaluate expression as $DEFAULT
-|`${var:=$DEFAULT}` | If var not set or is empty, evaluate expression as $DEFAULT
-|`${var+$OTHER}`    | If var set, evaluate expression as $OTHER, otherwise as empty string
-|`${var:+$OTHER}`   | If var set, evaluate expression as $OTHER, otherwise as empty string
-|`$$var`            | Escape expressions. Result will be `$var`. 
+
+| Expression         | Meaning                                                              |
+|--------------------|----------------------------------------------------------------------|
+| `${var}`           | Value of var (same as `$var`)                                        
+| `${var-$DEFAULT}`  | If var not set, evaluate expression as $DEFAULT                      
+| `${var:-$DEFAULT}` | If var not set or is empty, evaluate expression as $DEFAULT          
+| `${var=$DEFAULT}`  | If var not set, evaluate expression as $DEFAULT                      
+| `${var:=$DEFAULT}` | If var not set or is empty, evaluate expression as $DEFAULT          
+| `${var+$OTHER}`    | If var set, evaluate expression as $OTHER, otherwise as empty string 
+| `${var:+$OTHER}`   | If var set, evaluate expression as $OTHER, otherwise as empty string 
+| `$$var`            | Escape expressions. Result will be `$var`.                           
 
 
 ## Sharepoint API test url
