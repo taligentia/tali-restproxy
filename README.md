@@ -16,11 +16,11 @@ Fichier .secrets/.env
 DUMP_DIRECTORY=/dump
 
 # LoginName: "i:0#.w|taliwin\\kamare"
-PROXY_KEYTAB_FILE=kamare.keytab
+PROXY_KEYTAB_FILE=/app/kamare.keytab
 PROXY_PRINCIPAL=HTTP/kamare.taliwin.com@TALIWIN.COM
 
 # LoginName: "SHAREPOINT\\system"
-#PROXY_KEYTAB_FILE=sharepoint.keytab
+#PROXY_KEYTAB_FILE=/app/sharepoint.keytab
 #PROXY_PRINCIPAL=HTTP/win2016-sp@TALIWIN.COM
 ```
 
