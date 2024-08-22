@@ -24,6 +24,12 @@ PROXY_PRINCIPAL=HTTP/kamare.taliwin.com@TALIWIN.COM
 #PROXY_PRINCIPAL=HTTP/win2016-sp@TALIWIN.COM
 ```
 
+Afin de connaître le principal d'un fichier keytab 
+```
+klist -k /app/xxxxx.keytab
+```
+
+
 ## Build jar
 ```
 $ mvn -e -B -Dmaven.test.skip=true package
