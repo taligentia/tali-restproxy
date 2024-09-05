@@ -1,5 +1,7 @@
 #!/bin/bash 
 
+. /var/local/checksecrets.sh "$SECRETS"
+
 echo ">>> Apply environment variables in configuration files"
 for filename in /app/templates/*; do
     #echo "$filename"
