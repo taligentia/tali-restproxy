@@ -183,6 +183,8 @@ public class ProxyHttpClient {
 
                             CredentialsProvider credsProvider = new BasicCredentialsProvider();
                             credsProvider.setCredentials(new AuthScope(null, -1, null), use_jaas_creds);
+                            // Désactivation de la résolution DNS inverse
+                            // https://stackoverflow.com/a/48265900
                             Registry<AuthSchemeProvider> authSchemeRegistry = RegistryBuilder.<AuthSchemeProvider>create().register(AuthSchemes.SPNEGO, new SPNegoSchemeFactory(true, false)).build();
 
                             HttpClient httpClient = HttpClients.custom()
