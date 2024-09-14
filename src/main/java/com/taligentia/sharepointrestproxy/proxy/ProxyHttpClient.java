@@ -183,7 +183,7 @@ public class ProxyHttpClient {
 
                             CredentialsProvider credsProvider = new BasicCredentialsProvider();
                             credsProvider.setCredentials(new AuthScope(null, -1, null), use_jaas_creds);
-                            Registry<AuthSchemeProvider> authSchemeRegistry = RegistryBuilder.<AuthSchemeProvider>create().register(AuthSchemes.SPNEGO, new SPNegoSchemeFactory(true)).build();
+                            Registry<AuthSchemeProvider> authSchemeRegistry = RegistryBuilder.<AuthSchemeProvider>create().register(AuthSchemes.SPNEGO, new SPNegoSchemeFactory(true, false)).build();
 
                             HttpClient httpClient = HttpClients.custom()
                                     .setConnectionManager(connectionManager)
