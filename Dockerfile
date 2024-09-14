@@ -13,10 +13,10 @@ COPY src src
 RUN mvn -e -B -Dmaven.test.skip=true package
 
 #========================================
-FROM docker.pkg.github.com/taligentia/cea/kamare_base:1.1.0
+FROM docker.pkg.github.com/taligentia/cea/kamare_base:1.2.0
 ENV DEBIAN_FRONTEND=noninteractive
 
-ENV RESTPROXY_JAR="sharepointrestproxy-0.1.5.jar"
+ENV RESTPROXY_JAR="sharepointrestproxy-0.1.6.jar"
 ENV RESTPROXY_CONFIG=config.yml
 
 WORKDIR /app
