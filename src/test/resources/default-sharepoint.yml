@@ -8,8 +8,10 @@ proxy:
   authFile: src/test/resources/auth.yml
   sslSettingsFile: src/test/resources/ssl-settings.yml
   javaxSecurityAuthUseSubjectCredsOnly: false
-  sunSecurityKrb5Debug: true
-  javaSecurityKrb5Conf: /etc/krb5.conf
+  sunSecurityKrb5Debug: ${KRB5DEBUG:-false}
+  sunSecurityJgssDebug: ${JGSSDEBUG:-false}
+  sunSecuritySpnegoDebug: ${SPNEGODEBUG:-false}
+  javaSecurityKrb5Conf: src/test/resources/krb5.conf
   javaSecurityAuthLoginConfig: src/test/resources/login.conf
   dumpDirectory: ${DUMP_DIRECTORY}
 

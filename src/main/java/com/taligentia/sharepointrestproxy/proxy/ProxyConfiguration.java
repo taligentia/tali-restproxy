@@ -13,6 +13,8 @@ public class ProxyConfiguration {
     private SslSettings sslSettings;
 
     private String javaxSecurityAuthUseSubjectCredsOnly;
+    private String sunSecurityJgssDebug;
+    private String sunSecuritySpnegoDebug;
     private String sunSecurityKrb5Debug;
     private String javaSecurityKrb5Conf;
     private String javaSecurityAuthLoginConfig;
@@ -81,6 +83,22 @@ public class ProxyConfiguration {
 
     public void setJavaSecurityKrb5Conf(String javaSecurityKrb5Conf) {
         this.javaSecurityKrb5Conf = javaSecurityKrb5Conf;
+    }
+
+    public String getSunSecurityJgssDebug() {
+        return sunSecurityJgssDebug;
+    }
+
+    public void setSunSecurityJgssDebug(String sunSecurityJgssDebug) {
+        this.sunSecurityJgssDebug = sunSecurityJgssDebug;
+    }
+
+    public String getSunSecuritySpnegoDebug() {
+        return sunSecuritySpnegoDebug;
+    }
+
+    public void setSunSecuritySpnegoDebug(String sunSecuritySpnegoDebug) {
+        this.sunSecuritySpnegoDebug = sunSecuritySpnegoDebug;
     }
 
     public String getJavaSecurityAuthLoginConfig() {

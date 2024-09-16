@@ -34,6 +34,8 @@ public class ProxyManagerBuilder extends BaseBuilderImpl implements BaseBuilder 
         System.setProperty("java.security.auth.login.config", proxyConfiguration.getJavaSecurityAuthLoginConfig());
         System.setProperty("java.security.krb5.conf", proxyConfiguration.getJavaSecurityKrb5Conf());
         System.setProperty("sun.security.krb5.debug", proxyConfiguration.getSunSecurityKrb5Debug());
+        System.setProperty("sun.security.jgss.debug", proxyConfiguration.getSunSecurityJgssDebug());
+        System.setProperty("sun.security.spnego.debug", proxyConfiguration.getSunSecuritySpnegoDebug());
         System.setProperty("javax.security.auth.useSubjectCredsOnly", proxyConfiguration.getJavaxSecurityAuthUseSubjectCredsOnly());
         return manager;
     }
