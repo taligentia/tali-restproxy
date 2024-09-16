@@ -148,7 +148,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"siteName\": \"kamare\",\n    \"_subSitePath\": \"Biblio_Expert\",\n    \"_listTitleStartWith\": \"ASPRO\",\n    \"_lastModifiedSince\": \"2024-04-16\",\n    \"_userName\": \"taliwin\\\\Kamare\",\n    \"_userName\": \"Kamare-user3\",\n    \"_requiredPermission\" : [\"ViewListItems\", \"OpenItems\"]\n}",
+							"raw": "{\n    \"siteName\": \"kamare\",\n    \"_subSitePath\": \"Biblio_Expert\",\n    \"listTitleStartWith\": \"B\",\n    \"_lastModifiedSince\": \"2024-04-16\",\n    \"_userName\": \"taliwin\\\\mduran\",\n    \"_userName\": \"taliwin\\\\Kamare\",\n    \"_userName\": \"Kamare-user3\",\n    \"_requiredPermission\" : [\"ViewListItems\", \"OpenItems\"],\n    \"_fieldsList\" : \"Id,Title,Created,ItemCount,LastItemDeletedDate,LastItemModifiedDate,LastItemUserModifiedDate,BaseType,BaseTemplate\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -315,10 +315,10 @@
 			"name": "SharepointRestProxy",
 			"item": [
 				{
-					"name": "Tests directs",
+					"name": "Tests directs (ntlm avec spadmin)",
 					"item": [
 						{
-							"name": "Gest Current User",
+							"name": "Get Current User",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -339,12 +339,10 @@
 							"response": []
 						},
 						{
-							"name": "Get folder files",
+							"name": "Get folder files by title",
 							"protocolProfileBehavior": {
 								"disableBodyPruning": true,
-								"disabledSystemHeaders": {
-									"accept": true
-								}
+								"disabledSystemHeaders": {}
 							},
 							"request": {
 								"method": "GET",
@@ -352,7 +350,8 @@
 									{
 										"key": "Accept",
 										"value": "application/json;odata=verbose",
-										"type": "text"
+										"type": "text",
+										"disabled": true
 									}
 								],
 								"body": {
@@ -390,6 +389,50 @@
 											"key": "$select",
 											"value": "Name",
 											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get folder files by id",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{sharepoint_url}}/sites/kamare/_api/web/lists(guid'f9e26b24-049a-40c7-9d11-59f2b0e90c12')/Files?$top=2&$skip=1",
+									"host": [
+										"{{sharepoint_url}}"
+									],
+									"path": [
+										"sites",
+										"kamare",
+										"_api",
+										"web",
+										"lists(guid'f9e26b24-049a-40c7-9d11-59f2b0e90c12')",
+										"Files"
+									],
+									"query": [
+										{
+											"key": "$top",
+											"value": "2"
+										},
+										{
+											"key": "$skip",
+											"value": "1"
 										}
 									]
 								}
@@ -483,7 +526,7 @@
 							"response": []
 						},
 						{
-							"name": "Retrieve list information",
+							"name": "Retrieve list information by title",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -505,7 +548,28 @@
 							"response": []
 						},
 						{
-							"name": "Get List User Effective Permissions",
+							"name": "Retrieve list information by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{sharepoint_url}}/sites/kamare/_api/web/lists(guid'f9e26b24-049a-40c7-9d11-59f2b0e90c12')",
+									"host": [
+										"{{sharepoint_url}}"
+									],
+									"path": [
+										"sites",
+										"kamare",
+										"_api",
+										"web",
+										"lists(guid'f9e26b24-049a-40c7-9d11-59f2b0e90c12')"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get List User Effective Permissions by title",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -521,6 +585,34 @@
 										"web",
 										"lists",
 										"getbytitle('BrainSet1')",
+										"getusereffectivepermissions(@user)"
+									],
+									"query": [
+										{
+											"key": "@user",
+											"value": "'i:0%23.w|taliwin\\Kamare'"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get List User Effective Permissions by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{sharepoint_url}}/sites/kamare/_api/web/lists(guid'f9e26b24-049a-40c7-9d11-59f2b0e90c12')/getusereffectivepermissions(@user)?@user='i:0%23.w|taliwin\\Kamare'",
+									"host": [
+										"{{sharepoint_url}}"
+									],
+									"path": [
+										"sites",
+										"kamare",
+										"_api",
+										"web",
+										"lists(guid'f9e26b24-049a-40c7-9d11-59f2b0e90c12')",
 										"getusereffectivepermissions(@user)"
 									],
 									"query": [
@@ -731,7 +823,7 @@
 							"response": []
 						},
 						{
-							"name": "Site List Assignement",
+							"name": "Site List Assignement by title",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -747,6 +839,35 @@
 										"web",
 										"lists",
 										"GetByTitle('BrainSet1')",
+										"RoleAssignments",
+										""
+									],
+									"query": [
+										{
+											"key": "$expand",
+											"value": "Member"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Site List Assignement by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{sharepoint_url}}/sites/kamare/_api/web/lists(guid'f9e26b24-049a-40c7-9d11-59f2b0e90c12')/RoleAssignments/?$expand=Member",
+									"host": [
+										"{{sharepoint_url}}"
+									],
+									"path": [
+										"sites",
+										"kamare",
+										"_api",
+										"web",
+										"lists(guid'f9e26b24-049a-40c7-9d11-59f2b0e90c12')",
 										"RoleAssignments",
 										""
 									],
@@ -1036,13 +1157,41 @@
 					"response": []
 				},
 				{
-					"name": "Get Brainset files",
+					"name": "Get Brainset files by title",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"request\": {\n        \"url\": \"{{sharepoint_url}}/sites/kamare/_api/web/GetFolderByServerRelativeUrl%28%27BrainSet1%27%29%2FFiles\"\n    },\n    \"acceptHeader\": \"application/json;odata=verbose\",\n    \"debug\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{proxy_url}}/api/proxy/process",
+							"host": [
+								"{{proxy_url}}"
+							],
+							"path": [
+								"api",
+								"proxy",
+								"process"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Brainset files by id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"request\": {\n        \"_url\": \"{{sharepoint_url}}/sites/kamare/_api/web/GetFolderByServerRelativeUrl%28%27BrainSet1%27%29%2FFiles\",\n        \"url\": \"{{sharepoint_url}}/sites/kamare/_api/web/lists%28guid%27f9e26b24-049a-40c7-9d11-59f2b0e90c12%27%29%2FFiles\"\n    },\n    \"acceptHeader\": \"application/json;odata=verbose\",\n    \"debug\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1092,13 +1241,41 @@
 					"response": []
 				},
 				{
-					"name": "Get User Effective Permissions",
+					"name": "Get User Effective Permissions by title",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n    \"request\": {\n        \"url\": \"{{sharepoint_url}}/sites/kamare/_api/web/lists/getbytitle('BrainSet1')/getusereffectivepermissions(@user)?@user='i:0%23.w%7Ctaliwin%5CKamare'\"\n    },\n    \"acceptHeader\": \"application/json;odata=verbose\",\n    \"debug\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{proxy_url}}/api/proxy/process",
+							"host": [
+								"{{proxy_url}}"
+							],
+							"path": [
+								"api",
+								"proxy",
+								"process"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Effective Permissions by id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"request\": {\n        \"url\": \"{{sharepoint_url}}/sites/kamare/_api/web/lists(guid'f9e26b24-049a-40c7-9d11-59f2b0e90c12')/getusereffectivepermissions(@user)?@user='i:0%23.w%7Ctaliwin%5CKamare'\"\n    },\n    \"acceptHeader\": \"application/json;odata=verbose\",\n    \"debug\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
