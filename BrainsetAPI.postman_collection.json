@@ -1163,7 +1163,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"request\": {\n        \"url\": \"{{sharepoint_url}}/sites/kamare/_api/web/GetFolderByServerRelativeUrl%28%27BrainSet1%27%29%2FFiles\"\n    },\n    \"acceptHeader\": \"application/json;odata=verbose\",\n    \"debug\": true\n}",
+							"raw": "{\n    \"request\": {\n        \"url\": \"{{sharepoint_url}}/sites/kamare/_api/web/GetFolderByServerRelativeUrl('BrainSet1')/Files\"\n    },\n    \"acceptHeader\": \"application/json;odata=verbose\",\n    \"debug\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1191,7 +1191,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"request\": {\n        \"_url\": \"{{sharepoint_url}}/sites/kamare/_api/web/GetFolderByServerRelativeUrl%28%27BrainSet1%27%29%2FFiles\",\n        \"url\": \"{{sharepoint_url}}/sites/kamare/_api/web/lists%28guid%27f9e26b24-049a-40c7-9d11-59f2b0e90c12%27%29%2FFiles\"\n    },\n    \"acceptHeader\": \"application/json;odata=verbose\",\n    \"debug\": true\n}",
+							"raw": "{\n    \"request\": {\n        \"url\": \"{{sharepoint_url}}/sites/kamare/_api/web/lists(guid'f9e26b24-049a-40c7-9d11-59f2b0e90c12')/Files\"\n    },\n    \"acceptHeader\": \"application/json;odata=verbose\",\n    \"debug\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
