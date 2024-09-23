@@ -8,14 +8,16 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
 
+import com.taligentia.base.dropwizard.utils.Utils;
 import com.taligentia.sharepointrestproxy.SharepointRestProxyManager;
 import com.taligentia.sharepointrestproxy.model.QueryProxy;
 import com.taligentia.sharepointrestproxy.model.ResponseProxy;
 import com.taligentia.base.bearer.model.AuthUser;
 import com.taligentia.base.bearer.model.InvalidRolesException;
 
-import com.taligentia.sharepointrestproxy.utils.Utils;
+import com.taligentia.sharepointrestproxy.utils.RestProxyRessourceUtils;
 import io.dropwizard.auth.Auth;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -43,17 +45,25 @@ public class ApiProxy extends RestProxyRessource {
 			@Auth Principal user) {
 		BaseResponse<ResponseProxy> rep = start("get");
 		try {
-			if (!AuthUser.userRolesMatch(getUserRoles((AuthUser) user), Arrays.asList(defaultExpectedRoles)))
+			if (!AuthUser.userRolesMatch(getUserRoles((AuthUser) user), Arrays.asList(defaultExpectedRoles))) {
 				return error(rep, new InvalidRolesException(Arrays.asList(defaultExpectedRoles), getUserRoles((AuthUser) user)));
+			}
 			ResponseProxy responseProxy = getRestProxyManager().process(query);
 			String dumpDirectory = getRestProxyManager().getProxyManager().getProxyConfiguration().getDumpDirectory();
-			if (responseProxy.getResponse()!=null && StringUtils.isNotEmpty(dumpDirectory)) {
-				String dumpValue = responseProxy.getResponse();
-				if (query.getAcceptHeader()!=null && query.getAcceptHeader().startsWith("application/json"))
-					dumpValue = Utils.prettyPrintJsonString(dumpValue);
-				Utils.dumpToTextFile(dumpDirectory, "api_proxy.json", dumpValue);
+			if (responseProxy.getResponse()!=null && StringUtils.startsWith(responseProxy.getContentType(), "application/json") && StringUtils.isNotEmpty(dumpDirectory)) {
+				String dumpValue = RestProxyRessourceUtils.prettyPrintJsonString(responseProxy.getResponse());
+				RestProxyRessourceUtils.dumpToTextFile(dumpDirectory, "api_proxy.json", dumpValue);
 			}
-			return response(rep, responseProxy);
+			if (StringUtils.startsWith(responseProxy.getContentType(), "application/octet-stream")) {
+				StreamingOutput streamingOutput = Utils.inputStreamStreaming(responseProxy.getInputStream());
+				Response resp = Utils.pdf( streamingOutput );
+				//getRestProxyManager().close();
+				return resp;
+			}
+			else {
+				getRestProxyManager().close();
+				return response(rep, responseProxy);
+			}
 		} catch (Exception ex) {
 			return error(rep, ex);
 		}

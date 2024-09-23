@@ -27,9 +27,7 @@ import javax.security.auth.Subject;
 import javax.security.auth.callback.*;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.security.*;
 import java.security.cert.CertificateException;
 import java.util.Arrays;
@@ -45,10 +43,13 @@ public class ProxyHttpClient {
     private String acceptHeader = null;
     private String response;
     private int statusCode;
+    private String contenType;
     private String statusMessage;
     private String sslCertificateAuthorities = null;
     private String sslCertificateAuthoritiesPassword = null;
     private Boolean sslVerification;
+    private InputStream inputStream;
+    private HttpClient httpClient;
 
     public ProxyHttpClient() {
         sslVerification = true;
@@ -210,18 +211,30 @@ public class ProxyHttpClient {
     private void call(HttpClient httpClient, String url) throws IOException {
 
         try {
+            this.httpClient = httpClient;
             HttpUriRequest request = new HttpGet(url);
             if (!StringUtils.isEmpty(this.acceptHeader))
-                request.setHeader("Accept",this.acceptHeader);
+                request.setHeader("Accept", this.acceptHeader);
             HttpResponse httpResponse = httpClient.execute(request);
             HttpEntity entity = httpResponse.getEntity();
             this.statusCode = httpResponse.getStatusLine().getStatusCode();
             this.statusMessage = httpResponse.getStatusLine().getReasonPhrase();
-            this.response = EntityUtils.toString(entity);
-            EntityUtils.consume(entity);
+            this.contenType = entity.getContentType().getValue();
+            if (!StringUtils.startsWith(this.contenType, "application/octet-stream")) {
+                this.response = EntityUtils.toString(entity);
+                EntityUtils.consume(entity);
+            }
+            else {
+                this.response = "";
+                this.inputStream = entity.getContent();
+            }
         } finally {
-            httpClient.getConnectionManager().shutdown();
+            //httpClient.getConnectionManager().shutdown();
         }
+    }
+
+    void close() {
+        httpClient.getConnectionManager().shutdown();
     }
 
     class KerberosCallBackHandler implements CallbackHandler {
@@ -278,5 +291,13 @@ public class ProxyHttpClient {
 
     public String getStatusMessage() {
         return statusMessage;
+    }
+
+    public String getContenType() {
+        return contenType;
+    }
+
+    public InputStream getInputStream() {
+        return inputStream;
     }
 }

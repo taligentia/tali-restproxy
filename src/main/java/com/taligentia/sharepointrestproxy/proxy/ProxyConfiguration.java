@@ -20,7 +20,6 @@ public class ProxyConfiguration {
     private String javaSecurityAuthLoginConfig;
     private String dumpDirectory;
 
-
     public String getAuthFile() {
         return authFile;
     }
@@ -113,6 +112,10 @@ public class ProxyConfiguration {
         return dumpDirectory;
     }
 
+    public void setDumpDirectory(String dumpDirectory) {
+        this.dumpDirectory = dumpDirectory;
+    }
+
     public String getSslCertificateAuthorities() {
         return sslSettings.getSslCertificateAuthorities();
     }
@@ -125,7 +128,4 @@ public class ProxyConfiguration {
         return sslSettings.getSslVerification();
     }
 
-    public void setDumpDirectory(String dumpDirectory) {
-        this.dumpDirectory = dumpDirectory;
-    }
 }

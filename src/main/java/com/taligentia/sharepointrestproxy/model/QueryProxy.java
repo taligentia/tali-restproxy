@@ -5,7 +5,6 @@ import java.util.Map;
 
 public class QueryProxy {
 	@NotNull
-	private String acceptHeader;
 	private Map<String, String> request;
 	private boolean debug;
 
@@ -18,14 +17,6 @@ public class QueryProxy {
 
 	public String asText() {
 		return toString();
-	}
-
-	public String getAcceptHeader() {
-		return acceptHeader;
-	}
-
-	public void setAcceptHeader(String acceptHeader) {
-		this.acceptHeader = acceptHeader;
 	}
 
 	public Map<String, String> getRequest() {
