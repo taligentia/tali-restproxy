@@ -19,8 +19,6 @@ public class ProxyConfiguration {
     private String javaSecurityKrb5Conf;
     private String javaSecurityAuthLoginConfig;
     private String dumpDirectory;
-    private String downloadDirectory;
-
 
     public String getAuthFile() {
         return authFile;
@@ -116,14 +114,6 @@ public class ProxyConfiguration {
 
     public void setDumpDirectory(String dumpDirectory) {
         this.dumpDirectory = dumpDirectory;
-    }
-
-    public String getDownloadDirectory() {
-        return downloadDirectory;
-    }
-
-    public void setDownloadDirectory(String downloadDirectory) {
-        this.downloadDirectory=downloadDirectory;
     }
 
     public String getSslCertificateAuthorities() {

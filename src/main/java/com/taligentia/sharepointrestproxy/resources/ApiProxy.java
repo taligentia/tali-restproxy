@@ -1,6 +1,5 @@
 package com.taligentia.sharepointrestproxy.resources;
 
-import java.io.InputStream;
 import java.security.Principal;
 import java.util.Arrays;
 
@@ -56,7 +55,7 @@ public class ApiProxy extends RestProxyRessource {
 				RestProxyRessourceUtils.dumpToTextFile(dumpDirectory, "api_proxy.json", dumpValue);
 			}
 			if (StringUtils.startsWith(responseProxy.getContentType(), "application/octet-stream")) {
-				StreamingOutput streamingOutput = Utils.inputStreamStreaming(responseProxy.getIs());
+				StreamingOutput streamingOutput = Utils.inputStreamStreaming(responseProxy.getInputStream());
 				Response resp = Utils.pdf( streamingOutput );
 				//getRestProxyManager().close();
 				return resp;

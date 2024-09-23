@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-import java.io.IOException;
+import java.io.*;
 
 public class ProxyManager implements Managed, BaseManager, InfoManager {
     public static final Logger logger = LoggerFactory.getLogger(ProxyManager.class);
@@ -61,7 +61,6 @@ public class ProxyManager implements Managed, BaseManager, InfoManager {
         httpClient.setSslCertificateAuthorities(proxyConfiguration.getSslCertificateAuthorities());
         httpClient.setSslCertificateAuthoritiesPassword(proxyConfiguration.getSslCertificateAuthoritiesPassword());
         httpClient.setSslVerification(proxyConfiguration.getSslVerification());
-        httpClient.setSaveAs(queryProxy.getSaveAs());
         getLogger().debug("SharepointRestProxy : " + queryProxy.getRequest().get("url"));
         httpClient.doGet(proxyConfiguration.getAuth("sharepointrestproxy").getMethod(),proxyConfiguration.getAuth("sharepointrestproxy").getUser(), proxyConfiguration.getAuth("sharepointrestproxy").getPasswd(), proxyConfiguration.getAuth("sharepointrestproxy").getDomain(), queryProxy.getRequest().get("url"));
         ObjectMapper mapper = new ObjectMapper();
@@ -72,7 +71,7 @@ public class ProxyManager implements Managed, BaseManager, InfoManager {
             response.setHttpStatusCode(httpClient.getStatusCode());
             response.setHttpStatusMessage(httpClient.getStatusMessage());
             response.setContentType(httpClient.getContenType());
-            response.setIs(httpClient.getIs());
+            response.setInputStream(httpClient.getInputStream());
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

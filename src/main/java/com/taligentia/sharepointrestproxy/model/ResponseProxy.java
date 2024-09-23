@@ -13,7 +13,7 @@ public class ResponseProxy {
 	private String response;
 	private JsonNode jsonResponse;
 	private String contentType;
-	private InputStream is;
+	private InputStream inputStream;
 
 	public ResponseProxy() {
 	}
@@ -58,11 +58,11 @@ public class ResponseProxy {
 		this.contentType = contentType;
 	}
 
-	public InputStream getIs() {
-		return is;
+	public InputStream getInputStream() {
+		return inputStream;
 	}
 
-	public void setIs(InputStream is) {
-		this.is = is;
+	public void setInputStream(InputStream inputStream) {
+		this.inputStream = inputStream;
 	}
 }

@@ -48,8 +48,7 @@ public class ProxyHttpClient {
     private String sslCertificateAuthorities = null;
     private String sslCertificateAuthoritiesPassword = null;
     private Boolean sslVerification;
-    private String saveAs;
-    private InputStream is;
+    private InputStream inputStream;
     private HttpClient httpClient;
 
     public ProxyHttpClient() {
@@ -227,17 +226,7 @@ public class ProxyHttpClient {
             }
             else {
                 this.response = "";
-                if (StringUtils.isNotEmpty(saveAs)) {
-                    InputStream is = entity.getContent();
-                    FileOutputStream fos = new FileOutputStream(new File(saveAs));
-                    int inByte;
-                    while ((inByte = is.read()) != -1)
-                        fos.write(inByte);
-                    is.close();
-                    fos.close();
-                } else {
-                    this.is = entity.getContent();
-                }
+                this.inputStream = entity.getContent();
             }
         } finally {
             //httpClient.getConnectionManager().shutdown();
@@ -276,10 +265,6 @@ public class ProxyHttpClient {
         }
     }
 
-    public void setSaveAs(String saveAs) {
-        this.saveAs = saveAs;
-    }
-
     public void setAcceptHeader(String acceptHeader) {
         this.acceptHeader = acceptHeader;
     }
@@ -312,7 +297,7 @@ public class ProxyHttpClient {
         return contenType;
     }
 
-    public InputStream getIs() {
-        return is;
+    public InputStream getInputStream() {
+        return inputStream;
     }
 }
