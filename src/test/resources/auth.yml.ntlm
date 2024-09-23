@@ -1,0 +1,6 @@
+auth:
+  - service : sharepointrestproxy
+    method: ntlm
+    user: spadmin
+    passwd: RsC!15dK1PLu
+    domain: TALIWIN

@@ -40,3 +40,11 @@ settings-read.xml
 dump/
 
 docker/.env
+
+tmp/
+
+docker/save/
+
+docker/certs/
+
+src/test/resources/win2016-sp.cer

@@ -2,6 +2,7 @@ package com.taligentia.sharepointrestproxy;
 
 import com.taligentia.sharepointrestproxy.model.*;
 import com.taligentia.sharepointrestproxy.proxy.ProxyManager;
+import org.apache.solr.common.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +47,8 @@ public class SharepointRestProxyManager extends BaseManagerImpl implements Manag
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		if (!StringUtils.isEmpty(name))
+			this.name = name;
 	}
 
 	public String getVersion() {
@@ -75,7 +77,7 @@ public class SharepointRestProxyManager extends BaseManagerImpl implements Manag
 
 	@Override
 	public void start() throws Exception {
-		setStartedTime(null);
+		setStartedTime();
 		getLogger().info( "Initialisation de " + getAllName() + " " + getVersion() );
 	}
 

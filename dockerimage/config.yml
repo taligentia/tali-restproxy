@@ -6,8 +6,11 @@ restProxy:
 
 proxy:
   authFile: /app/auth.yml
+  sslSettingsFile: /app/ssl-settings.yml
   javaxSecurityAuthUseSubjectCredsOnly: false
-  sunSecurityKrb5Debug: true
+  sunSecurityKrb5Debug: ${KRB5DEBUG:-false}
+  sunSecurityJgssDebug: ${JGSSDEBUG:-false}
+  sunSecuritySpnegoDebug: ${SPNEGODEBUG:-false}
   javaSecurityKrb5Conf: /etc/krb5.conf
   javaSecurityAuthLoginConfig: /app/login.conf
   # Json response Dump dir pour debugging. Pas de dump si vide
@@ -63,7 +66,7 @@ logging:
     io.dropwizard: "INFO"
     com.codahale: "INFO"
     io.swagger: "INFO"
-    com.taligentia.hdtmdata: "DEBUG"
+    com.taligentia: "DEBUG"
 
   appenders:
     - type: console
