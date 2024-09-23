@@ -13,6 +13,7 @@ proxy:
   sunSecuritySpnegoDebug: ${SPNEGODEBUG:-false}
   javaSecurityKrb5Conf: src/test/resources/krb5.conf
   javaSecurityAuthLoginConfig: src/test/resources/login.conf
+  downloadDirectory: ${DOWNLOAD_DIRECTORY:-/tmp}
   dumpDirectory: ${DUMP_DIRECTORY}
 
 auth:

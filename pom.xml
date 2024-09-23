@@ -15,8 +15,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<talidata-version>2.17.8</talidata-version>
-		<talibase-version>1.19</talibase-version>
+		<talidata-version>2.19</talidata-version>
+		<talibase-version>1.21</talibase-version>
 		<jackson-version>2.17.0</jackson-version>
 		<mainClass>com.taligentia.sharepointrestproxy.SharepointRestProxy</mainClass>
 	</properties>

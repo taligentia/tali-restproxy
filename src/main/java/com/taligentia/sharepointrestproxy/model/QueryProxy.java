@@ -4,10 +4,13 @@ import javax.validation.constraints.NotNull;
 import java.util.Map;
 
 public class QueryProxy {
+	//@NotNull
+	//private String acceptHeader;
 	@NotNull
-	private String acceptHeader;
 	private Map<String, String> request;
 	private boolean debug;
+	private String saveAs;
+	//private String responseContentType;
 
 	public QueryProxy(String dataset) {
 	}
@@ -20,13 +23,13 @@ public class QueryProxy {
 		return toString();
 	}
 
-	public String getAcceptHeader() {
-		return acceptHeader;
-	}
+	//public String getAcceptHeader() {
+	//	return acceptHeader;
+	//}
 
-	public void setAcceptHeader(String acceptHeader) {
-		this.acceptHeader = acceptHeader;
-	}
+	//public void setAcceptHeader(String acceptHeader) {
+	//	this.acceptHeader = acceptHeader;
+	//}
 
 	public Map<String, String> getRequest() {
 		return request;
@@ -34,6 +37,22 @@ public class QueryProxy {
 
 	public void setRequest(Map<String, String> request) {
 		this.request = request;
+	}
+
+	//public String getResponseContentType() {
+	//	return responseContentType;
+	//}
+
+	//public void setResponseContentType(String responseContentType) {
+	//	this.responseContentType = responseContentType;
+	//}
+
+	public String getSaveAs() {
+		return saveAs;
+	}
+
+	public void setSaveAs(String saveAs) {
+		this.saveAs = saveAs;
 	}
 
 	public boolean isDebug() {
