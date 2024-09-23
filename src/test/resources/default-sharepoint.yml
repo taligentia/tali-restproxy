@@ -13,6 +13,7 @@ proxy:
   sunSecuritySpnegoDebug: ${SPNEGODEBUG:-false}
   javaSecurityKrb5Conf: src/test/resources/krb5.conf
   javaSecurityAuthLoginConfig: src/test/resources/login.conf
+  # Json response Dump dir pour debugging. Pas de dump si vide
   dumpDirectory: ${DUMP_DIRECTORY}
 
 auth:

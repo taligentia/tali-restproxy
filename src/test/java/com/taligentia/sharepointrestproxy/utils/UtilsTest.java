@@ -5,6 +5,6 @@ public class UtilsTest {
 
     @Test
     public void testPrettyPrintJsonString() throws Exception {
-        System.out.println(Utils.prettyPrintJsonString("{}"));
+        System.out.println(RestProxyRessourceUtils.prettyPrintJsonString("{}"));
     }
 }

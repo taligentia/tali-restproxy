@@ -13,11 +13,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-import java.io.IOException;
+import java.io.*;
 
 public class ProxyManager implements Managed, BaseManager, InfoManager {
     public static final Logger logger = LoggerFactory.getLogger(ProxyManager.class);
     private ProxyConfiguration proxyConfiguration;
+    private static final String ACCEPT_HEADER = "application/json;odata=verbose";
+    private ProxyHttpClient httpClient;
 
     public ProxyManager(ProxyConfiguration proxyConfiguration) throws IllegalArgumentException, ClassNotFoundException, IOException {
         this.proxyConfiguration = proxyConfiguration;
@@ -54,8 +56,8 @@ public class ProxyManager implements Managed, BaseManager, InfoManager {
     }
 
     public ResponseProxy process(QueryProxy queryProxy) {
-        ProxyHttpClient httpClient = new ProxyHttpClient();
-        httpClient.setAcceptHeader(queryProxy.getAcceptHeader());
+        httpClient = new ProxyHttpClient();
+        httpClient.setAcceptHeader(ACCEPT_HEADER);
         httpClient.setSslCertificateAuthorities(proxyConfiguration.getSslCertificateAuthorities());
         httpClient.setSslCertificateAuthoritiesPassword(proxyConfiguration.getSslCertificateAuthoritiesPassword());
         httpClient.setSslVerification(proxyConfiguration.getSslVerification());
@@ -68,9 +70,15 @@ public class ProxyManager implements Managed, BaseManager, InfoManager {
             response.setJsonResponse(jsonNode);
             response.setHttpStatusCode(httpClient.getStatusCode());
             response.setHttpStatusMessage(httpClient.getStatusMessage());
+            response.setContentType(httpClient.getContenType());
+            response.setInputStream(httpClient.getInputStream());
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
         return response;
+    }
+
+    public void close() {
+        httpClient.close();
     }
 }

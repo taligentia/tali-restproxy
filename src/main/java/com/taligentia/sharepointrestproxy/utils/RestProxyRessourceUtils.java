@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Utils {
+public class RestProxyRessourceUtils {
 
     public static String prettyPrintJsonString(String json) {
         ObjectMapper mapper = new ObjectMapper();
