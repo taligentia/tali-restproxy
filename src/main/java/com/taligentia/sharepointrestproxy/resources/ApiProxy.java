@@ -61,6 +61,8 @@ public class ApiProxy extends RestProxyRessource {
 				return resp;
 			}
 			else {
+				responseProxy.setContentType(null);
+				responseProxy.setInputStream(null);
 				getRestProxyManager().close();
 				return response(rep, responseProxy);
 			}
