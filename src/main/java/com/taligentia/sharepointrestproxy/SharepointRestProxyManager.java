@@ -132,6 +132,10 @@ public class SharepointRestProxyManager extends BaseManagerImpl implements Manag
 		return proxyManager.process(queryProxy);
 	}
 
+	public ResponseProxy download( QueryProxyDownload queryProxy) {
+		return proxyManager.download(queryProxy);
+	}
+
 	public void close() {
 		proxyManager.close();
 	}
