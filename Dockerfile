@@ -1,5 +1,5 @@
 #========================================
-FROM maven:3.9-eclipse-temurin-17 AS builder
+FROM maven:3.6.3-openjdk-11 AS builder
 
 # La variable d'environnement READPASSWORD est passée en argument lors du build : docker build -t ... --build-arg READPASSWORD=...
 # Elle est utilisée par substitution dans /root/.m2/settings.xml (<password>${env.READPASSWORD}</password>)
