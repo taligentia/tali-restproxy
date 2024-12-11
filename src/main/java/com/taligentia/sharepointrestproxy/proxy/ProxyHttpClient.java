@@ -220,7 +220,7 @@ public class ProxyHttpClient {
             this.statusCode = httpResponse.getStatusLine().getStatusCode();
             this.statusMessage = httpResponse.getStatusLine().getReasonPhrase();
             this.contenType = entity.getContentType().getValue();
-            if (!StringUtils.startsWith(this.contenType, "application/octet-stream")) {
+            if (!StringUtils.startsWith(this.contenType, "application/octet-stream") && !StringUtils.startsWith(this.contenType, "application/pdf")) {
                 this.response = EntityUtils.toString(entity);
                 EntityUtils.consume(entity);
             }

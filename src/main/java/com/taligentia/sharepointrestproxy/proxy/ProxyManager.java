@@ -20,6 +20,8 @@ public class ProxyManager implements Managed, BaseManager, InfoManager {
     public static final Logger logger = LoggerFactory.getLogger(ProxyManager.class);
     private ProxyConfiguration proxyConfiguration;
     private static final String ACCEPT_HEADER = "application/json;odata=verbose";
+    private static final String ACCEPT_HEADER_PDF = "application/pdf";
+    private static final String ACCEPT_HEADER_OCTETSTREAM = "application/octet-stream";
     private ProxyHttpClient httpClient;
 
     public ProxyManager(ProxyConfiguration proxyConfiguration) throws IllegalArgumentException, ClassNotFoundException, IOException {
@@ -81,16 +83,15 @@ public class ProxyManager implements Managed, BaseManager, InfoManager {
 
     public ResponseProxy download(QueryProxyDownload queryProxy) {
         httpClient = new ProxyHttpClient();
-        httpClient.setAcceptHeader(ACCEPT_HEADER);
+        httpClient.setAcceptHeader(ACCEPT_HEADER_OCTETSTREAM);
         httpClient.setSslCertificateAuthorities(proxyConfiguration.getSslCertificateAuthorities());
         httpClient.setSslCertificateAuthoritiesPassword(proxyConfiguration.getSslCertificateAuthoritiesPassword());
         httpClient.setSslVerification(proxyConfiguration.getSslVerification());
         getLogger().debug("SharepointRestProxy : " + queryProxy.getUrl());
         httpClient.doGet(proxyConfiguration.getAuth("sharepointrestproxy").getMethod(),proxyConfiguration.getAuth("sharepointrestproxy").getUser(), proxyConfiguration.getAuth("sharepointrestproxy").getPasswd(), proxyConfiguration.getAuth("sharepointrestproxy").getDomain(), queryProxy.getUrl());
-        ObjectMapper mapper = new ObjectMapper();
         ResponseProxy response = new ResponseProxy();
         try {
-            JsonNode jsonNode = mapper.readTree(httpClient.getResponse());
+            JsonNode jsonNode = new ObjectMapper().readTree(httpClient.getResponse());
             response.setJsonResponse(jsonNode);
             response.setHttpStatusCode(httpClient.getStatusCode());
             response.setHttpStatusMessage(httpClient.getStatusMessage());
