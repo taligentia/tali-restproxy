@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.taligentia.base.dropwizard.BaseManager;
 import com.taligentia.base.dropwizard.InfoManager;
 import com.taligentia.sharepointrestproxy.model.QueryProxy;
-import com.taligentia.sharepointrestproxy.model.QueryProxyDownload;
 import com.taligentia.sharepointrestproxy.model.ResponseProxy;
 import io.dropwizard.lifecycle.Managed;
 import org.slf4j.Logger;
@@ -58,19 +57,20 @@ public class ProxyManager implements Managed, BaseManager, InfoManager {
     public void stop() throws Exception {
     }
 
-    public ResponseProxy process(QueryProxy queryProxy) {
+    public ResponseProxy process(QueryProxy queryProxy, boolean asStream) {
         httpClient = new ProxyHttpClient();
         httpClient.setAcceptHeader(ACCEPT_HEADER);
         httpClient.setSslCertificateAuthorities(proxyConfiguration.getSslCertificateAuthorities());
         httpClient.setSslCertificateAuthoritiesPassword(proxyConfiguration.getSslCertificateAuthoritiesPassword());
         httpClient.setSslVerification(proxyConfiguration.getSslVerification());
         getLogger().debug("SharepointRestProxy : " + queryProxy.getRequest().get("url"));
-        httpClient.doGet(proxyConfiguration.getAuth("sharepointrestproxy").getMethod(),proxyConfiguration.getAuth("sharepointrestproxy").getUser(), proxyConfiguration.getAuth("sharepointrestproxy").getPasswd(), proxyConfiguration.getAuth("sharepointrestproxy").getDomain(), queryProxy.getRequest().get("url"));
-        ObjectMapper mapper = new ObjectMapper();
+        httpClient.doGet(proxyConfiguration.getAuth("sharepointrestproxy").getMethod(),proxyConfiguration.getAuth("sharepointrestproxy").getUser(), proxyConfiguration.getAuth("sharepointrestproxy").getPasswd(), proxyConfiguration.getAuth("sharepointrestproxy").getDomain(), queryProxy.getRequest().get("url"), asStream);
         ResponseProxy response = new ResponseProxy();
         try {
-            JsonNode jsonNode = mapper.readTree(httpClient.getResponse());
-            response.setJsonResponse(jsonNode);
+            if (httpClient.getResponse()!=null) {
+                JsonNode jsonNode = new ObjectMapper().readTree(httpClient.getResponse());
+                response.setJsonResponse(jsonNode);
+            }
             response.setHttpStatusCode(httpClient.getStatusCode());
             response.setHttpStatusMessage(httpClient.getStatusMessage());
             response.setContentType(httpClient.getContenType());
@@ -81,29 +81,7 @@ public class ProxyManager implements Managed, BaseManager, InfoManager {
         return response;
     }
 
-    public ResponseProxy download(QueryProxyDownload queryProxy) {
-        httpClient = new ProxyHttpClient();
-        httpClient.setAcceptHeader(ACCEPT_HEADER_OCTETSTREAM);
-        httpClient.setSslCertificateAuthorities(proxyConfiguration.getSslCertificateAuthorities());
-        httpClient.setSslCertificateAuthoritiesPassword(proxyConfiguration.getSslCertificateAuthoritiesPassword());
-        httpClient.setSslVerification(proxyConfiguration.getSslVerification());
-        getLogger().debug("SharepointRestProxy : " + queryProxy.getUrl());
-        httpClient.doGet(proxyConfiguration.getAuth("sharepointrestproxy").getMethod(),proxyConfiguration.getAuth("sharepointrestproxy").getUser(), proxyConfiguration.getAuth("sharepointrestproxy").getPasswd(), proxyConfiguration.getAuth("sharepointrestproxy").getDomain(), queryProxy.getUrl());
-        ResponseProxy response = new ResponseProxy();
-        try {
-            JsonNode jsonNode = new ObjectMapper().readTree(httpClient.getResponse());
-            response.setJsonResponse(jsonNode);
-            response.setHttpStatusCode(httpClient.getStatusCode());
-            response.setHttpStatusMessage(httpClient.getStatusMessage());
-            response.setContentType(httpClient.getContenType());
-            response.setInputStream(httpClient.getInputStream());
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return response;
-    }
-
-    public void close() {
+    public void close() throws IOException {
         httpClient.close();
     }
 }

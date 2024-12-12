@@ -19,6 +19,7 @@ import com.taligentia.base.dropwizard.ManagerInfo;
 
 import io.dropwizard.lifecycle.Managed;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 public class SharepointRestProxyManager extends BaseManagerImpl implements Managed,BaseManager,InfoManager  {
@@ -128,15 +129,11 @@ public class SharepointRestProxyManager extends BaseManagerImpl implements Manag
 		return responseInfoVersion;
 	}
 
-	public ResponseProxy process( QueryProxy queryProxy) {
-		return proxyManager.process(queryProxy);
+	public ResponseProxy process( QueryProxy queryProxy, boolean asStream) {
+		return proxyManager.process(queryProxy, asStream);
 	}
 
-	public ResponseProxy download( QueryProxyDownload queryProxy) {
-		return proxyManager.download(queryProxy);
-	}
-
-	public void close() {
+	public void close() throws IOException {
 		proxyManager.close();
 	}
 

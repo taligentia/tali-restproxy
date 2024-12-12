@@ -49,13 +49,13 @@ public class ProxyHttpClient {
     private String sslCertificateAuthoritiesPassword = null;
     private Boolean sslVerification;
     private InputStream inputStream;
-    private HttpClient httpClient;
+    private CloseableHttpClient httpClient;
 
     public ProxyHttpClient() {
         sslVerification = true;
     }
 
-    public void doGet(String authMethod, String user, String password, String domain, final String url) {
+    public void doGet(String authMethod, String user, String password, String domain, final String url, boolean asStream) {
         logger.debug(String.format("SharepointRestProxy : Start doGet -> %s - %s - %s - %s", authMethod, user, password, domain));
         ConnectionSocketFactory sslsf = null;
         SSLContext sslContext = null;
@@ -100,9 +100,7 @@ public class ProxyHttpClient {
         // No authentication
         if (StringUtils.isEmpty(authMethod) || authMethod.equals("basic") || authMethod.equals("ntlm")) {
             try {
-
                 final BasicCredentialsProvider provider = new BasicCredentialsProvider();
-                CloseableHttpClient httpClient = null;
 
                 if ("basic".equals(authMethod) && StringUtils.isNotEmpty(user) && StringUtils.isNotEmpty(password)) {
                     provider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(user, password));
@@ -137,7 +135,7 @@ public class ProxyHttpClient {
                 if (httpClient==null)
                     httpClient = HttpClients.custom().setConnectionManager(connectionManager).build();
 
-                call (httpClient, url);
+                call (url, asStream);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -188,13 +186,13 @@ public class ProxyHttpClient {
                             // https://stackoverflow.com/a/48265900
                             Registry<AuthSchemeProvider> authSchemeRegistry = RegistryBuilder.<AuthSchemeProvider>create().register(AuthSchemes.SPNEGO, new SPNegoSchemeFactory(true, false)).build();
 
-                            HttpClient httpClient = HttpClients.custom()
+                            httpClient = HttpClients.custom()
                                     .setConnectionManager(connectionManager)
                                     .setDefaultCredentialsProvider(credsProvider)
                                     .setDefaultAuthSchemeRegistry(authSchemeRegistry)
                                     .build();
 
-                            call(httpClient, url);
+                            call(url, asStream);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -208,33 +206,30 @@ public class ProxyHttpClient {
         }
     }
 
-    private void call(HttpClient httpClient, String url) throws IOException {
+    private void call(String url, boolean asStream) throws IOException {
 
-        try {
-            this.httpClient = httpClient;
-            HttpUriRequest request = new HttpGet(url);
-            if (!StringUtils.isEmpty(this.acceptHeader))
-                request.setHeader("Accept", this.acceptHeader);
-            HttpResponse httpResponse = httpClient.execute(request);
-            HttpEntity entity = httpResponse.getEntity();
-            this.statusCode = httpResponse.getStatusLine().getStatusCode();
-            this.statusMessage = httpResponse.getStatusLine().getReasonPhrase();
-            this.contenType = entity.getContentType().getValue();
-            if (!StringUtils.startsWith(this.contenType, "application/octet-stream") && !StringUtils.startsWith(this.contenType, "application/pdf")) {
-                this.response = EntityUtils.toString(entity);
-                EntityUtils.consume(entity);
-            }
-            else {
-                this.response = "";
-                this.inputStream = entity.getContent();
-            }
-        } finally {
-            //httpClient.getConnectionManager().shutdown();
+        HttpUriRequest request = new HttpGet(url);
+        if (!StringUtils.isEmpty(this.acceptHeader))
+            request.setHeader("Accept", this.acceptHeader);
+        HttpResponse httpResponse = httpClient.execute(request);
+        HttpEntity entity = httpResponse.getEntity();
+        this.statusCode = httpResponse.getStatusLine().getStatusCode();
+        this.statusMessage = httpResponse.getStatusLine().getReasonPhrase();
+        this.contenType = entity.getContentType().getValue();
+        if (asStream) {
+            this.response = "";
+            this.inputStream = entity.getContent();
+        } else {
+            this.inputStream = null;
+            this.response = EntityUtils.toString(entity);
+            EntityUtils.consume(entity);
+            httpClient.close();
         }
+        //httpClient.close();
     }
 
-    void close() {
-        httpClient.getConnectionManager().shutdown();
+    void close() throws IOException {
+        httpClient.close();
     }
 
     class KerberosCallBackHandler implements CallbackHandler {

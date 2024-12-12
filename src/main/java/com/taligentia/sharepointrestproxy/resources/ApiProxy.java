@@ -11,7 +11,6 @@ import javax.ws.rs.core.StreamingOutput;
 import com.taligentia.base.dropwizard.utils.Utils;
 import com.taligentia.sharepointrestproxy.SharepointRestProxyManager;
 import com.taligentia.sharepointrestproxy.model.QueryProxy;
-import com.taligentia.sharepointrestproxy.model.QueryProxyDownload;
 import com.taligentia.sharepointrestproxy.model.ResponseProxy;
 import com.taligentia.base.bearer.model.AuthUser;
 import com.taligentia.base.bearer.model.InvalidRolesException;
@@ -46,7 +45,7 @@ public class ApiProxy extends RestProxyRessource {
 			if (!AuthUser.userRolesMatch(getUserRoles((AuthUser) user), Arrays.asList(defaultExpectedRoles))) {
 				return error(rep, new InvalidRolesException(Arrays.asList(defaultExpectedRoles), getUserRoles((AuthUser) user)));
 			}
-			ResponseProxy responseProxy = getRestProxyManager().process(query);
+			ResponseProxy responseProxy = getRestProxyManager().process(query, false);
 			String dumpDirectory = getRestProxyManager().getProxyManager().getProxyConfiguration().getDumpDirectory();
 			if (responseProxy.getResponse()!=null && StringUtils.startsWith(responseProxy.getContentType(), "application/json") && StringUtils.isNotEmpty(dumpDirectory)) {
 				String dumpValue = RestProxyUtils.prettyPrintJsonString(responseProxy.getResponse());
@@ -64,14 +63,14 @@ public class ApiProxy extends RestProxyRessource {
 	@Operation(summary = "Download ", tags = "download")
 	@ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = ResponseProxy.class)))
 	public Response download(
-			QueryProxyDownload query,
+			QueryProxy query,
 			@Auth Principal user) {
 		BaseResponse<ResponseProxy> rep = start("get");
 		try {
 			if (!AuthUser.userRolesMatch(getUserRoles((AuthUser) user), Arrays.asList(defaultExpectedRoles))) {
 				return error(rep, new InvalidRolesException(Arrays.asList(defaultExpectedRoles), getUserRoles((AuthUser) user)));
 			}
-			ResponseProxy responseProxy = getRestProxyManager().download(query);
+			ResponseProxy responseProxy = getRestProxyManager().process(query, true);
 			StreamingOutput streamingOutput = Utils.inputStreamStreaming(responseProxy.getInputStream());
 			Response resp = Utils.pdf( streamingOutput );
 			return resp;
