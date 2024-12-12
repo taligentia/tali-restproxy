@@ -148,7 +148,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"siteName\": \"kamare\",\n    \"_subSitePath\": \"Biblio_Expert\",\n    \"_siteTitleStartWith\": \"B\"\n}",
+							"raw": "{\n    \"siteName\": \"kamare\",\n    \"_subSitePath\": \"Biblio_Dominique\",\n    \"_siteTitleStartWith\": \"B\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -171,12 +171,23 @@
 				},
 				{
 					"name": "Get Site Brainsets",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"siteName\": \"kamare\",\n    \"loginName\": \"taliwin\\\\Kamare\",\n    \"listTitleStartWith\": \"B\",\n\n    \"_subSitePath\": \"Biblio_Expert\",\n    \"_lastModifiedSince\": \"2024-04-16\",\n    \"_requiredPermission\" : [\"ViewListItems\", \"OpenItems\"],\n\n    \"_loginName\": \"taliwin\\\\mduran\",\n    \"_loginName\": \"Kamare-user3\",\n    \"_fieldsList\" : \"Id,Title,Created,ItemCount,LastItemDeletedDate,LastItemModifiedDate,LastItemUserModifiedDate,BaseType,BaseTemplate\"\n}",
+							"raw": "{\n    \"siteName\": \"kamare\",\n\n    \"_subSitePath\": \"Biblio_Expert\",\n    \"recursive\": true,\n    \"_maxDepth\": 4,\n\n   \"loginName\": \"taliwin\\\\kamare\",\n    \"_requiredPermission\" : [\"ViewListItems\", \"OpenItems\"],\n    \"_onlyAllowView\": false,\n\n    \"_listTitleStartWith\": \"B\",\n    \"_lastModifiedSince\": \"2024-04-16\",\n    \"titleStopValues\": [\"Pages du site\", \"Pièces jointes\", \"Documents\"],\n    \"_filterField\": \"Description\",\n    \"_filterValue\": \"brainset\",\n\n    \"_detailledOutput\": true,\n\n    \"_subSitePath\": \"Biblio_Dominique\",\n    \"_subSitePath\": \"Biblio_Expert\",\n    \"_loginName\": \"taliwin\\\\Kamare\",\n    \"_loginName\": \"Kamare-user3\",\n    \"_fieldsList\" : \"Id,Title,Created,ItemCount,LastItemDeletedDate,LastItemModifiedDate,LastItemUserModifiedDate,BaseType,BaseTemplate\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -204,7 +215,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"siteName\": \"kamare\",\n    \"_subSitePath\": \"Biblio_Expert\",\n    \"brainsetId\": \"f9e26b24-049a-40c7-9d11-59f2b0e90c12\",\n    \"rows\": \"1\",\n    \"next\":\"%24skiptoken=Paged%3dTRUE%26p_SortBehavior%3d0%26p_ID%3d2%26RootFolder%3d%252fsites%252fkamare%252fBrainSet1&%24select=Size%2cName%2cTimeCreated%2cTimeLastModified%2cId%2cUrl&%24top=1\"\n}",
+							"raw": "{\n    \"brainsetId\": \"a2FtYXJlfC9CaWJsaW9fRXhwZXJ0fDBkNmFjMTZkLTM4MGMtNDMxMC04YzY2LWYxZGJjZWM3YjE1NA==\",\n    \"_siteName\": \"kamare\",\n    \"_subSitePath\": \"/Biblio_Dominique\",\n    \"_listId\": \"4d143351-8167-455e-b8e0-efae34cc6ed3\",\n    \"_listId\": \"d995055c-bee0-4379-a6e3-58a60d65e440\",\n    \"_subSitePath\": \"/Biblio_Expert\",\n    \"_listId\": \"0d6ac16d-380c-4310-8c66-f1dbcec7b154\",\n    \"rows\": 100,\n    \"_next\":\"%24skiptoken=Paged%3dTRUE%26p_SortBehavior%3d0%26p_ID%3d2%26RootFolder%3d%252fsites%252fkamare%252fBrainSet1&%24select=Size%2cName%2cTimeCreated%2cTimeLastModified%2cId%2cUrl&%24top=1\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -232,17 +243,10 @@
 					},
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/pdf",
-								"type": "text",
-								"disabled": true
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"relativeUrl\": \"/sites/kamare/BrainSet1/bergé_J of Mat Phys_ The findamental solution.pdf\"\n}",
+							"raw": "{\n    \"relativeUrl\": \"/sites/kamare/Biblio_Expert/ProvalisBoyreau/Publications/Lefebvre_Physics of Plasmas_Influence of subpicosecond.pdf\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -271,7 +275,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"siteName\": \"kamare\",\n    \"_subSitePath\": \"Biblio_Expert\"\n}",
+							"raw": "{\n    \"siteName\": \"kamare\",\n    \"subSitePath\": \"/Biblio_Expert\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -299,7 +303,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"siteName\": \"kamare\",\n    \"_subSitePath\": \"Biblio_Expert\"\n}",
+							"raw": "{\n    \"siteName\": \"kamare\",\n    \"subSitePath\": \"/Biblio_Expert\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -327,7 +331,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"siteName\": \"kamare\",\n    \"_subSitePath\": \"Biblio_Expert\",\n    \"_groupName\": \"Projet Kamare - Membres\",\n    \"groupName\": \"GRP-Biblio-Dominique\"\n}",
+							"raw": "{\n    \"siteName\": \"kamare\",\n    \"subSitePath\": \"/Biblio_Expert\",\n    \"groupName\": \"GRP_Brainset\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -343,6 +347,34 @@
 								"api",
 								"brainset",
 								"groupmembers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Site BrainSet infos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"_brainsetId\": \"a2FtYXJlfC9CaWJsaW9fRXhwZXJ0fDBkNmFjMTZkLTM4MGMtNDMxMC04YzY2LWYxZGJjZWM3YjE1NA\",\n    \"siteName\": \"kamare\",\n    \"subSitePath\": \"/Biblio_Expert\",\n    \"listId\": \"0d6ac16d-380c-4310-8c66-f1dbcec7b154\",\n    \"_subSitePath\": \"Biblio_Dominique\",\n    \"_listId\": \"4d143351-8167-455e-b8e0-efae34cc6ed3\",\n    \"_listId\": \"d995055c-bee0-4379-a6e3-58a60d65e440\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{brainset_url}}/api/brainset/infos",
+							"host": [
+								"{{brainset_url}}"
+							],
+							"path": [
+								"api",
+								"brainset",
+								"infos"
 							]
 						}
 					},
@@ -429,6 +461,18 @@
 												"web",
 												"lists",
 												""
+											],
+											"query": [
+												{
+													"key": "$filter",
+													"value": "Hidden eq 'false'",
+													"disabled": true
+												},
+												{
+													"key": "$select",
+													"value": "Title, BaseType, BaseTemplate, ContentTypesEnabled",
+													"disabled": true
+												}
 											]
 										}
 									},
@@ -717,26 +761,91 @@
 											}
 										},
 										"url": {
-											"raw": "{{sharepoint_url}}/sites/kamare/_api/web/lists(guid'f9e26b24-049a-40c7-9d11-59f2b0e90c12')/Files?$top=2&$select=Size,Name,TimeCreated",
+											"raw": "{{sharepoint_url}}/sites/kamare/Biblio_Dominique/_api/web/lists(guid'4d143351-8167-455e-b8e0-efae34cc6ed3')/Files",
 											"host": [
 												"{{sharepoint_url}}"
 											],
 											"path": [
 												"sites",
 												"kamare",
+												"Biblio_Dominique",
 												"_api",
 												"web",
-												"lists(guid'f9e26b24-049a-40c7-9d11-59f2b0e90c12')",
+												"lists(guid'4d143351-8167-455e-b8e0-efae34cc6ed3')",
 												"Files"
 											],
 											"query": [
 												{
 													"key": "$top",
-													"value": "2"
+													"value": "1",
+													"disabled": true
 												},
 												{
 													"key": "$select",
-													"value": "Size,Name,TimeCreated"
+													"value": "Size,Name,TimeCreated",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get site list items by list id",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{sharepoint_url}}/sites/kamare/Biblio_Expert/_api/web/lists(guid'bad630d3-e498-4ae2-b540-a719579d2735')/items?$select=Id,Title",
+											"host": [
+												"{{sharepoint_url}}"
+											],
+											"path": [
+												"sites",
+												"kamare",
+												"Biblio_Expert",
+												"_api",
+												"web",
+												"lists(guid'bad630d3-e498-4ae2-b540-a719579d2735')",
+												"items"
+											],
+											"query": [
+												{
+													"key": "$top",
+													"value": "1",
+													"disabled": true
+												},
+												{
+													"key": "$select",
+													"value": "Id,Title"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get site list info by list id",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{sharepoint_url}}/sites/kamare/Biblio_Dominique/_api/web/lists(guid'4d143351-8167-455e-b8e0-efae34cc6ed3')?$select=Id,Title",
+											"host": [
+												"{{sharepoint_url}}"
+											],
+											"path": [
+												"sites",
+												"kamare",
+												"Biblio_Dominique",
+												"_api",
+												"web",
+												"lists(guid'4d143351-8167-455e-b8e0-efae34cc6ed3')"
+											],
+											"query": [
+												{
+													"key": "$select",
+													"value": "Id,Title"
 												}
 											]
 										}
@@ -769,13 +878,14 @@
 											}
 										},
 										"url": {
-											"raw": "{{sharepoint_url}}/sites/kamare/_api/web/GetFolderByServerRelativeUrl('BrainSet1')/Files",
+											"raw": "{{sharepoint_url}}/sites/kamare/Biblio_Dominique/_api/web/GetFolderByServerRelativeUrl('BrainSet1')/Files",
 											"host": [
 												"{{sharepoint_url}}"
 											],
 											"path": [
 												"sites",
 												"kamare",
+												"Biblio_Dominique",
 												"_api",
 												"web",
 												"GetFolderByServerRelativeUrl('BrainSet1')",
@@ -857,19 +967,173 @@
 								},
 								{
 									"name": "Get file by url",
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"accept": true
+										}
+									},
 									"request": {
 										"method": "GET",
-										"header": [],
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/pdf",
+												"type": "text"
+											}
+										],
 										"url": {
-											"raw": "{{sharepoint_url}}/sites/kamare/BrainSet1/bergé_J of Mat Phys_ The findamental solution.pdf",
+											"raw": "{{sharepoint_url}}/sites/kamare/Biblio_Expert/ProvalisBoyreau/Publications/Lefebvre_Physics of Plasmas_Influence of subpicosecond.pdf",
 											"host": [
 												"{{sharepoint_url}}"
 											],
 											"path": [
 												"sites",
 												"kamare",
-												"BrainSet1",
-												"bergé_J of Mat Phys_ The findamental solution.pdf"
+												"Biblio_Expert",
+												"ProvalisBoyreau",
+												"Publications",
+												"Lefebvre_Physics of Plasmas_Influence of subpicosecond.pdf"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Browse Brainset in Biblio_Expert",
+							"item": [
+								{
+									"name": "Get Site SitePages Id",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{sharepoint_url}}/sites/kamare/Biblio_Expert/_api/web/lists",
+											"host": [
+												"{{sharepoint_url}}"
+											],
+											"path": [
+												"sites",
+												"kamare",
+												"Biblio_Expert",
+												"_api",
+												"web",
+												"lists"
+											],
+											"query": [
+												{
+													"key": "$filter",
+													"value": "EntityTypeName eq 'SitePages'",
+													"disabled": true
+												},
+												{
+													"key": "$select",
+													"value": "Id",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Site SitePages List Items",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{sharepoint_url}}/sites/kamare/Biblio_Expert/_api/web/lists(guid'bad630d3-e498-4ae2-b540-a719579d2735')/items?$select=Id,Title,FileRef,FileLeafRef&$expand=Properties",
+											"host": [
+												"{{sharepoint_url}}"
+											],
+											"path": [
+												"sites",
+												"kamare",
+												"Biblio_Expert",
+												"_api",
+												"web",
+												"lists(guid'bad630d3-e498-4ae2-b540-a719579d2735')",
+												"items"
+											],
+											"query": [
+												{
+													"key": "$select",
+													"value": "Id,Title,FileRef,FileLeafRef"
+												},
+												{
+													"key": "$expand",
+													"value": "Properties"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Site SitePages Item details",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{sharepoint_url}}/sites/kamare/Biblio_Expert/_api/Web/Lists(guid'bad630d3-e498-4ae2-b540-a719579d2735')/Items(7)?$expand=Properties",
+											"host": [
+												"{{sharepoint_url}}"
+											],
+											"path": [
+												"sites",
+												"kamare",
+												"Biblio_Expert",
+												"_api",
+												"Web",
+												"Lists(guid'bad630d3-e498-4ae2-b540-a719579d2735')",
+												"Items(7)"
+											],
+											"query": [
+												{
+													"key": "$expand",
+													"value": "Properties"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Webparts in page",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{sharepoint_url}}/sites/kamare/Biblio_Expert/_api/web/getfilebyserverrelativeurl('/sites/kamare/Biblio_Expert/SitePages/PAGE%20ASPRO.aspx')/getLimitedWebPartManager(scope=1)/webparts?$expand=WebPart",
+											"host": [
+												"{{sharepoint_url}}"
+											],
+											"path": [
+												"sites",
+												"kamare",
+												"Biblio_Expert",
+												"_api",
+												"web",
+												"getfilebyserverrelativeurl('",
+												"sites",
+												"kamare",
+												"Biblio_Expert",
+												"SitePages",
+												"PAGE%20ASPRO.aspx')",
+												"getLimitedWebPartManager(scope=1)",
+												"webparts"
+											],
+											"query": [
+												{
+													"key": "$expand",
+													"value": "WebPart"
+												},
+												{
+													"key": "$filter",
+													"value": "WebPart/Title+eq+'Test'\n",
+													"disabled": true
+												}
 											]
 										}
 									},
@@ -1382,7 +1646,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"url\": \"{{sharepoint_url}}/sites/kamare/BrainSet1/berg%C3%A9_J%20of%20Mat%20Phys_%20The%20findamental%20solution.pdf\"\n}",
+							"raw": "{\n    \"url\": \"{{sharepoint_url}}/sites/kamare/Biblio_Expert/ProvalisBoyreau/Publications/Lefebvre_Physics%20of%20Plasmas_Influence%20of%20subpicosecond.pdf\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"

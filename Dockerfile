@@ -1,5 +1,5 @@
 #========================================
-FROM maven:3.9-eclipse-temurin-17 AS builder
+FROM maven:3.6.3-openjdk-11 AS builder
 
 # La variable d'environnement READPASSWORD est passée en argument lors du build : docker build -t ... --build-arg READPASSWORD=...
 # Elle est utilisée par substitution dans /root/.m2/settings.xml (<password>${env.READPASSWORD}</password>)
@@ -16,7 +16,7 @@ RUN mvn -e -B -Dmaven.test.skip=true package
 FROM docker.pkg.github.com/taligentia/cea/kamare_base:1.2.0
 ENV DEBIAN_FRONTEND=noninteractive
 
-ENV RESTPROXY_JAR="sharepointrestproxy-0.1.8.jar"
+ENV RESTPROXY_JAR="sharepointrestproxy-0.1.9.jar"
 ENV RESTPROXY_CONFIG=config.yml
 
 WORKDIR /app

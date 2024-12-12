@@ -46,7 +46,7 @@ public class ApiProxy extends RestProxyRessource {
 			if (!AuthUser.userRolesMatch(getUserRoles((AuthUser) user), Arrays.asList(defaultExpectedRoles))) {
 				return error(rep, new InvalidRolesException(Arrays.asList(defaultExpectedRoles), getUserRoles((AuthUser) user)));
 			}
-			ResponseProxy responseProxy = getRestProxyManager().process(query);
+			ResponseProxy responseProxy = getRestProxyManager().process(query, false);
 			String dumpDirectory = getRestProxyManager().getProxyManager().getProxyConfiguration().getDumpDirectory();
 			if (responseProxy.getResponse()!=null && StringUtils.startsWith(responseProxy.getContentType(), "application/json") && StringUtils.isNotEmpty(dumpDirectory)) {
 				String dumpValue = RestProxyUtils.prettyPrintJsonString(responseProxy.getResponse());
@@ -71,7 +71,7 @@ public class ApiProxy extends RestProxyRessource {
 			if (!AuthUser.userRolesMatch(getUserRoles((AuthUser) user), Arrays.asList(defaultExpectedRoles))) {
 				return error(rep, new InvalidRolesException(Arrays.asList(defaultExpectedRoles), getUserRoles((AuthUser) user)));
 			}
-			ResponseProxy responseProxy = getRestProxyManager().download(query);
+			ResponseProxy responseProxy = getRestProxyManager().process(query.asQueryProxy(), true);
 			StreamingOutput streamingOutput = Utils.inputStreamStreaming(responseProxy.getInputStream());
 			Response resp = Utils.pdf( streamingOutput );
 			return resp;

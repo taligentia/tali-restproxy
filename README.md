@@ -38,7 +38,7 @@ $ mvn -e -B -Dmaven.test.skip=true package
 
 ## Build image
 ```
-$ docker build --no-cache -t sharepointrestproxy:`cat pom.xml | grep -oP '(?<=<version>).*?(?=</version>)' | head -1` --build-arg READPASSWORD=`cat .secrets/tali-maven-read.txt` .
+$ docker build --no-cache -t sharepointrestproxy:`cat pom.xml | grep -oP '(?<=<version>).*?(?=</version>)' | head -1` --build-arg READPASSWORD=`cat .secrets/settings-read.xml | grep -oP '(?<=<password>).*?(?=</password>)'` .
 ```
 
 #### Pousser l'image docker dans la registry github
