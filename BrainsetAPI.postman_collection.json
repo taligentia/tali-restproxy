@@ -1646,7 +1646,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"request\": {\n        \"url\": \"{{sharepoint_url}}/sites/kamare/Biblio_Expert/ProvalisBoyreau/Publications/Lefebvre_Physics%20of%20Plasmas_Influence%20of%20subpicosecond.pdf\"\n    },\n    \"debug\": true\n}",
+							"raw": "{\n    \"url\": \"{{sharepoint_url}}/sites/kamare/Biblio_Expert/ProvalisBoyreau/Publications/Lefebvre_Physics%20of%20Plasmas_Influence%20of%20subpicosecond.pdf\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
